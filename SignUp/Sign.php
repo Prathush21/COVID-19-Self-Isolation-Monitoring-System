@@ -1,6 +1,5 @@
 <?php 
 
-
 require_once 'user.php';
 require_once 'patient.php';
 require_once 'validate.php';
