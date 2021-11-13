@@ -12,6 +12,9 @@ class Patient{
 		if(!$this->_db->insert('patient', $fields)) {
 			throw new Exception('There was a problem creating this patient account.');
 		}
+		else{
+			return true;
+		}
 	}
 
 	

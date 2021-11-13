@@ -19,7 +19,6 @@ class Validate{
         if($this->_db->select('user',$uname)){
             $this->_errorcount+=1;
             $this->_errors[]=$uname;
-            echo "user exists";
             return true;
 
         }
@@ -35,49 +34,53 @@ class Validate{
         if($psw!=$repsw){
             $this->_errorcount+=1;
             $this->_errors[]=$repsw;
-            //echo "passwords didn't match. Please re-enter your password";
+            return true;
             
         }
+        return false;
     }
 
     public function checkMobile($mobileno){
         if(strlen($mobileno)!=10){
             $this->_errorcount+=1;
             $this->_errors[]=$mobileno;
-            // echo "invalid mobile number";           
+            return true;          
         }
+        return false;
     }
 
     public function checkEmail($email){
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->_errorcount+=1;
             $this->_errors[]=$email;
-            //echo "Invalid email format";
+            return true;
         }
+        return false;
     }
 
     public function checkNic($nic){
         if (strlen($nic)!=10 and strlen($nic)!=12){
             $this->_errorcount+=1;
             $this->_errors[]=$nic;
-            //echo "Invalid NIC";
+            return true;
         }
         else{
             if (strlen($nic)==10){
                 if (!(is_numeric(substr($nic,0,9)) and (strtoupper(substr($nic,9))=='V' or strtoupper(substr($nic,9))=='X'))){
                     $this->_errorcount+=1;
                     $this->_errors[]=$nic;
-                    //echo "Invalid NIC";
+                    return true;
                 }
             }
             else{
                 if(!(is_numeric($nic))){
                     $this->_errorcount+=1;
                     $this->_errors[]=$nic;
-                    //echo "Invalid NIC";
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public function passed(){

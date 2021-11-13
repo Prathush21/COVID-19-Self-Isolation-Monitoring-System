@@ -19,7 +19,7 @@ class Db{
         $this->_dbPassword='';
         try {
             $this->_pdo = new PDO("mysql:host=$this->_dbHost;dbname=$this->_dbName",$this->_dbUser,$this->_dbPassword);  
-            Echo "Successfully connected with myDB database";  
+            // Echo "Successfully connected with myDB database";  
         } catch(PDOException $e) {
             die($e->getMessage());
         }

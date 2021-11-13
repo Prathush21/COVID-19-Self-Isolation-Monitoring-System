@@ -1,36 +1,143 @@
-<!DOCTYPE html>
-<!-- Coding by CodingLab | www.codinglabweb.com-->
-<html lang="en" dir="ltr">
-<?php
-require_once 'validate.php'
+<?php 
+
+
+require_once 'user.php';
+require_once 'patient.php';
+require_once 'validate.php';
+
+$error1="";
+$error2="";
+$error3="";
+$error4="";
+$error5="";
+$gender='no';
+$asthma='no';
+$lung='no';
+$kidney='no';
+$heart='no';
+$diabetes='no';
+$tension='no';
+$cancer='no';
+$immuno='no';
+
+if(!empty($_POST)){
+    $name=$_POST['name'];
+    $uname=$_POST['uname'];
+    $psw=$_POST['password'];
+    $nic=$_POST['nic'];
+    $repsw=$_POST['repassword'];
+    $address=$_POST['address'];
+    $mobileno=$_POST['mobileno'];
+    $email=trim($_POST['email-id']);
+    $dob=$_POST['dob'];
+    if(isset($_POST['gender'])){
+      $gender=$_POST['gender'];
+    }
+    
+    if(isset($_POST['asthma'])){
+      $asthma=$_POST['asthma'];
+    }
+    
+    if(isset($_POST['lungdisease'])){
+      $lung=$_POST['lungdisease'];
+    }
+    if(isset($_POST['kidney'])){
+      $kidney=$_POST['kidney'];
+    }
+    if(isset($_POST['heart'])){
+      $heart=$_POST['heart'];
+    }
+    if(isset($_POST['diabetes'])){
+      $diabetes=$_POST['diabetes'];
+    }
+    if(isset($_POST['hyper'])){
+      $tension=$_POST['hyper'];
+    }
+    if(isset($_POST['cancer'])){
+      $cancer=$_POST['cancer'];
+    }
+    if(isset($_POST['immuno'])){
+      $immuno=$_POST['immuno'];
+    }
+   
+    $hashed = password_hash($psw,PASSWORD_DEFAULT);
+
+
+$validate=new Validate();
+if($validate->checkUser($uname)){
+    $error1="User already exists";
+}
+if($validate->matchPassword($psw,$repsw)){
+  $error2="Passwords didn't match";
+}
+if($validate->checkMobile($mobileno)){
+  $error3="Invalid mobile number";
+}
+if($validate->checkEmail($email)){
+  $error4="Invalid email address";
+}
+if($validate->checkNic($nic)){
+  $error5="Invalid NIC number";
+}
+
+
+
+
+if ($validate->passed()){
+    $user=new User();
+    $patient = new Patient();
+    if(
+    $user->create(array(
+        'username'=> $uname,
+        'password'=> $hashed,
+    )) and
+
+    
+    $patient->create (array(
+    'patient_name'=>$name,
+    'NIC'=>$nic,
+    'address'=>$address,
+    'phonenumber'=>$mobileno,
+    'email_add'=>$email,
+    'DOB'=>$dob,
+    'gender'=>$gender,
+    'asthma'=>$asthma,
+    'lung_disease'=>$lung,
+    'kidney_failure'=>$kidney,
+    'heart_disease'=>$heart,
+    'diabetes'=>$diabetes,
+    'hyper_tension'=>$tension,
+    'cancer'=>$cancer,
+    'immuno_deficiency'=>$immuno,
+    'username'=>$uname,
+    ))
+    ){
+      header("Location:https://www.google.lk/");
+    }
+}
+
+
+}
 
 
 ?>
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com-->
+<html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8" />
   <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
   <link rel="stylesheet" href="signup.css" />
   <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<script>
+<!-- <script>
   function errorMessage() {
-    var user =document.getElementById("uname");
-    <?php 
-    $validate=new Validate();
-    $uname= "<script>document.write(user)</script>";
-    $result= $validate->checkUser($uname);
-    echo $result;
-    ?> 
-    var result=<?php echo $result ?>;
-    if(result){
-      document.getElementById("unm").style.color = "red";
-      document.getElementById("unm").innerHTML =
-        "User exists";
-      return false;
-
-    }
+   
+  
     if (
       document.getElementById("password").value !=
       document.getElementById("repassword").value
@@ -44,7 +151,7 @@ require_once 'validate.php'
       return true;
     }
   };
-</script>
+</script> -->
 
 <body>
   <div class="container">
@@ -54,7 +161,7 @@ require_once 'validate.php'
       <!-- <div class="form-content"> -->
       <div  class="signup-form" >
         <div class="title">Signup</div>
-        <form  action="signup.php" onsubmit="return errorMessage()" method="post">
+        <form  action="#" method="post">
           <div class="input-boxes">
             <div class="input-box">
               <label for="name"><b>Name</b></label>
@@ -63,7 +170,7 @@ require_once 'validate.php'
             <div class="input-box">
               <label for="uname"><b>Username</b></label>
               <input type="text" placeholder="Enter a username" id="uname" name="uname" required />
-              <span id="unm"></span>
+              <span id="unm" style="color:red"><?php echo $error1;?></span>
 
             </div>
             <div class="input-box">
@@ -75,14 +182,14 @@ require_once 'validate.php'
             <div class="input-box">
               <label for="repassword"><b>Re-enter Password</b></label>
               <input type="password" placeholder="Re-enter your password" id="repassword" name="repassword" required />
-              <span id="repsw"></span>
+              <span id="repsw" style="color:red"><?php echo $error2;?></span>
 
             </div>
 
             <div class="input-box">
               <label for="nic"><b>NIC number</b></label>
               <input type="text" placeholder="Enter your NIC number" name="nic" required />
-              <span id="nic"></span>
+              <span id="nic" style="color:red"><?php echo $error5;?></span>
 
             </div>
 
@@ -94,18 +201,19 @@ require_once 'validate.php'
             <div class="input-box">
               <label for="mobileno"><b>Mobile Number</b></label>
               <input type="text" placeholder="Enter your mobile number" name="mobileno" required />
-              <span id="mobileno"></span>
+              <span id="mobileno" style="color:red"><?php echo $error3;?></span>
 
             </div>
 
             <div class="input-box">
               <label for="email-id"><b>Email Address</b></label>
               <input type="text" placeholder="Enter your Email Address" name="email-id" required />
+              <span id="emailadd" style="color:red"><?php echo $error4;?></span>
             </div>
 
             <div class="input-box">
               <label for="dob"><b>Date of Birth</b></label>
-              <input type="text" placeholder="Enter your Date of Birth" name="dob" required />
+              <input type="date" placeholder="Enter your Date of Birth" name="dob" required />
             </div>
             <!-- <div class="input-box"> -->
             <!-- <div class = "selection"> -->

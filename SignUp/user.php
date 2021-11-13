@@ -13,6 +13,9 @@ class User{
 		if(!$this->_db->insert('user', $fields)) {
 			throw new Exception('There was a problem creating this account.');
 		}
+		else{
+			return true;
+		}
 	}
 
 
