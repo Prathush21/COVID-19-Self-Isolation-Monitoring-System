@@ -83,14 +83,43 @@ class Validate{
         return false;
     }
 
+
+    public function checkUserExists($uname){
+        if(!($this->_db->select('user',$uname))){
+            $this->_errorcount+=1;
+            $this->_errors[]=$uname;
+            return true;
+        }
+        return false;
+    }
+
     public function passed(){
         if ($this->_errorcount==0){
             return true;
         }
         return false;
     }
-}
 
+    // public function checkPassword($table, $uname, $password){
+       
+        
+    //     $result =  $this->_db->get($table,$uname);
+
+    //     if (password_verify($password, $result['password'])){
+    //                 // echo "login successful";
+    //         return true;
+    //     }
+    //     else {
+    //                 // echo "password incorrect";
+    //         $this->_errorcount+=1;
+    //         return false;
+    //     }
+            
+        
+        
+
+    // }
+}
 
 
 ?>

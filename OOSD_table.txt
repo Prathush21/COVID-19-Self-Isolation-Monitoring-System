@@ -1,0 +1,26 @@
+Patient -
+
+
+PatientFile -
+PatientNumber (Foreign key)
+PatientFileNo (Primary key)
+
+PatientRecord - 
+PatientRecordNumber (primary key)
+PatientFileNumber (foreign key)
+RecordType
+AssignedDoctorNo (Foreign key)
+StartDate
+EndDate
+--SymptomRecord?
+
+SymptomRecord -
+PatientRecordNumber (foreign key)
+SymptomRecordNumber (Primarykey)
+List of Symptoms
+
+Doctor - 
+DoctorNo (Primary key)
+DoctorName 
+PhoneNo
+EmailAddress
