@@ -18,6 +18,24 @@ class User{
 		}
 	}
 
+	public function login($table, $uname, $password){
+       
+        
+        $result =  $this->_db->get($table,$uname);
+
+        if (password_verify($password, $result['password'])){
+                    // echo "login successful";
+            return true;
+        }
+        else {
+            return false;
+        }
+            
+        
+        
+
+    }
+
 
 }
 ?>
