@@ -80,11 +80,20 @@ class Db{
             return true;
         }
         return false;
-
     }
 
+    public function get($table,$uname){
+
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE username=?");
+        $stmt->execute([$uname]); 
+        $result = $stmt->fetch();
+
+        return $result;
+
+    } 
+
+
+
 }
-
-
 
 ?>
