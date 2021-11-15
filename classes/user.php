@@ -18,6 +18,10 @@ class User{
 		}
 	}
 
+    // public function login($uname, $password){
+	// 	echo 'hi';
+    //     return $this->db->getPassword('user',$uname, $password);
+    // }
 	public function login($table, $uname, $password){
        
         
@@ -35,7 +39,5 @@ class User{
         
 
     }
-
-
 }
 ?>

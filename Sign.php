@@ -1,7 +1,9 @@
 <?php 
-require_once 'user.php';
-require_once 'patient.php';
-require_once 'validate.php';
+
+chdir("classes");
+require_once  'classes/user.php';
+require_once 'classes/patient.php';
+require_once 'classes/validate.php';
 
 $error1="";
 $error2="";
@@ -110,7 +112,7 @@ if ($validate->passed()){
     'username'=>$uname,
     ))
     ){
-      header("Location:https://www.google.lk/");
+      header("Location:login.php");
     }
 }
 
@@ -259,9 +261,9 @@ if ($validate->passed()){
 
               }
             </script> -->
-            <div class="text sign-up-text">
-              Already have an account? <label for="flip">Login now</label>
-            </div>
+            <a href="login.php"><div class="text sign-up-text">
+              Already have an account? Login now
+            </div></a>
           </div>
         </form>
       </div>
