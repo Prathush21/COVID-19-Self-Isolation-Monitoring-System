@@ -17,8 +17,7 @@ if(!empty($_POST)){
 if (($validate->checkUserExists($uname))){
     $error1 = "No such user exists";
     
-    //  echo $error1;
-}else{
+   }else{
   // if($validate->checkPassword('user',$uname,$psw)){
     $user = new User();
     if($user->login('user',$uname,$psw)){
