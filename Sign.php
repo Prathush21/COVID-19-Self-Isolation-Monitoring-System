@@ -1,7 +1,7 @@
 <?php 
 
-
-require_once 'classes/user.php';
+chdir("classes");
+require_once  'classes/user.php';
 require_once 'classes/patient.php';
 require_once 'classes/validate.php';
 

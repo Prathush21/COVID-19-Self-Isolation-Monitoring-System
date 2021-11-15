@@ -1,6 +1,6 @@
 <?php
 
-require_once 'classes/db.php';
+require_once 'db.php';
 
 class User{
     private $db;
