@@ -1,8 +1,7 @@
 <?php
+require_once 'classes/db.php';
 
-require_once 'db.php';
-
-class User{
+class Patient{
     private $db;
 
     public function __construct($user = null) {
@@ -10,14 +9,14 @@ class User{
     }
 
     public function create($fields = array()) {
-		if(!$this->_db->insert('user', $fields)) {
-			throw new Exception('There was a problem creating this account.');
+		if(!$this->_db->insert('patient', $fields)) {
+			throw new Exception('There was a problem creating this patient account.');
 		}
 		else{
 			return true;
 		}
 	}
 
-
+	
 }
 ?>
