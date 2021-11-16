@@ -106,7 +106,7 @@ class Db{
             }
             // die($set);
 
-            $sql = "UPDATE {$table} SET {$set} WHERE username = {$uname}";
+            $sql = "UPDATE {$table} SET {$set} WHERE username = '{$uname}'";
             // echo $sql;
 
             $this->_query = $this->_pdo->prepare($sql);
