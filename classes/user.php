@@ -18,6 +18,14 @@ class User{
 		}
 	}
 
+    public function update($fields = array(),$uname) {
+		if(!$this->_db->update('user',$uname, $fields)) {
+			throw new Exception('There was a problem updating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
     // public function login($uname, $password){
 	// 	echo 'hi';
     //     return $this->db->getPassword('user',$uname, $password);
