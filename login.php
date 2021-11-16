@@ -26,7 +26,7 @@ if (($validate->checkUserExists('user',$uname))){
   // if($validate->checkPassword('user',$uname,$psw)){
     $user = new User();
     if($user->login('user',$uname,$psw)){
-      header("Location:https://www.google.lk/");
+      header("Location:doctorpassword.php");//have to change
 
 
   }
