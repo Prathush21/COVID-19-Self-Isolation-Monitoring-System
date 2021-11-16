@@ -2,13 +2,8 @@
 
 session_start();
 
-<<<<<<< HEAD
-// $uname=$_SESSION['username'];
-$uname = 'nishaa';
-=======
 $uname=$_SESSION['username'];
 // $uname = 'nishaa';
->>>>>>> 033e4d364336758a79f565d81c81871753d0ec3a
 require_once  'classes/user.php';
 require_once 'classes/doctor.php';
 require_once 'classes/validate.php';
@@ -32,45 +27,6 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
     if (isset($_POST['name'])) {
       $name = $_POST['name'];
     }
-<<<<<<< HEAD
-
-    if (isset($_POST['gender'])) {
-      $gender = $_POST['gender'];
-    }
-    if (isset($_POST['nic'])) {
-      $id = $_POST['nic'];
-    }
-    if (isset($_POST['mobileno'])) {
-      $phone = $_POST['mobileno'];
-    }
-    if (isset($_POST['email-id'])) {
-      $email = $_POST['email-id'];
-    }
-
-    if ($doctor->create(array(
-      'username' => $uname,
-      'doctor_name' => $name,
-      'doctor_gender' => $gender,
-      'doctor_id' => $id,
-      'doctor_email' => $email,
-      'doctor_phone' => $phone,
-    ))) {
-      header("Location:https://www.google.lk/");
-    }
-  }
-} else {
-  $result = $doctor->getDetails($uname);
-  $email = $result["doctor_email"];
-  $id = $result["doctor_id"];
-  $phone = $result["doctor_phone"];
-  $name = $result["doctor_name"];
-  $gender = $result["doctor_gender"];
-
-  if (!empty($_POST)) {
-    if (isset($_POST['name'])) {
-      $name = $_POST['name'];
-    }
-=======
 
     if (isset($_POST['gender'])) {
       $gender = $_POST['gender'];
@@ -119,7 +75,6 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
     if (isset($_POST['name'])) {
       $name = $_POST['name'];
     }
->>>>>>> 033e4d364336758a79f565d81c81871753d0ec3a
 
     if (isset($_POST['gender'])) {
       $gender = $_POST['gender'];
@@ -134,17 +89,6 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
       $email = $_POST['email-id'];
     }
 
-<<<<<<< HEAD
-    if ($doctor->update(array(
-      'doctor_name' => $name,
-      'doctor_gender' => $gender,
-      'doctor_id' => $id,
-      'doctor_email' => $email,
-      'doctor_phone' => $phone,
-    ), $uname)) {
-      header("Location:https://www.google.lk/");
-    }
-=======
     if($validate_3->passed()){
       if ($doctor->update(array(
         'doctor_name' => $name,
@@ -158,7 +102,6 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
     }
 
     
->>>>>>> 033e4d364336758a79f565d81c81871753d0ec3a
   }
 }
 
@@ -192,11 +135,7 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
           <div class="input-boxes">
             <div class="input-box">
               <label for="name"><b>Name</b></label>
-<<<<<<< HEAD
-              <input type="text" placeholder="Enter your name" name="name" <?php if ($name != "") { ?> value=<?php echo $name;
-=======
               <input type="text" placeholder="Enter your name" name="name" <?php if ($name != "") { ?> value=<?php echo "'$name'";
->>>>>>> 033e4d364336758a79f565d81c81871753d0ec3a
                                                                                                       } ?> /><br />
             </div>
 
