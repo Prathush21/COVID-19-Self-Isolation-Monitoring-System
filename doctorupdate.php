@@ -58,6 +58,7 @@ if($validate_3->checkUserExists('doctor',$uname)){
 }
 else{
     $result=$doctor->getDetails($uname);
+    $uname=$result["username"];
     $email=$result["doctor_email"];
     $id=$result["doctor_id"];
     $phone=$result["doctor_phone"];
