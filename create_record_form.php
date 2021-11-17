@@ -1,10 +1,58 @@
 <?php
 
-$error1="";
-$error2="";
-$error3="";
-$error4="";
-$error5="";
+session_start();
+
+
+chdir("classes");
+require_once 'classes/patientrecord.php';
+
+if(!empty($_POST)){
+  if (isset($_POST['reason']))
+    $reason = $_POST['reason'];
+  if (isset($_POST['vaccination']))
+    $vaccination = $_POST['vaccination'];
+  if (isset($_POST['employment']))
+    $employment = $_POST['employment'];
+  if (isset($_POST['contact-type']))
+    $contacttype = $_POST['contact-type'];
+  $time = $_POST['appt'];
+  if(isset($_POST['click'])){
+    $start_date = date('Y-m-d');
+  }
+
+  $patientRecord = new PatientRecord();
+
+  //finding the patient number
+  $uname = $_SESSION['uname'];
+  $patient_no = $patientRecord->getPatientNo($uname);
+
+  $enddate = $patientRecord->getEndDate($reason,$contacttype,$employment,$vaccination,$start_date);
+  if($enddate == $start_date){
+    $_SESSION['qualified'] = false;
+  }
+  
+  if($enddate != $start_date){
+    if(
+      $patientRecord->create(array(
+        'patient_no' => $patient_no,
+        'reason' => $reason,
+        'vaccination' => $vaccination,
+        'employment' => $employment,
+        'email_time' => $time,
+        'start_date' => $start_date,
+        'contact_type' => $contacttype,
+        'end_date' => $enddate,
+      ))
+    ){
+      header("Location:patient_dashboard.php");
+    }
+  }
+  else{
+    header("Location:patient_dashboard.php");
+  }
+
+}
+
 
 ?>
 
@@ -53,37 +101,43 @@ $error5="";
         
 
           <div class="input-boxes">
-            <!-- <div class="input-box">
-              <label for="name"><b>Name</b></label>
-              <input type="text" placeholder="Enter your name" name="name" required /><br />
-            </div> -->
-
-            
+           
           <label for="reason"><b>Reason for self-isolation</b></label>
           <br><br>
             <label class="radio-container">
-            <input type="radio" id="html" name="reason" value="covid-positive">
+            <input type="radio" onclick="javascript:yesnoCheck();" name="reason" value="covid-positive" required>
             <label for="covid-positive" style="color: black">Tested COVID Positive</label>
-          </label>
-          <br><br>
-          <label class="radio-container">
-          <input type="radio" id="html" name="reason" value="close-contact">
-          <label for="close-contact" style="color: black">Close Contact of COVID Positive Patient</label>
           </label>
 
           <br><br>
           <label class="radio-container">
-            <input type="radio" id="html" name="reason" value="foreign-return">
+            <input type="radio" onclick="javascript:yesnoCheck();" name="reason" value="foreign-return">
             <label for="foreign-return" style="color: black">Foreign Return</label>
           </label>
           <br>
+
+          <br>
+          <label class="radio-container">
+          <input type="radio" onclick="javascript:yesnoCheck();" id="yesCheck" name="reason" value="close-contact">
+          <label for="close-contact" style="color: black">Close Contact of COVID Positive Patient</label>
+
+          </label>
+          <div class="sub" id="ifYes" style="left:50px"><br>
+        <label for="type">Type of close contact:</label> 
+        <br>
+        <input type="radio" id="inside" name='contact-type' value="inside" disabled required> 
+        <label for="inside" style="color: black">Index case inside the household</label>
+        <br>
+        <input type="radio" id="outside" name='contact-type' value="outside" disabled> 
+        <label for="outside" style="color: black">Index case outside the household</label>
+    </div>
 
 
           <br>
           <label for="vaccination"><b>Vaccination Status</b></label>
           <br><br>
             <label class="radio-container">
-            <input type="radio" id="html" name="vaccination" value="fully-vaccinated">
+            <input type="radio" id="html" name="vaccination" value="fully-vaccinated" required>
             <label for="fully-vaccinated" style="color: black">Fully Vaccinated</label>
           </label>
           <br><br>
@@ -104,7 +158,7 @@ $error5="";
           <label for="employment"><b>Employment Category</b></label>
           <br><br>
             <label class="radio-container">
-            <input type="radio" id="html" name="employment" value="hospital-work">
+            <input type="radio" id="html" name="employment" value="hospital-work" required>
             <label for="hospital-work" style="color: black">Patient Care Management services in hospital</label>
           </label>
 
@@ -132,11 +186,12 @@ $error5="";
               <label for="dob"><b>Preferred Time for Emails</b></label><br>
               <small>We would like to send you an email at a convenient time, reminding you to fill the form with your symptoms.
               Please select your preferred time to receive this reminder email.</small>
-              <input type="time" id="appt" name="appt" min="09:00" max="18:00" required>
+              <input type="time" id="appt" name="appt" required> 
+              <!-- min="09:00" max="18:00" -->
             </div>
           <br>
             <div class="button input-box">
-              <input type="submit"  value="Create Record" />
+              <input name = "click" type="submit"  value="Create Record" />
             </div>
 
             <!-- <script>
@@ -163,6 +218,20 @@ $error5="";
       <!-- </div> -->
     </div>
   </div>
+  <script>
+  
+  function yesnoCheck() {
+    document.getElementById("inside").disabled = true;  
+    document.getElementById("outside").disabled = true;  
+
+    if (document.getElementById('yesCheck').checked) {
+        document.getElementById('inside').disabled=false;
+        document.getElementById('outside').disabled=false;
+    }
+
+}
+</script>
+
 </body>
 
 </html>

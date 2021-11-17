@@ -3,6 +3,8 @@
 require_once 'classes/validate.php';
 require_once 'classes/user.php';
 
+session_start();
+
 $validate = new Validate();
 $error1 = "";
 $error2 = "";
@@ -22,9 +24,9 @@ if (($validate->checkUserExists($uname))){
   // if($validate->checkPassword('user',$uname,$psw)){
     $user = new User();
     if($user->login('user',$uname,$psw)){
-      header("Location:https://www.google.lk/");
-
-
+      $_SESSION['uname'] = $uname;
+      $_SESSION['qualified'] = true;
+      header("Location:patient_dashboard.php");
   }
   else{
     $error2="wrong password";
