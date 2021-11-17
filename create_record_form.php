@@ -30,6 +30,8 @@ if(!empty($_POST)){
   if($enddate == $start_date){
     $_SESSION['qualified'] = false;
   }
+
+  $docno = $patientRecord->assignDoctor();
   
   if($enddate != $start_date){
     if(
@@ -41,6 +43,7 @@ if(!empty($_POST)){
         'email_time' => $time,
         'start_date' => $start_date,
         'contact_type' => $contacttype,
+        'assigned_doctor_no' => $docno,
         'end_date' => $enddate,
       ))
     ){
@@ -102,7 +105,7 @@ if(!empty($_POST)){
 
           <div class="input-boxes">
            
-          <label for="reason"><b>Reason for self-isolation</b></label>
+          <label for="reason"><b>Reason for self-isolation</b></label>          
           <br><br>
             <label class="radio-container">
             <input type="radio" onclick="javascript:yesnoCheck();" name="reason" value="covid-positive" required>
