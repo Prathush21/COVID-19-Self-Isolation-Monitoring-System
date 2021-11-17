@@ -22,7 +22,25 @@ class PatientRecord{
     }
     
     public function assignDoctor(){
+
+        $prevdocno = $this->_db->getLastRowElement('patient_record','patient_record_no','assigned_doctor_no');
         
+        
+        if (($prevdocno == null) || ($prevdocno == $this->_db->getLastRowElement('doctor','doctor_no','doctor_no'))){
+            $docno = $this->_db->getFirstRowElement('doctor','doctor_no');            
+        }
+        else{
+            $docno = $prevdocno;
+            while(true){
+                $docno++;
+                $result = $this->_db->getCommon('doctor','doctor_no',$docno)['doctor_no'];
+                if($result != null)
+                    break;
+            }
+        }
+        
+        return $docno;
+       
     }
 
     public function getEndDate($reason,$contacttype,$employment,$vaccination,$startdate){
@@ -54,6 +72,9 @@ class PatientRecord{
                     $duration = 14;
                 }
             }
+        }
+        else{
+            $duration = 14; //for foreign return - not specified by gov though
         }
         $enddate = date('Y-m-d', strtotime($startdate . " + " .$duration." days"));
         return $enddate;
