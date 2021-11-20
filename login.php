@@ -1,9 +1,11 @@
 <?php
 
+session_start();
+
 require_once 'classes/validate.php';
 require_once 'classes/user.php';
 
-session_start();
+
 
 $validate = new Validate();
 $error1 = "";
@@ -15,8 +17,10 @@ if(!empty($_POST)){
     $uname=$_POST['uname'];
     $psw=$_POST['password'];
 
+    $_SESSION['username']=$uname;
 
-if (($validate->checkUserExists($uname))){
+
+if (($validate->checkUserExists('user',$uname))){
     $error1 = "No such user exists";
     
     //  echo $error1;
@@ -24,9 +28,15 @@ if (($validate->checkUserExists($uname))){
   // if($validate->checkPassword('user',$uname,$psw)){
     $user = new User();
     if($user->login('user',$uname,$psw)){
+
       $_SESSION['uname'] = $uname;
       $_SESSION['qualified'] = true;
       header("Location:patient_dashboard.php");
+
+//       header("Location:doctorpassword.php");//have to change
+
+
+
   }
   else{
     $error2="wrong password";
