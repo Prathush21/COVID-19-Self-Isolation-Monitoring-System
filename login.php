@@ -29,11 +29,15 @@ if (($validate->checkUserExists('user',$uname))){
     $user = new User();
     if($user->login('user',$uname,$psw)){
 
+
       $_SESSION['uname'] = $uname;
       $_SESSION['qualified'] = true;
       header("Location:patient_dashboard.php");
 
 //       header("Location:doctorpassword.php");//have to change
+
+
+      header("Location:doctorupdate.php");//have to change
 
 
 
