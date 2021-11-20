@@ -14,7 +14,7 @@ class Db{
 
     private function __construct() {
         $this->_dbHost='localhost';  
-        $this->_dbName='symptom_tracker_oosd'; //symptom_tracker  
+        $this->_dbName='symptom_tracker'; //symptom_tracker  
         $this->_dbUser='root';      //by default root is user name.  
         $this->_dbPassword='';
         try {
