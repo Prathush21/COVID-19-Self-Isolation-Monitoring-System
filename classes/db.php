@@ -14,7 +14,7 @@ class Db{
 
     private function __construct() {
         $this->_dbHost='localhost';  
-        $this->_dbName='symptom_tracker';  
+        $this->_dbName='symptom_tracker_oosd'; //symptom_tracker  
         $this->_dbUser='root';      //by default root is user name.  
         $this->_dbPassword='';
         try {
@@ -92,6 +92,44 @@ class Db{
 
     } 
 
+
+    public function getCommon($table,$col,$val){
+
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
+        $stmt->execute([$val]); 
+        $result = $stmt->fetch();
+
+        return $result;
+
+    }
+
+    public function getLastRowElement($table,$col1,$col2){
+        
+        // $stmt = $this->_pdo->prepare("SELECT * FROM $table");
+        // $count = $this->_pdo->query("SELECT count(*) FROM $table")->fetchColumn();
+        // $count = $stmt->fetchColumn();
+
+        $stmt = $this->_pdo->prepare("SELECT $col2 FROM $table WHERE $col1=(SELECT MAX($col1) FROM $table)");
+        $stmt->execute();
+        $result = $stmt->fetch(); 
+        
+        return $result[$col2];
+       
+    }
+
+    public function getFirstRowElement($table,$col){
+        $stmt = $this->_pdo->prepare("SELECT $col FROM $table");
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function update($table,$col1,$col2,$val1,$val2){
+
+        $stmt= $this->_pdo->prepare("UPDATE $table SET $col1=? WHERE $col2=?");
+        $stmt->execute([$val1,$val2]);
+
+    }
+
     public function update($table, $uname, $fields) {
         if(count($fields)){
             $set = '';
@@ -127,6 +165,7 @@ class Db{
 
         
     }
+
 
 
 

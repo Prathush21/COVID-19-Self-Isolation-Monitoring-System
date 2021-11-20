@@ -5,6 +5,8 @@ session_start();
 require_once 'classes/validate.php';
 require_once 'classes/user.php';
 
+
+
 $validate = new Validate();
 $error1 = "";
 $error2 = "";
@@ -26,7 +28,13 @@ if (($validate->checkUserExists('user',$uname))){
   // if($validate->checkPassword('user',$uname,$psw)){
     $user = new User();
     if($user->login('user',$uname,$psw)){
-      header("Location:doctorpassword.php");//have to change
+
+      $_SESSION['uname'] = $uname;
+      $_SESSION['qualified'] = true;
+      header("Location:patient_dashboard.php");
+
+//       header("Location:doctorpassword.php");//have to change
+
 
 
   }
