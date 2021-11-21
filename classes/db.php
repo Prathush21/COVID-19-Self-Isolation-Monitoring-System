@@ -123,12 +123,12 @@ class Db{
         return $stmt->fetchColumn();
     }
 
-    public function update($table,$col1,$col2,$val1,$val2){
+    // public function update($table,$col1,$col2,$val1,$val2){
 
-        $stmt= $this->_pdo->prepare("UPDATE $table SET $col1=? WHERE $col2=?");
-        $stmt->execute([$val1,$val2]);
+    //     $stmt= $this->_pdo->prepare("UPDATE $table SET $col1=? WHERE $col2=?");
+    //     $stmt->execute([$val1,$val2]);
 
-    }
+    // }
 
     public function update($table, $uname, $fields) {
         if(count($fields)){
