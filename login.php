@@ -27,24 +27,30 @@ if (($validate->checkUserExists('user',$uname))){
 }else{
   // if($validate->checkPassword('user',$uname,$psw)){
     $user = new User();
-    if($user->login('user',$uname,$psw)){
+    if($user->check('patient',$uname)){
+      if($user->login('user',$uname,$psw)){
 
 
-      $_SESSION['uname'] = $uname;
-      $_SESSION['qualified'] = true;
-      header("Location:patient_dashboard.php");
+        $_SESSION['uname'] = $uname;
+        $_SESSION['qualified'] = true;
+        header("Location:patient_dashboard.php");
+  
+  
+    }
+    else{
+      $error2="wrong password";
+    }
 
-//       header("Location:doctorpassword.php");//have to change
-
-
-      header("Location:doctorupdate.php");//have to change
-
-
-
-  }
-  else{
-    $error2="wrong password";
-  }
+    }
+    else{
+      if($user->login('user',$uname,$psw)){
+        header("Location:doctorupdate.php");//have to change
+      }
+      else{
+        $error2="wrong password";
+      }
+    }
+    
 
 }
 // $validate->checkPassword('user',$uname,$psw);
@@ -68,7 +74,7 @@ if (($validate->checkUserExists('user',$uname))){
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login1.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,11 +84,11 @@ if (($validate->checkUserExists('user',$uname))){
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <!--<img src="images/frontImg.jpg" alt="">-->
-        <div class="text">
+        <img src="images/covidlogin.jpg" alt="">-->
+        <!-- <div class="text">
           <span class="text-1">Every new friend is a <br> new adventure</span>
           <span class="text-2">Let's get connected</span>
-        </div>
+        </div> -->
       </div>
       <div class="back">
         <!--<img class="backImg" src="images/backImg.jpg" alt="">-->

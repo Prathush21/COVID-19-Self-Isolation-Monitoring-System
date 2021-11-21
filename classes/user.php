@@ -33,7 +33,7 @@ class User{
 	public function login($table, $uname, $password){
        
         
-        $result =  $this->_db->get($table,$uname);
+        $result =  $this->_db->getCommon($table,'username',$uname);
 
         if (password_verify($password, $result['password'])){
                     // echo "login successful";
@@ -46,6 +46,17 @@ class User{
         
         
 
+    }
+
+    public function check($table,$uname){
+        $result =  $this->_db->getCommon($table,'username',$uname);
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
     }
 }
 ?>
