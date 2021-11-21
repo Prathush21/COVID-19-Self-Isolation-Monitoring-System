@@ -44,7 +44,7 @@ if (($validate->checkUserExists('user',$uname))){
     }
     else{
       if($user->loginDoctor('user',$uname,$psw)){
-        header("Location:doctorpassword.php");//have to change
+        header("Location:doctordashboard.php");//have to change
       }
       else{
         $error2="wrong password";
@@ -74,7 +74,7 @@ if (($validate->checkUserExists('user',$uname))){
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="login1.css">
+    <link rel="stylesheet" href="login2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,7 +118,7 @@ if (($validate->checkUserExists('user',$uname))){
               </div>
               <span id="unm" style="color:red"><?php echo $error2;?></span>
               
-              <div class="text"><a href="#">Forgot password?</a></div>
+              <div class="text"><a href="#" style="color:#2B4560">Forgot password?</a></div>
               <div class="button input-box">
                 <input type="submit" value="Login">
               </div>
