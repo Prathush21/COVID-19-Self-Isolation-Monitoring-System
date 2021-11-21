@@ -1,9 +1,11 @@
 <?php
 
+session_start();
+
 require_once 'classes/validate.php';
 require_once 'classes/user.php';
 
-session_start();
+
 
 $validate = new Validate();
 $error1 = "";
@@ -15,22 +17,40 @@ if(!empty($_POST)){
     $uname=$_POST['uname'];
     $psw=$_POST['password'];
 
+    $_SESSION['username']=$uname;
 
-if (($validate->checkUserExists($uname))){
+
+if (($validate->checkUserExists('user',$uname))){
     $error1 = "No such user exists";
     
     //  echo $error1;
 }else{
   // if($validate->checkPassword('user',$uname,$psw)){
     $user = new User();
-    if($user->login('user',$uname,$psw)){
-      $_SESSION['uname'] = $uname;
-      $_SESSION['qualified'] = true;
-      header("Location:patient_dashboard.php");
-  }
-  else{
-    $error2="wrong password";
-  }
+    if($user->check('patient',$uname)){
+      if($user->login('user',$uname,$psw)){
+
+
+        $_SESSION['uname'] = $uname;
+        $_SESSION['qualified'] = true;
+        header("Location:patient_dashboard.php");
+  
+  
+    }
+    else{
+      $error2="wrong password";
+    }
+
+    }
+    else{
+      if($user->loginDoctor('user',$uname,$psw)){
+        header("Location:doctordashboard.php");//have to change
+      }
+      else{
+        $error2="wrong password";
+      }
+    }
+    
 
 }
 // $validate->checkPassword('user',$uname,$psw);
@@ -54,7 +74,7 @@ if (($validate->checkUserExists($uname))){
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,11 +84,11 @@ if (($validate->checkUserExists($uname))){
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <!--<img src="images/frontImg.jpg" alt="">-->
-        <div class="text">
+        <img src="images/covidlogin.jpg" alt="">-->
+        <!-- <div class="text">
           <span class="text-1">Every new friend is a <br> new adventure</span>
           <span class="text-2">Let's get connected</span>
-        </div>
+        </div> -->
       </div>
       <div class="back">
         <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
@@ -98,7 +118,7 @@ if (($validate->checkUserExists($uname))){
               </div>
               <span id="unm" style="color:red"><?php echo $error2;?></span>
               
-              <div class="text"><a href="#">Forgot password?</a></div>
+              <div class="text"><a href="#" style="color:#2B4560">Forgot password?</a></div>
               <div class="button input-box">
                 <input type="submit" value="Login">
               </div>

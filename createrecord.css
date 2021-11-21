@@ -11,7 +11,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #6AA4B0;
+  background: #7d2ae8;
   padding: 30px;
 }
 .container{
@@ -104,31 +104,31 @@ body{
   justify-content: space-between;
 } */
 /* .form-content .login-form,
-.form-content .signup-form{
+.form-content .create-record-form{
   width: calc(100% / 2 - 25px);
 } */
-.forms .signup-form .title{
+.forms .create-record-form .title{
   position: relative;
   font-size: 24px;
   font-weight: 500;
   color: #333;
 }
-.forms .signup-form .title:before{
+.forms .create-record-form .title:before{
   content: '';
   position: absolute;
   left: 0;
   bottom: 0;
   height: 3px;
-  width: 100px;
+  width: 235px;
   background: #7d2ae8;
 }
-/* .forms .signup-form  .title:before{
+/* .forms .create-record-form  .title:before{
   width: 40px;
 } */
-.forms .signup-form .input-boxes {
+.forms .create-record-form .input-boxes {
   margin-top: 30px;
 }
-.forms .signup-form .input-box, .forms .signup-form .selection {
+.forms .create-record-form .input-box, .forms .create-record-form .selection {
   display: inline-block;
   align-items: center;
   height: 50px;
@@ -136,7 +136,7 @@ body{
   margin: 40px 0;
   position: relative;
 }
-.signup-form .input-box input ,  .signup-form  .selection{
+.create-record-form .input-box input ,  .create-record-form  .selection{
   height: 100%;
   width: 100%;
   outline: none;
@@ -147,36 +147,36 @@ body{
   border-bottom: 2px solid rgba(0,0,0,0.2);
   transition: all 0.3s ease;
 }
-.signup-form .input-box input:focus,
-.signup-form .input-box input:valid{
+.create-record-form .input-box input:focus,
+.create-record-form .input-box input:valid{
   border-color: #7d2ae8;
 }
-.signup-form .input-box i{
+.create-record-form .input-box i{
   position: absolute;
   color: #7d2ae8;
   font-size: 17px;
 }
 
-.forms .signup-form .selection{
+.forms .create-record-form .selection{
 
     align-content:center;
 }
-.forms .signup-form .text{
+.forms .create-record-form .text{
   font-size: 14px;
   font-weight: 500;
   color: #333;
 }
-.forms .signup-form .text a{
+.forms .create-record-form .text a{
   text-decoration: none;
 }
-/* .forms .signup-form .text a:hover{
+/* .forms .create-record-form .text a:hover{
   text-decoration: underline;
 } */
-.forms .signup-form .button{
+.forms .create-record-form .button{
   color: #fff;
   margin-top: 40px;
 }
-.forms .signup-form .button input{
+.forms .create-record-form .button input{
   color: #fff;
   background: #7d2ae8;
   border-radius: 6px;
@@ -184,19 +184,19 @@ body{
   cursor: pointer;
   transition: all 0.4s ease;
 }
-.forms .signup-form .button input:hover{
+.forms .create-record-form .button input:hover{
   background: #5b13b9;
 }
-.forms .signup-form label{
+.forms .create-record-form label{
   color: #5b13b9;
   
 }
 
-/* .forms .signup-form label:hover{
+/* .forms .create-record-form label:hover{
   text-decoration: underline;
 } */
-.forms .signup-form .login-text,
-.forms .signup-form .sign-up-text{
+.forms .create-record-form .login-text,
+.forms .create-record-form .sign-up-text{
   text-align: center;
   margin-top: 25px;
 }
@@ -208,13 +208,13 @@ body{
     display: none;
   }
   .form-content .login-form,
-  .signup-form .signup-form{
+  .create-record-form .create-record-form{
     width: 100%;
   }
-  .signup-form .signup-form{
+  .create-record-form .create-record-form{
     display: none;
   }
-  .container #flip:checked ~ .forms .signup-form{
+  .container #flip:checked ~ .forms .create-record-form{
     display: block;
   }
   .container #flip:checked ~ .forms .login-form{

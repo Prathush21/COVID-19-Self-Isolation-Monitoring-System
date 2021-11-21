@@ -66,7 +66,7 @@ if(!empty($_POST)){
 <head>
   <meta charset="UTF-8" />
   <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-  <link rel="stylesheet" href="create_record_form.css" />
+  <link rel="stylesheet" href="createrecord1.css" />
   <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -104,7 +104,7 @@ if(!empty($_POST)){
         
 
           <div class="input-boxes">
-           
+
           <label for="reason"><b>Reason for self-isolation</b></label>          
           <br><br>
             <label class="radio-container">
@@ -126,8 +126,9 @@ if(!empty($_POST)){
 
           </label>
           <div class="sub" id="ifYes" style="left:50px"><br>
-        <label for="type">Type of close contact:</label> 
+        <label for="type"><b>Type of close contact:</b></label> 
         <br>
+      
         <input type="radio" id="inside" name='contact-type' value="inside" disabled required> 
         <label for="inside" style="color: black">Index case inside the household</label>
         <br>
@@ -183,7 +184,7 @@ if(!empty($_POST)){
             <label for="none" style="color: black">None of the above</label>
           </label>
           <br>
-
+          
 
           <div class="input-box">
               <label for="dob"><b>Preferred Time for Emails</b></label><br>
@@ -197,23 +198,6 @@ if(!empty($_POST)){
               <input name = "click" type="submit"  value="Create Record" />
             </div>
 
-            <!-- <script>
-              function errorMessage() {
-                if (
-                    document.getElementById("password").value ==
-                    document.getElementById("repassword").value
-                  ) {
-                    document.getElementById("repassword").style.color = "green";
-                    document.getElementById("repassword").innerHTML =
-                      "Passwords matched";
-                  } else {
-                    document.getElementById("repassword").style.color = "red";
-                    document.getElementById("repassword").innerHTML =
-                      "Password did not match";
-                  }
-
-              }
-            </script> -->
             
           </div>
         </form>
