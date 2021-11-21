@@ -27,7 +27,7 @@ class Doctor{
 	}
 
     public function getDetails($uname){
-        $result=$this->_db->get('doctor',$uname);
+        $result=$this->_db->getCommon('doctor','username',$uname);
         return $result;
     }
 
