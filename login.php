@@ -43,8 +43,8 @@ if (($validate->checkUserExists('user',$uname))){
 
     }
     else{
-      if($user->login('user',$uname,$psw)){
-        header("Location:doctorupdate.php");//have to change
+      if($user->loginDoctor('user',$uname,$psw)){
+        header("Location:doctorpassword.php");//have to change
       }
       else{
         $error2="wrong password";

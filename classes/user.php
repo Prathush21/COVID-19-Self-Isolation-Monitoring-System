@@ -58,5 +58,22 @@ class User{
         }
         
     }
+
+    public function loginDoctor($table,$uname,$psw){
+        $result=$this->_db->getCommon($table,'username',$uname);
+        if($result['password']==$psw){
+            return true;
+        }
+        else{
+            if (password_verify($psw, $result['password'])){
+                // echo "login successful";
+                return true;
+            }
+            else {
+                return false;
+            }
+        
+        }
+    }
 }
 ?>
