@@ -3,7 +3,6 @@
 session_start();
 
 $uname=$_SESSION['username'];
-// $uname = 'nishaa';
 require_once  'classes/user.php';
 require_once 'classes/doctor.php';
 require_once 'classes/validate.php';

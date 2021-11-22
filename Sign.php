@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 chdir("classes");
 require_once  'classes/user.php';
 require_once 'classes/patient.php';
@@ -112,7 +114,9 @@ if ($validate->passed()){
     'username'=>$uname,
     ))
     ){
-      header("Location:login.php");
+      $_SESSION['username']=$uname;
+      $_SESSION['qualified'] = true;
+      header("Location:patient_dashboard.php");
     }
 }
 
