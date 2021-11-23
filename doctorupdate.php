@@ -84,9 +84,7 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
     }
     if (isset($_POST['mobileno'])) {
       $phone=$_POST['mobileno'];
-      // if($validate_3->checkMobile($phone)){
-      //   $error2="invalid mobile number";
-      // }
+      
     }
     if (isset($_POST['email-id'])) {
       $email=trim($_POST['email-id']);
