@@ -44,6 +44,7 @@ if (($validate->checkUserExists('user',$uname))){
     }
     else{
       if($user->loginDoctor('user',$uname,$psw)){
+        $_SESSION['qualified'] = true;
         header("Location:doctordashboard.php");//have to change
       }
       else{
