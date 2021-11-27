@@ -18,6 +18,14 @@ class User{
 		}
 	}
 
+    public function update($fields = array(),$uname) {
+		if(!$this->_db->update('user',$uname, $fields)) {
+			throw new Exception('There was a problem updating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
     // public function login($uname, $password){
 	// 	echo 'hi';
     //     return $this->db->getPassword('user',$uname, $password);
@@ -25,7 +33,7 @@ class User{
 	public function login($table, $uname, $password){
        
         
-        $result =  $this->_db->get($table,$uname);
+        $result =  $this->_db->getCommon($table,'username',$uname);
 
         if (password_verify($password, $result['password'])){
                     // echo "login successful";
@@ -38,6 +46,34 @@ class User{
         
         
 
+    }
+
+    public function check($table,$uname){
+        $result =  $this->_db->getCommon($table,'username',$uname);
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+
+    public function loginDoctor($table,$uname,$psw){
+        $result=$this->_db->getCommon($table,'username',$uname);
+        if($result['password']==$psw){
+            return true;
+        }
+        else{
+            if (password_verify($psw, $result['password'])){
+                // echo "login successful";
+                return true;
+            }
+            else {
+                return false;
+            }
+        
+        }
     }
 }
 ?>

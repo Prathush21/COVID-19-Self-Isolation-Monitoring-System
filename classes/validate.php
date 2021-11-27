@@ -84,10 +84,8 @@ class Validate{
     }
 
 
-    public function checkUserExists($uname){
-        if(!($this->_db->select('user',$uname))){
-            $this->_errorcount+=1;
-            $this->_errors[]=$uname;
+    public function checkUserExists($table,$uname){
+        if(!($this->_db->select($table,$uname))){
             return true;
         }
         return false;

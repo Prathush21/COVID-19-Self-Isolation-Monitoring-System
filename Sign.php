@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 chdir("classes");
 require_once  'classes/user.php';
 require_once 'classes/patient.php';
@@ -112,7 +114,9 @@ if ($validate->passed()){
     'username'=>$uname,
     ))
     ){
-      header("Location:login.php");
+      $_SESSION['username']=$uname;
+      $_SESSION['qualified'] = true;
+      header("Location:patient_dashboard.php");
     }
 }
 
@@ -128,7 +132,7 @@ if ($validate->passed()){
 <head>
   <meta charset="UTF-8" />
   <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-  <link rel="stylesheet" href="signup.css" />
+  <link rel="stylesheet" href="signup1.css" />
   <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
