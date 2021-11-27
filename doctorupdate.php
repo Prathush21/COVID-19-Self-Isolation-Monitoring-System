@@ -83,10 +83,16 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
       $id = $_POST['nic'];
     }
     if (isset($_POST['mobileno'])) {
-      $phone = $_POST['mobileno'];
+      $phone=$_POST['mobileno'];
+      if($validate_3->checkMobile($phone)){
+        $error2="invalid mobile number";
+      }
     }
     if (isset($_POST['email-id'])) {
       $email = $_POST['email-id'];
+      if($validate_3->checkEmail($email)){
+        $error3="invalid email address";
+      }
     }
 
     if($validate_3->passed()){
