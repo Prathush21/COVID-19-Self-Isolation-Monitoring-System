@@ -18,6 +18,7 @@ $name = "";
 $gender = "";
 $psw = "";
 $repsw = "";
+$phone = "0";
 
 $doctor = new Doctor();
 
@@ -67,7 +68,7 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
   $result = $doctor->getDetails($uname);
   $email = $result["doctor_email"];
   $id = $result["doctor_id"];
-  $phone = $result["doctor_phone"];
+  $phone .= $result["doctor_phone"];
   $name = $result["doctor_name"];
   $gender = $result["doctor_gender"];
 
