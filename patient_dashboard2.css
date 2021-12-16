@@ -11,7 +11,7 @@ body{
   display: flex;
   /* align-items: center; */
   /* justify-content: left; */
-  /* background: url("images/background2.jpg");  */
+  background: url("images/background2.jpg"); 
   padding: 30px;
 }
 .container{

@@ -107,6 +107,17 @@ class Db
         return $result;
     }
 
+    public function getAll($table, $col, $val)
+    {
+
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
+        $stmt->execute([$val]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+
     public function getLastRowElement($table, $col1, $col2)
     {
 

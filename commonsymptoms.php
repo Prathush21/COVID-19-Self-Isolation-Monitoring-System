@@ -2,6 +2,8 @@
 
 session_start();
 $patient_record_no = $_SESSION['record_no'];
+$number = $_SESSION['number'];
+$doc_no = $_SESSION['doc_no'];
 
 
 require_once  'classes/user.php';
@@ -99,7 +101,7 @@ if (!empty($_POST)) {
     ) {
         // $_SESSION['username'] = $uname;
         // $_SESSION['qualified'] = true;
-        header("Location:patient_dashboard.php");
+        header("Location:view_record.php?varname=  $record_no &varname1=  $no &varname2= $doctor_no ");
     }
 }
 

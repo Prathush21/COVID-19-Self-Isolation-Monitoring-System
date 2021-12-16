@@ -25,7 +25,7 @@ if (!empty($_POST)) {
 
 
   $symptom_record = new SymptomRecord();
-  $patient_record_no = $symptom_record->getPatientRecordNo($patient_no);
+  $patient_record_no = $_SESSION['record'];
   $_SESSION['record_no']=$patient_record_no;
   $_SESSION['oxygen'] = $oxygen;
   $_SESSION['pressure1'] = $pressure1;
