@@ -101,7 +101,7 @@ if (!empty($_POST)) {
     ) {
         // $_SESSION['username'] = $uname;
         // $_SESSION['qualified'] = true;
-        header("Location:view_record.php?varname=  $record_no &varname1=  $no &varname2= $doctor_no ");
+        header("Location:view_record.php?varname=  $patient_record_no &varname1=  $number &varname2= $doc_no ");
     }
 }
 
