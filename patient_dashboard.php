@@ -56,6 +56,9 @@ else{
             <div class="input-boxes">
                 <a href="create_record_form.php"><div class="text sign-up-text">Create a new Record now!</div></a>
             </div>
+            <div class="input-boxes">
+                <a href="patientupdate1.php"><div class="text sign-up-text">Update your account</div></a>
+            </div>
         </form>
       </div>
 

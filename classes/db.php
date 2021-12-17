@@ -103,6 +103,15 @@ class Db{
 
     }
 
+    public function getAll($table){
+
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table");
+        $stmt->execute(); 
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
     public function getLastRowElement($table,$col1,$col2){
         
         // $stmt = $this->_pdo->prepare("SELECT * FROM $table");
