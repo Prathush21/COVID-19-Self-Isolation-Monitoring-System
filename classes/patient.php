@@ -16,7 +16,19 @@ class Patient{
 			return true;
 		}
 	}
+	public function getDetails($uname){
+        $result=$this->_db->getCommon('patient','username',$uname);
+        return $result;
+    }
 
+	public function update($fields = array(),$uname) {
+		if(!$this->_db->update('patient',$uname, $fields)) {
+			throw new Exception('There was a problem updating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
 	
 }
 ?>

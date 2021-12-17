@@ -38,22 +38,7 @@ $patient_records = array_reverse($result);
 <body>
   <div class="container">
     <input type="checkbox" id="flip">
-    <!-- <div class="cover"> -->
-      <!-- <div class="front"> -->
-        <!--<img src="images/frontImg.jpg" alt="">-->
-        <!-- <div class="text">
-          <span class="text-1"></span> -->
-          <!-- <span class="text-2">Let's get connected</span> -->
-        <!-- </div> -->
-      <!-- </div> -->
-      <!-- <div class="back"> -->
-        <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
-        <!-- <div class="text"> -->
-          <!-- <span class="text-1">Complete miles of journey <br> with one step</span>
-          <span class="text-2">Let's get started</span> -->
-        <!-- </div>
-      </div>
-    </div> -->
+
 
     <div class="forms">
         <div class="form-content">
@@ -63,6 +48,7 @@ $patient_records = array_reverse($result);
             <div class="input-boxes">
                 
             </div>
+
             <?php 
             // var_dump($patient_records);
             $x=0;
@@ -97,6 +83,11 @@ $patient_records = array_reverse($result);
             
             ?> 
 
+
+            <div class="input-boxes">
+                <a href="patientupdate1.php"><div class="text sign-up-text">Update your account</div></a>
+            </div>
+
         </form>
 
         
@@ -107,6 +98,42 @@ $patient_records = array_reverse($result);
     </div>
     </div>
   </div>
-  <a href="create_record_form.php"><div class="text sign-up-text">Create a new Record now!</div></a>
+  <div >
+              <input type="submit" id="input-box" value="Log out" onclick="redirecting1()"  />
+
+              
+        <script>
+          function redirecting1() {
+            location.replace("login.php")
+
+          }
+        </script>
+            </div>
+            <br><br>
+
+            <div >
+              <input type="submit" id="input-box1" value="Create new record" onclick="redirecting()" style ="font-size:18px"  />
+
+              
+        <script>
+          function redirecting() {
+            location.replace("create_record_form.php")
+
+          }
+        </script>
+            </div>
+            <br> <br>
+
+            <div >
+              <input type="submit" id="input-box2" value="Change Account Details" onclick="redirecting2()" style ="font-size:18px"  />
+
+              
+        <script>
+          function redirecting2() {
+            location.replace("create_record_form.php")
+
+          }
+        </script>
+            </div>
 </body>
 </html>

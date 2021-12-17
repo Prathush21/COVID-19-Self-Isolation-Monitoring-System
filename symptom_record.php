@@ -68,7 +68,7 @@ if (!empty($_POST)) {
           <div class="input-boxes">
             <div class="input-box">
               <label for="oxygen"><b>Oxygen Saturation</b></label>
-              <input type="number" placeholder="" name="oxygen" min="1" max="100" required /><br />
+              <input type="number" placeholder="" name="oxygen" min="1" max="100" step = "0.1" required /><br />
             </div>
             <div class="input-box">
               <label for="pressure1"><b>Systolic blood pressure </b></label>

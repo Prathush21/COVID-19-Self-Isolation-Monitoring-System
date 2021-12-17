@@ -118,9 +118,17 @@ class Db
     }
 
 
-    public function getLastRowElement($table, $col1, $col2)
-    {
+    public function getAll($table){
 
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table");
+        $stmt->execute(); 
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function getLastRowElement($table,$col1,$col2){
+        
         // $stmt = $this->_pdo->prepare("SELECT * FROM $table");
         // $count = $this->_pdo->query("SELECT count(*) FROM $table")->fetchColumn();
         // $count = $stmt->fetchColumn();

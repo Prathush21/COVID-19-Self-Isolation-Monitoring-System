@@ -31,6 +31,21 @@ class Doctor{
         return $result;
     }
 
+	public function getPatientList($uname){
+		$docno = $this->_db->getCommon('doctor','username',$uname)['doctor_no'];
+		$results = $this->_db->getAll("patient_record");
+		$today = date('Y-m-d');
+		$patients = array();
+		foreach($results as $result){
+			if ($result['assigned_doctor_no'] == $docno){
+				if($result['end_date'] >= $today){
+					$patientname = $this->_db->getCommon('patient','patient_no',$result['patient_no'])['patient_name'];
+					$patients += array($result['patient_no']=>$patientname);
+				}
+			}
+		}
+        return $patients;           
+	}
 	
 }
 ?>
