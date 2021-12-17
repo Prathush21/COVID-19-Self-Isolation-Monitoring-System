@@ -1,126 +1,109 @@
 <?php
 
-session_start();
+ session_start();
 
-$uname=$_SESSION['username'];
+ $uname=$_SESSION['username'];
 // $uname = 'nishaa';
+
 require_once  'classes/user.php';
-require_once 'classes/doctor.php';
+require_once 'classes/patient.php';
 require_once 'classes/validate.php';
 
 $error1 = "";
 $error2 = "";
 $error3 = "";
-$email = "";
-$id = "";
-$phone = "";
-$name = "";
-$gender = "";
-$psw = "";
-$repsw = "";
-$phone = "0";
 
-$doctor = new Doctor();
+$patient = new Patient();
+$validate_4 = new Validate();
 
-$validate_3 = new Validate();
-if ($validate_3->checkUserExists('doctor', $uname)) {
-  if (!empty($_POST)) {
+$result = $patient->getDetails($uname);
+
+$email = $result["email_add"];
+$id = $result["NIC"];
+$phone = $result["phonenumber"];
+$name = $result["patient_name"];
+$gender = $result["gender"];
+$address = $result["address"];
+$asthma = $result['asthma'];
+$lung = $result['lung_disease'];
+$kidney = $result['kidney_failure'];
+$heart = $result['heart_disease'];
+$diabetes = $result['diabetes'];
+$tension = $result['hyper_tension'];
+$cancer = $result['cancer'];
+$immuno = $result['immuno_deficiency'];
+
+
+if (!empty($_POST)) {
     if (isset($_POST['name'])) {
-      $name = $_POST['name'];
+        $name = $_POST['name'];
     }
 
     if (isset($_POST['gender'])) {
-      $gender = $_POST['gender'];
+        $gender = $_POST['gender'];
     }
     if (isset($_POST['nic'])) {
-      $id = $_POST['nic'];
-    }
-    if(isset($_POST['mobileno'])){
-      $phone=$_POST['mobileno'];
-      if($validate_3->checkMobile($phone)){
-        $error2="invalid mobile number";
-      }
-  }
-  if(isset($_POST['email-id'])){
-      $email=trim($_POST['email-id']);
-      if($validate_3->checkEmail($email)){
-        $error3="invalid email address";
-      }
-  }
-
-  if($validate_3->passed()){
-    if ($doctor->create(array(
-      'username' => $uname,
-      'doctor_name' => $name,
-      'doctor_gender' => $gender,
-      'doctor_id' => $id,
-      'doctor_email' => $email,
-      'doctor_phone' => $phone,
-    ))) {
-      header("Location:doctordashboard.php");
-    }
-
-  }
-
-    
-  }
-} else {
-  $result = $doctor->getDetails($uname);
-  $email = $result["doctor_email"];
-  $id = $result["doctor_id"];
-  $phone .= $result["doctor_phone"];
-  $name = $result["doctor_name"];
-  $gender = $result["doctor_gender"];
-
-  if (!empty($_POST)) {
-    if (isset($_POST['name'])) {
-      $name = $_POST['name'];
-    }
-
-    if (isset($_POST['gender'])) {
-      $gender = $_POST['gender'];
-    }
-    if (isset($_POST['nic'])) {
-      $id = $_POST['nic'];
+        $id = $_POST['nic'];
     }
     if (isset($_POST['mobileno'])) {
-      $phone=$_POST['mobileno'];
-
-      if($validate_3->checkMobile($phone)){
-        $error2="invalid mobile number";
-      }
+        $phone = $_POST['mobileno'];
     }
     if (isset($_POST['email-id'])) {
-      $email = $_POST['email-id'];
-
-      
+        $email = $_POST['email-id'];
     }
-    if (isset($_POST['email-id'])) {
-      $email=trim($_POST['email-id']);
-
-      if($validate_3->checkEmail($email)){
-        $error3="invalid email address";
-      }
+    if (isset($_POST['address'])) {
+        $email = $_POST['address'];
     }
-
-    if($validate_3->passed()){
-      if ($doctor->update(array(
-        'doctor_name' => $name,
-        'doctor_gender' => $gender,
-        'doctor_id' => $id,
-        'doctor_email' => $email,
-        'doctor_phone' => $phone,
-      ), $uname)) {
-        header("Location:doctordashboard.php");
-      }
+    if(isset($_POST['asthma'])){
+        $asthma=$_POST['asthma'];
     }
-
-    
-  }
+    if(isset($_POST['lungdisease'])){
+    $lung=$_POST['lungdisease'];
+    }
+    if(isset($_POST['kidney'])){
+    $kidney=$_POST['kidney'];
+    }
+    if(isset($_POST['heart'])){
+    $heart=$_POST['heart'];
+    }
+    if(isset($_POST['diabetes'])){
+    $diabetes=$_POST['diabetes'];
+    }
+    if(isset($_POST['hyper'])){
+    $tension=$_POST['hyper'];
+    }
+    if(isset($_POST['cancer'])){
+    $cancer=$_POST['cancer'];
+    }
+    if(isset($_POST['immuno'])){
+    $immuno=$_POST['immuno'];
+    }
 }
 
+if($validate_4->passed()){
+    if ($patient->update(array(
+    'patient_name' => $name,
+    'gender' => $gender,
+    'NIC' => $id,
+    'email_add' => $email,
+    'phonenumber' => $phone,
+    'address' => $address,
+    'asthma' => $asthma,
+    'lung_disease'=>$lung,
+    'kidney_failure'=>$kidney,
+    'heart_disease'=>$heart,
+    'diabetes'=>$diabetes,
+    'hyper_tension'=>$tension,
+    'cancer'=>$cancer,
+    'immuno_deficiency'=>$immuno,
+    'username'=>$uname,
+    ), $uname)) {
+    header("Location:patientdashboard.php");
+    }
+}
 
 ?>
+
 
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
@@ -162,11 +145,11 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
               <label for="female" style="color: black">Female</label>
              
             <input type="radio" id="other" name="gender" value="other" <?php if ($gender == "other") { ?>checked<?php } ?> />
-              <label for="other" style="color: black">Other</label><br><br>
+              <label for="other" style="color: black">Other</label><br>
 
             <div class="input-box">
-              <label for="nic"><b>ID number</b></label>
-              <input type="text" placeholder="Enter your ID number" name="nic" <?php if ($id != "") { ?> value=<?php echo $id;
+              <label for="nic"><b>NIC number</b></label>
+              <input type="text" placeholder="Enter your NIC number" name="nic" <?php if ($id != "") { ?> value=<?php echo $id;
                                                                                                         } ?> />
               <span id="nic" style="color:red"><?php echo $error1; ?></span>
 
@@ -187,6 +170,24 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
               <span id="emailadd" style="color:red"><?php echo $error3; ?></span>
             </div>
 
+            <div class="input-box">
+              <label for="address"><b>Residential Address</b></label>
+              <input type="text" placeholder="Enter your Residential Address" name="address" <?php if ($address != "") { ?> value=<?php echo $address;
+                                                                                                        } ?> />
+              <span id="address" style="color:red"><?php echo $error1; ?></span>
+
+            </div>
+
+            <label for="disease"><b>Chronic Disease</b></label> <br /><br />
+            <input type="Checkbox" name="asthma" value="yes" />Asthma <br> <br>
+            <input type="Checkbox" name="lungdisease" value="yes" />Chronic lung disease<br> <br>
+            <input type="Checkbox" name="kidney" value="yes" />Kidney failure <br> <br>
+            <input type="Checkbox" name="heart" value="yes" />Heart Disease <br> <br>
+            <input type="Checkbox" name="diabetes" value="yes" />Diabetes <br> <br>
+            <input type="Checkbox" name="hyper" value="yes" />Hyper Tension <br> <br>
+            <input type="Checkbox" name="cancer" value="yes" />Cancer <br> <br>
+            <input type="Checkbox" name="immuno" value="yes" />Immunodeficiency Diseases <br>
+
 
             <div class="button input-box">
               <input type="submit" value="Submit Changes" />
@@ -204,17 +205,17 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
           </div>
         </form>
 
-        <div class="button input-box">
+        <!-- <div class="button input-box">
           <input type="submit" onclick="redirecting()" value="Cancel Changes" />
 
-        </div>
+        </div> -->
 
-        <script>
+        <!-- <script>
           function redirecting() {
-            location.replace("doctordashboard.php")
+            location.replace("patientdashboard.php")
 
           }
-        </script>
+        </script> -->
       </div>
       <!-- </div> -->
     </div>

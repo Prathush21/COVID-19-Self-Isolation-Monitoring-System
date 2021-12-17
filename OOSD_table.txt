@@ -18,6 +18,9 @@ SymptomRecord -
 PatientRecordNumber (foreign key)
 SymptomRecordNumber (Primarykey)
 List of Symptoms
+Comments
+Date
+Status
 
 Doctor - 
 DoctorNo (Primary key)

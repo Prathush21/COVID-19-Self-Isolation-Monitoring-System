@@ -9,13 +9,13 @@
 body{
   min-height: 100vh;
   display: flex;
-  /* align-items: center; */
-  /* justify-content: left; */
-  background: url("images/background2.jpg"); 
+  align-items: center;
+  justify-content: center;
+  /* background: url("images/background2.jpg");  */
   padding: 30px;
 }
 .container{
-  position: relative;
+  /* position: relative; */
   max-width: 850px;
   width: 100%;
   background: #fff;
@@ -117,7 +117,7 @@ body{
   left: 0;
   bottom: 0;
   height: 3px;
-  width: 230px;
+  width: 225px;
   background: #2B4560;
 }
 .forms .signup-form  .title:before{
@@ -125,13 +125,6 @@ body{
 }
 .forms .form-content .input-boxes{
   margin-top: 30px;
-  /* margin-left: 100px; */
-}
-
-.input-boxes{
-    margin-left: 200px;
-
-
 }
 .forms .form-content .input-box{
   display: flex;
@@ -184,74 +177,6 @@ body{
   cursor: pointer;
   transition: all 0.4s ease;
 }
-
-/* .button input{
-  color: #fff;
-  background: #2B4560;
-  border-radius: 6px;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  margin-left: 800px;
-  width: 10%;
-  height: 5%;
-  display: block;
-
-
-
-
-} */
-
-#input-box{
-  color: #fff;
-  background: #2B4560;
-  border-radius: 6px;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  /* margin-left: 200px; */
-  float:right;
-  transform: translateX(500px);
-
-
-  width:150%;
-  height: 5%;
-  /* display: block; */
-
-}
-
-#input-box1{
-  color: #fff;
-  background: #2B4560;
-  border-radius: 6px;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  width:100%;
-  margin-top: 200px;
-  margin-right: 200px;
-  height: 10%;
-  transform: translateX(100px);
-  /* display: block; */
-}
-
-#input-box2{
-  color: #fff;
-  background: #2B4560;
-  border-radius: 6px;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  width:170%;
-  /* margin-top: 200px; */
-  /* margin-right: 200px; */
-  height: 10%;
-  
-  /* transform: translateY(500px);
-  transform: translateX(-200px); */
-  transform: translate(-275px,300px);
-  /* display: block; */
-}
 .forms .form-content .button input:hover{
   background: #2B4560;
 }
@@ -289,10 +214,14 @@ body{
   }
 }
 
-
-a{
-    margin-left: 500px;
+.docdetails{
+  position: absolute;
+  /* text-align: right; */
+  justify-content: flex-end;
+  /* float: right; */
 }
-.record-box{
-  background-color: grey;
+
+.patientbutton{
+  background-color: bisque;
+  border-radius: 6%;
 }

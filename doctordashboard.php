@@ -2,6 +2,9 @@
 
 session_start();
 
+require_once  'classes/doctor.php';
+
+
 $uname = $_SESSION['username'];
 
 if($_SESSION['qualified'] == false){
@@ -10,6 +13,9 @@ if($_SESSION['qualified'] == false){
 else{
     $status = $uname;
 }
+
+$doctor = new Doctor();
+$patients = $doctor->getPatientList($uname);
 
 ?>
 
@@ -20,39 +26,36 @@ else{
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="doctordashboard.css">
+    <link rel="stylesheet" href="patient_dashboard2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
 <body>
+
   <div class="container">
     <input type="checkbox" id="flip">
-    <div class="cover">
-      <div class="front">
-        <!--<img src="images/frontImg.jpg" alt="">-->
-        <div class="text">
-          <span class="text-1"><?php echo $status ?></span>
-          <!-- <span class="text-2">Let's get connected</span> -->
-        </div>
-      </div>
-      <div class="back">
-        <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
-        <div class="text">
-          <!-- <span class="text-1">Complete miles of journey <br> with one step</span>
-          <span class="text-2">Let's get started</span> -->
-        </div>
-      </div>
-    </div>
+    
 
     <div class="forms">
         <div class="form-content">
           <div class="login-form">
             <div class="title">Doctor Dashboard</div>
           <form action="#" method = "post">
+            <br><br>
+            <?php
+              foreach($patients as $patientno => [$patientname, $record_no]){
+                ?>
+              
+            
+            <div class = "record-box" onclick="location.href='patientsymptomsfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patientno ?>&varname2=<?php echo $patientname ?>'" style="cursor:pointer;" >
+            <h1><?php echo $patientno . " " . $patientname; ?></h1>
+          </div>
+          <br>
+          <?php } ?>
             <div class="input-boxes">
-                <a href="doctorpassword.php"><div class="text sign-up-text">Change Password</div></a>
-                <a href="doctorupdate.php"><div class="text sign-up-text">Update Account Details</div></a>
+                <!-- <a href="doctorpassword.php"><div class="text sign-up-text">Change Password</div></a>
+                <a href="doctorupdate.php"><div class="text sign-up-text">Update Account Details</div></a> -->
             </div>
         </form>
       </div>
@@ -62,5 +65,43 @@ else{
     </div>
     </div>
   </div>
+
+  <div >
+              <input type="submit" id="input-box" value="Log out" onclick="redirecting1()"  />
+
+              
+        <script>
+          function redirecting1() {
+            location.replace("login.php")
+
+          }
+        </script>
+            </div>
+            <br><br>
+
+            <div >
+              <input type="submit" id="input-box1" value="Change password" onclick="redirecting()" style ="font-size:18px"  />
+
+              
+        <script>
+          function redirecting() {
+            location.replace("doctorpassword.php")
+
+          }
+        </script>
+            </div>
+            <br> <br>
+
+            <div >
+              <input type="submit" id="input-box2" value="Change Account Details" onclick="redirecting2()" style ="font-size:18px"  />
+
+              
+        <script>
+          function redirecting2() {
+            location.replace("doctorupdate.php")
+
+          }
+        </script>
+            </div>
 </body>
 </html>
