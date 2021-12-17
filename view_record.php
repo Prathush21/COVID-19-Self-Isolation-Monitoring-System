@@ -41,14 +41,42 @@ $reversed_record = array_reverse($symptom_record);
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="view_record1.css">
+    <link rel="stylesheet" href="view_record.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
+<div >
+              <input type="submit" id="input-box3" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" />
+
+              
+        <script>
+          function redirecting1() {
+            location.replace("symptom_record.php")
+
+          }
+        </script>
+            </div>
     <div class="container">
+    <div >
+              <input type="submit" id="input-box2" value="Home" onclick="redirecting2()" style ="font-size:18px"  />
+
+              
+        <script>
+          function redirecting2() {
+            location.replace("patient_dashboard.php")
+
+          }
+        </script>
+            </div>
+
+            
+
+            <br><br>
+
+        
 
    
         <input type="checkbox" id="flip">
@@ -74,6 +102,10 @@ $reversed_record = array_reverse($symptom_record);
           }
         </script>
             </div>
+
+           
+
+            
                     <br> <br>
 
                     <table>
