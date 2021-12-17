@@ -107,15 +107,15 @@ class Db
         return $result;
     }
 
-    public function getAll($table, $col, $val)
-    {
+    // public function getAll($table, $col, $val)
+    // {
 
-        $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
-        $stmt->execute([$val]);
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    //     $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
+    //     $stmt->execute([$val]);
+    //     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return $result;
-    }
+    //     return $result;
+    // }
 
 
     public function getAll($table){
@@ -170,6 +170,40 @@ class Db
             // die($set);
 
             $sql = "UPDATE {$table} SET {$set} WHERE username = '{$uname}'";
+            // echo $sql;
+
+            $this->_query = $this->_pdo->prepare($sql);
+            $x = 1;
+            if (count($fields)) {
+                foreach ($fields as $field) {
+                    // echo $param;
+                    $this->_query->bindValue($x, $field);
+                    $x++;
+                    // echo $x."<br>";
+                }
+            }
+            $this->_query->execute();
+            return true;
+        }
+        return false;
+    }
+
+    public function updateNew($table, $colname, $val, $fields)
+    {
+        if (count($fields)) {
+            $set = '';
+            $x = 1;
+
+            foreach ($fields as $name => $value) {
+                $set .= "{$name} = ?";
+                if ($x < count($fields)) {
+                    $set .= ', ';
+                }
+                $x++;
+            }
+            // die($set);
+
+            $sql = "UPDATE {$table} SET {$set} WHERE {$colname} = '{$val}'";
             // echo $sql;
 
             $this->_query = $this->_pdo->prepare($sql);
