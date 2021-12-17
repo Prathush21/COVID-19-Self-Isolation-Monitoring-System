@@ -48,6 +48,7 @@ $patient_records = array_reverse($result);
             <div class="input-boxes">
                 
             </div>
+
             <?php 
             // var_dump($patient_records);
             $x=0;
@@ -81,6 +82,11 @@ $patient_records = array_reverse($result);
             
             
             ?> 
+
+
+            <div class="input-boxes">
+                <a href="patientupdate1.php"><div class="text sign-up-text">Update your account</div></a>
+            </div>
 
         </form>
 
