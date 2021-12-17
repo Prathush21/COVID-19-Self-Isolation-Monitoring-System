@@ -1,53 +1,57 @@
 <?php
 
-class Db{
+class Db
+{
 
     private static $_instance = null;
 
     private $pdo;
     private $query;
 
-    private $dbHost;  
-    private $dbName;  
+    private $dbHost;
+    private $dbName;
     private $dbUser;      //by default root is user name.  
-    private $dbPassword;  
+    private $dbPassword;
 
-    private function __construct() {
-        $this->_dbHost='localhost';  
-        $this->_dbName='symptom_tracker'; //symptom_tracker  
-        $this->_dbUser='root';      //by default root is user name.  
-        $this->_dbPassword='';
+    private function __construct()
+    {
+        $this->_dbHost = 'localhost';
+        $this->_dbName = 'symptom_tracker'; //symptom_tracker  
+        $this->_dbUser = 'root';      //by default root is user name.  
+        $this->_dbPassword = '';
         try {
-            $this->_pdo = new PDO("mysql:host=$this->_dbHost;dbname=$this->_dbName",$this->_dbUser,$this->_dbPassword);  
+            $this->_pdo = new PDO("mysql:host=$this->_dbHost;dbname=$this->_dbName", $this->_dbUser, $this->_dbPassword);
             // Echo "Successfully connected with myDB database";  
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             die($e->getMessage());
         }
     }
 
-    public static function getInstance() {
-        if(!isset(self::$_instance)) {
+    public static function getInstance()
+    {
+        if (!isset(self::$_instance)) {
             self::$_instance = new Db();
         }
         return self::$_instance;
     }
 
 
-    public function insert($table, $fields = array()){
-        if(count($fields)) {
+    public function insert($table, $fields = array())
+    {
+        if (count($fields)) {
             $keys = array_keys($fields);
             $values = null;
             $x = 1;
 
             foreach ($fields as $field) {
                 $values .= "?";
-                if($x < count($fields)) {
+                if ($x < count($fields)) {
                     $values .= ', ';
                 }
                 $x++;
             }
 
-            $sql = "INSERT INTO $table (`".implode('`, `', $keys)."`) VALUES ({$values})";
+            $sql = "INSERT INTO $table (`" . implode('`, `', $keys) . "`) VALUES ({$values})";
 
             // echo $sql;
             // if(!$this->query($sql, $fields)->error()) {
@@ -55,8 +59,8 @@ class Db{
             // }
             $this->_query = $this->_pdo->prepare($sql);
             $x = 1;
-            if(count($fields)) {
-                foreach($fields as $field) {
+            if (count($fields)) {
+                foreach ($fields as $field) {
                     // echo $param;
                     $this->_query->bindValue($x, $field);
                     $x++;
@@ -65,43 +69,54 @@ class Db{
             }
             $this->_query->execute();
             return true;
-
         }
         return false;
     }
 
 
-    public function select($table,$uname){
+    public function select($table, $uname)
+    {
         $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE username=?");
-        $stmt->execute([$uname]); 
+        $stmt->execute([$uname]);
         $result = $stmt->fetch();
 
-        if($result){
+        if ($result) {
             return true;
         }
         return false;
     }
 
-    public function get($table,$uname){
+    public function get($table, $uname)
+    {
 
         $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE username=?");
-        $stmt->execute([$uname]); 
+        $stmt->execute([$uname]);
         $result = $stmt->fetch();
 
         return $result;
+    }
 
-    } 
 
-
-    public function getCommon($table,$col,$val){
+    public function getCommon($table, $col, $val)
+    {
 
         $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
-        $stmt->execute([$val]); 
+        $stmt->execute([$val]);
         $result = $stmt->fetch();
 
         return $result;
-
     }
+
+    public function getAll($table, $col, $val)
+    {
+
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
+        $stmt->execute([$val]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
 
     public function getAll($table){
 
@@ -120,13 +135,13 @@ class Db{
 
         $stmt = $this->_pdo->prepare("SELECT $col2 FROM $table WHERE $col1=(SELECT MAX($col1) FROM $table)");
         $stmt->execute();
-        $result = $stmt->fetch(); 
-        
+        $result = $stmt->fetch();
+
         return $result[$col2];
-       
     }
 
-    public function getFirstRowElement($table,$col){
+    public function getFirstRowElement($table, $col)
+    {
         $stmt = $this->_pdo->prepare("SELECT $col FROM $table");
         $stmt->execute();
         return $stmt->fetchColumn();
@@ -139,14 +154,15 @@ class Db{
 
     // }
 
-    public function update($table, $uname, $fields) {
-        if(count($fields)){
+    public function update($table, $uname, $fields)
+    {
+        if (count($fields)) {
             $set = '';
             $x = 1;
 
-            foreach($fields as $name => $value) {
+            foreach ($fields as $name => $value) {
                 $set .= "{$name} = ?";
-                if($x < count($fields)) {
+                if ($x < count($fields)) {
                     $set .= ', ';
                 }
                 $x++;
@@ -158,26 +174,26 @@ class Db{
 
             $this->_query = $this->_pdo->prepare($sql);
             $x = 1;
-            if(count($fields)) {
-                foreach($fields as $field) {
-                        // echo $param;
+            if (count($fields)) {
+                foreach ($fields as $field) {
+                    // echo $param;
                     $this->_query->bindValue($x, $field);
                     $x++;
-                        // echo $x."<br>";
+                    // echo $x."<br>";
                 }
             }
             $this->_query->execute();
             return true;
         }
         return false;
-        
-
-        
     }
 
+    public function getMaxRecord($table, $val1,$col1)
+    {
 
-
-
+        $stmt = $this->_pdo->prepare("SELECT MAX($col1) as MAXRECORD  FROM $table WHERE patient_no=?");
+        $stmt->execute([$val1]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['MAXRECORD'];
+    }
 }
-
-?>

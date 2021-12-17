@@ -47,7 +47,7 @@ if(!empty($_POST)){
         'end_date' => $enddate,
       ))
     ){
-      header("Location:patient_dashboard.php");
+      header("Location:symptom_record.php");
     }
   }
   else{
