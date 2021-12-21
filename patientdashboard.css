@@ -232,6 +232,7 @@ body{
   margin-right: 200px;
   height: 10%;
   transform: translateX(100px);
+  position:relative;
   /* display: block; */
 }
 
@@ -246,6 +247,7 @@ body{
   /* margin-top: 200px; */
   /* margin-right: 200px; */
   height: 10%;
+  position:relative;
   
   /* transform: translateY(500px);
   transform: translateX(-200px); */
@@ -294,5 +296,8 @@ a{
     margin-left: 500px;
 }
 .record-box{
-  background-color: grey;
+  background-color: blanchedalmond;
+  width: 150%;
+  border-radius: 10px;
+  padding: 5px;
 }

@@ -79,5 +79,11 @@ class PatientRecord{
         $enddate = date('Y-m-d', strtotime($startdate . " + " .$duration." days"));
         return $enddate;
     }
+
+    public function getRecord($val){
+        $result=$this->_db->getMaxRecord('patient_record', $val,'patient_record_no');
+        return $result;
+
+    }
 }
 ?>

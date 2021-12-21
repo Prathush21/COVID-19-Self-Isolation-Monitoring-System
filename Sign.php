@@ -114,7 +114,7 @@ if ($validate->passed()){
     'username'=>$uname,
     ))
     ){
-      $_SESSION['username']=$uname;
+      $_SESSION['uname']=$uname;
       $_SESSION['qualified'] = true;
       header("Location:patient_dashboard.php");
     }

@@ -20,6 +20,16 @@ class SymptomRecord{
         $result = $this->_db->getMaxRecord('patient_record',$patientno,'patient_record_no');
         return $result;
     }
+
+    public function getSymptomNo($val){
+        $result=$this->_db->getMax('symptom_record','symptom_record_no',$val,'patient_record_no');
+        return $result;
+    }
+
+    public function updateSymptom($col1,$val1,$val2){
+        $this->_db->updateOne('symptom_record',$col1,'symptom_record_no',$val1,$val2);
+
+    }
     
     // public function assignDoctor(){
 
