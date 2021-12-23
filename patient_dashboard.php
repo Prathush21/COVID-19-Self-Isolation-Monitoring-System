@@ -61,6 +61,7 @@ $_SESSION['count']=$record_count;
               $no = count($patient_records)-$x;
               $doctor_no =  $patient_records[$x]['assigned_doctor_no'];
               
+              
               ?>
             
               
