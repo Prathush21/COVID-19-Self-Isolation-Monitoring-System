@@ -18,7 +18,7 @@ else{
 $db = Db::getInstance();
 $patient_det =$db->getCommon('patient','username',$uname);
 $patient_no = $patient_det['patient_no'];
-$result = $db->getAll('patient_record','patient_no',$patient_no);
+$result = $db->getAllRelevant('patient_record','patient_no',$patient_no);
 $patient_records = array_reverse($result);
 
 ?>
@@ -82,18 +82,18 @@ $patient_records = array_reverse($result);
             
             
             ?> 
-
+          </form>
 
             <div class="input-boxes">
                 <a href="patientupdate1.php"><div class="text sign-up-text">Update your account</div></a>
             </div>
 
-        </form>
+       
 
         
       </div>
 
-      </form>
+      
     </div>
     </div>
     </div>
@@ -130,7 +130,7 @@ $patient_records = array_reverse($result);
               
         <script>
           function redirecting2() {
-            location.replace("create_record_form.php")
+            location.replace("patientupdate1.php")
 
           }
         </script>
