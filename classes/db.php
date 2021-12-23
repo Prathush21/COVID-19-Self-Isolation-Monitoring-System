@@ -194,4 +194,13 @@ class Db
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['MAXRECORD'];
     }
+
+    public function uploadFile($table,$val,$file){
+        // $query = "INSERT INTO $table ($col) VALUE (?)";
+        // $query = "INSERT INTO patient_record (pcr_report) VALUES(?)";
+        $query ="UPDATE patient_record SET pcr_report=? WHERE patient_record_no=?"; 
+   
+        $statement = $this->_pdo->prepare($query);
+        $statement->execute([$file,$val]);
+    }
 }

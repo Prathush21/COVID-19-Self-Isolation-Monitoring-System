@@ -11,9 +11,9 @@ body {
   display: flex;
   /* align-items: center; */
   /* justify-content: center; */
-  /* background: url("images/background2.jpg"); */
+  background: url("images/background2.jpg");
   padding: 30px;
-  transform: translateX(-140px);
+  /* transform: translateX(-140px); */
 }
 .container {
   position: relative;
@@ -254,12 +254,42 @@ th,td{
     color: #fff;
     background: #2B4560;
     border-radius: 6px;
-    padding: 0;
+    padding: 12px;
     cursor: pointer;
     transition: all 0.4s ease;
-    width:400%;
+    width:30%;
     height:6%;
-    transform: translate(900px,245px);
+    transform: translate(900px,300px);
+    
+    
+  
+  }
+
+  #input-box4{
+    color: #fff;
+    background: #2B4560;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    width:30%;
+    height:6%;
+    transform: translate(1500px,255px);
+    
+    
+  
+  }
+
+  #input-box5{
+    color: #fff;
+    background: #2B4560;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    width:30%;
+    height:6%;
+    transform: translate(1500px,255px);
     
     
   

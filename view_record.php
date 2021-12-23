@@ -34,12 +34,19 @@ $symptom_record_no=$db->getMax('symptom_record','symptom_record_no',$record_no,'
 $symptom_details=$db->getCommon('symptom_record','symptom_record_no',$symptom_record_no);
 $date=$symptom_details['date'];
 
+$status=$symptom_record_details['status'];
+
 if($date==$today){
     $var2=0;
 }
 
 if($end_date<$today){
     $var=0;
+    if($status!='closed'){
+        $status='closed';
+        $db->updateOne('patient_record','status','patient_record_no',$status,$record_no);
+    }
+    
 }
 
 $symptom_record = $db->getAll('symptom_record', 'patient_record_no', $record_no);
@@ -59,7 +66,7 @@ $reversed_record = array_reverse($symptom_record);
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="view_record1.css">
+    <link rel="stylesheet" href="view_record2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,6 +85,16 @@ $reversed_record = array_reverse($symptom_record);
         </script>
             </div> -->
     <div class="container">
+    <div >
+              <input type="submit" id="input-box5" value="View your evidence report" onclick="redirecting4()" style="font-size:16px" <?php if($var!=0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting4() {
+            location.replace("updatesymptom.php")
+
+          }
+        </script>
         <div >
               <input type="submit" id="input-box3" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
 
@@ -85,6 +102,18 @@ $reversed_record = array_reverse($symptom_record);
         <script>
           function redirecting1() {
             location.replace("updatesymptom.php")
+
+          }
+        </script>
+            </div>
+
+            <div >
+              <input type="submit" id="input-box4" value="Close Record" onclick="redirecting3()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting3() {
+            location.replace("submitreport.php")
 
           }
         </script>
@@ -120,6 +149,7 @@ $reversed_record = array_reverse($symptom_record);
 
                     </div>
                     <h3>Assigned Doctor-<?php echo $doctor_name ?></h3>
+                    <h3>Status-<?php echo $status ?></h3>
 
                     <div class="button input-box">
               <input type="submit" value="Record your symptom" onclick="redirecting()"  <?php if($var==0){?> hidden <?php }?> <?php if($var2==0){?> disabled <?php }?>/>

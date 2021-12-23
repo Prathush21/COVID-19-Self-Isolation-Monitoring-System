@@ -8,6 +8,7 @@ require_once 'classes/patient.php';
 require_once 'classes/validate.php';
 require_once 'classes/symptomrecord.php';
 
+$severity_count=0;
 
 $patient_no = 21;
 
@@ -17,14 +18,14 @@ if (!empty($_POST)) {
   $pressure2 = $_POST['pressure2'];
   $pulse = $_POST['pulse'];
   $temp = $_POST['temp'];
-
-
-
- 
-
-
-
+  
   $symptom_record = new SymptomRecord();
+
+  $severity_count=$symptom_record->checkSeverity($oxygen,$pressure1,$pressure2,$pulse,$temp);
+  $_SESSION['severity']=$severity_count;
+
+
+
   $patient_record_no = $_SESSION['record'];
   $_SESSION['record_no']=$patient_record_no;
   $_SESSION['oxygen'] = $oxygen;

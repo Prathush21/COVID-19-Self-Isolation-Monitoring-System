@@ -71,6 +71,12 @@ if (!empty($_POST)) {
         $doubt = $_POST['doubt'];
     }
 
+    $severity_count=$_SESSION['severity'];
+
+    if ($breathe=='yes' or $severity_count>=2){
+        // send mail
+    }
+
 
 
     $symptom_record = new SymptomRecord();

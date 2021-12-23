@@ -30,6 +30,27 @@ class SymptomRecord{
         $this->_db->updateOne('symptom_record',$col1,'symptom_record_no',$val1,$val2);
 
     }
+
+
+    public function checkSeverity($oxygen,$p1,$p2,$pulse,$temp){
+        $count=0;
+        if($oxygen<94){
+            $count++;
+        }
+        if($p1>130 or $p2>90 ){
+            $count++;
+        }
+
+        if($pulse>100){
+            $count++;
+        }
+
+        if($temp>100.4){
+            $count++;
+        }
+
+        return $count;
+    }
     
     // public function assignDoctor(){
 

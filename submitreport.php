@@ -19,95 +19,70 @@ require_once 'classes/symptomrecord.php';
 // $temp =  $_SESSION['temp'];
 $error='';
 
-
+$db = Db::getInstance();
 
 $record_no=$_SESSION['record'];
 $no=$_SESSION['number'] ;
 $doc_no=$_SESSION['doc_no'];
 
-$symptom_record = new SymptomRecord();
+$record_details=$db->getCommon('patient_record','patient_record_no',$record_no);
 
-$symptom_record_no=$symptom_record->getSymptomNo($record_no);
-
-if (!empty($_POST)) {
-    $count=0;
-    if (isset($_POST['oxygen'])) {
-        $oxygen = $_POST['oxygen'];
-        if($oxygen!=''){
-            $symptom_record->updateSymptom('oxygen',$oxygen,$symptom_record_no);
-            $count++;
-        }
-        
-    }
-
-    if (isset($_POST['pressure1'])) {
-        $pressure1 = $_POST['pressure1'];
-        if($pressure1!=''){
-            $symptom_record->updateSymptom('pressure1',$pressure1,$symptom_record_no);
-            $count++;
-        }
-        
-    }
-
-    if (isset($_POST['pressure2'])) {
-        $pressure2 = $_POST['pressure2'];
-        if($pressure2!=''){
-            $symptom_record->updateSymptom('pressure2',$pressure2,$symptom_record_no);
-            $count++;
-        }
+if(isset($_POST['submit'])) {
+   
+    // Count total files
+    // $countfiles = count($_FILES['files']['name']);
+    
+    // Prepared statement
+    // $query = "INSERT INTO images (name,image) VALUES(?,?)";
+   
+    // $statement = $conn->prepare($query);
+   
+    // Loop all files
+    // for($i = 0; $i < $countfiles; $i++) {
+   
+        // File name
+        $filename = $_FILES['file']['name'];
        
-    }
-
-    if (isset($_POST['pulse'])) {
-        $pulse = $_POST['pulse'];
-        if($pulse!=''){
-            $symptom_record->updateSymptom('pulse',$pulse,$symptom_record_no);
-            $count++;
-        }
+        // Location
+        $target_file = 'uploads/'.$filename;
        
-    }
+        // file extension
+        $file_extension = pathinfo(
+            $target_file, PATHINFO_EXTENSION);
+              
+        $file_extension = strtolower($file_extension);
+       
+        // Valid image extension
+        $valid_extension = array("png","jpeg","jpg","pdf");
+       
+        if(in_array($file_extension, $valid_extension)) {
+   
+            // Upload file
+            if(move_uploaded_file(
+                $_FILES['file']['tmp_name'],
+                $target_file)
+            ) {
 
-    if (isset($_POST['temp'])) {
-        $temp = $_POST['temp'];
-        if($temp!=''){
-            $symptom_record->updateSymptom('temperature',$temp,$symptom_record_no);
-            $count++;
+                
+                $db->uploadFile('patient_record',$record_no,$target_file);
+                header("Location:view_record.php?varname=  $record_no &varname1=  $no &varname2= $doc_no ");
+  
+                // Execute query
+                // $statement->execute(
+                //     array($filename,$target_file));
+            }
         }
-
-    }
-
-    if (isset($_POST['breathe'])) {
-        $breathe = $_POST['breathe'];
-        $symptom_record->updateSymptom('breathe',$breathe,$symptom_record_no);
-        $count++;
-    }
+    // }
+      
+    // echo "File upload successfully";
+}
 
 
-    if (isset($_POST['bodyache'])) {
-        $body_ache = $_POST['bodyache'];
-        $symptom_record->updateSymptom('body_ache',$body_ache,$symptom_record_no);
-        $count++;
-    }
-
-    if (isset($_POST['vomit'])) {
-        $vomit = $_POST['vomit'];
-        $symptom_record->updateSymptom('vomit',$vomit,$symptom_record_no);
-        $count++;
-    }
-
-    if($count>0){
-        //send mail
-        header("Location:view_record.php?varname=  $record_no &varname1=  $no &varname2= $doc_no ");
-    }
-        
-    else{
-       $error='Fill atleast one field'; 
-    }
     
 
 
    
-}
+
 
 
 
@@ -122,7 +97,7 @@ if (!empty($_POST)) {
 <head>
   <meta charset="UTF-8" />
   <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-  <link rel="stylesheet" href="symptom_record.css" />
+  <link rel="stylesheet" href="submitreport.css" />
   <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -137,19 +112,38 @@ if (!empty($_POST)) {
     <div class="forms">
       <!-- <div class="form-content"> -->
       <div class="signup-form">
-        <div class="title">Update Symptom Record</div>
-        <form action="#" method="post">
+        <div class="title">Close Record</div>
+        <br><br>
+        <?php
+
+        $file_name=$record_details['pcr_report'];
+        echo '<a href="'.$file_name.'" role="text" aria-expanded="false" >'.$file_name .'</a>'; 
+
+        ?>
+
+
+        <form method='post' action='' 
+        enctype='multipart/form-data'>
+        <input type='file' id='input-box2' name='file' />
+        <br><br>
+        <input type='submit' id='input-box3' value='Submit' name='submit' />
+    </form>
+    <div class="button input-box">
+          <input type="submit" onclick="location.href='view_record.php?varname=<?php echo $record_no ?>&varname1=<?php echo $no ?>&varname2=<?php echo $doc_no ?>';" value="Cancel Changes" />
+
+        </div>
+        <!-- <form action="#" method="post">
           <div class="input-boxes">
             <div class="input-box">
               <label for="oxygen"><b>Oxygen Saturation</b></label>
               <input type="number" placeholder="" name="oxygen" min="1" max="100" step = "0.1"  /><br />
-            </div>
-            <div class="input-box">
+            </div> -->
+            <!-- <div class="input-box">
               <label for="pressure1"><b>Systolic blood pressure </b></label>
-              <input type="number" id="pressure1" name="pressure1"  />
+              <input type="number" id="pressure1" name="pressure1"  /> -->
               <!-- <span id="pressure1" style="color:red"></span> -->
 
-            </div>
+            <!-- </div>
 
             <div class="input-box">
               <label for="pressure2"><b>Diastolic blood pressure </b></label>
@@ -159,9 +153,9 @@ if (!empty($_POST)) {
             </div>
             <div class="input-box">
               <label for="pulse"><b>Pulse Rate</b></label>
-              <input type="number" id="pulse" name="pulse" />
+              <input type="number" id="pulse" name="pulse" /> -->
               <!-- <span id="pulse"></span> -->
-            </div>
+            <!-- </div>
 
             <div class="input-box">
               <label for="temp"><b>Temperature</b></label>
@@ -183,7 +177,7 @@ if (!empty($_POST)) {
 
               <div class="button input-box">
                             <input type="submit" value="Submit" />
-                        </div>
+                        </div> -->
 
                         
 
@@ -201,12 +195,12 @@ if (!empty($_POST)) {
             <!-- <a href='https://www.google.lk' ><div class="text sign-up-text">
               Help?
             </div></a> -->
-          </div>
-        </form>
-        <div class="button input-box">
+          <!-- </div>
+        </form> -->
+        <!-- <div class="button input-box">
           <input type="submit" onclick="location.href='view_record.php?varname=<?php echo $record_no ?>&varname1=<?php echo $no ?>&varname2=<?php echo $doc_no ?>';" value="Cancel Changes" />
 
-        </div>
+        </div> -->
       </div>
       <!-- </div> -->
     </div>
