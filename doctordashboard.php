@@ -48,7 +48,7 @@ $patients = $doctor->getPatientList($uname);
                 ?>
               
             
-            <div class = "record-box" onclick="location.href='patientsymptomsfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patientno ?>&varname2=<?php echo $patientname ?>'" style="cursor:pointer;" >
+            <div class = "record-box" onclick="location.href='patientsymptomsfordoctor2.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patientno ?>'" style="cursor:pointer;" >
             <h1><?php echo $patientno . " " . $patientname; ?></h1>
           </div>
           <br>

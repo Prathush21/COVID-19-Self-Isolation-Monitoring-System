@@ -16,7 +16,7 @@ class Db
     private function __construct()
     {
         $this->_dbHost = 'localhost';
-        $this->_dbName = 'symptom_tracker'; //symptom_tracker  
+        $this->_dbName = 'selfcare system'; //symptom_tracker  
         $this->_dbUser = 'root';      //by default root is user name.  
         $this->_dbPassword = '';
         try {
@@ -107,15 +107,15 @@ class Db
         return $result;
     }
 
-    // public function getAll($table, $col, $val)
-    // {
+    public function getAllRelevant($table, $col, $val)
+    {
 
-    //     $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
-    //     $stmt->execute([$val]);
-    //     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
+        $stmt->execute([$val]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    //     return $result;
-    // }
+        return $result;
+    }
 
 
     public function getAll($table){
@@ -147,12 +147,12 @@ class Db
         return $stmt->fetchColumn();
     }
 
-    // public function update($table,$col1,$col2,$val1,$val2){
+    public function updateSimple($table,$col1,$col2,$val1,$val2){
 
-    //     $stmt= $this->_pdo->prepare("UPDATE $table SET $col1=? WHERE $col2=?");
-    //     $stmt->execute([$val1,$val2]);
-
-    // }
+        $stmt= $this->_pdo->prepare("UPDATE $table SET $col1=? WHERE $col2=?");
+        $result = $stmt->execute([$val1,$val2]);
+        return $result;
+    }
 
     public function update($table, $uname, $fields)
     {
