@@ -119,7 +119,7 @@ body {
   left: 0;
   bottom: 0;
   height: 3px;
-  width: 225px;
+  width: 180px;
   background: #2b4560;
 }
 .forms .signup-form .title:before {
@@ -264,4 +264,16 @@ th,td{
     
     
   
+  }
+
+
+  .record-box{
+    /* background-color: blanchedalmond; */
+    color: #fff;
+    background: #2B4560;
+    border-radius: 6px;
+    width: 15%;
+    border-radius: 10px;
+    text-align: center;
+    padding: 1%;
   }

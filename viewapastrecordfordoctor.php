@@ -18,24 +18,6 @@ $patient_name = $patient_details['patient_name'];
 $symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
 $reversed_record = array_reverse($symptom_record);
 
-if(!empty($_POST)){
-    if(isset($_POST['status'])){
-        $status = $_POST['status'];
-    }
-    if(isset($_POST['comments'])){
-        $comments = $_POST['comments'];
-    }
-    else{
-        $comments = $_POST['defaultcomments'];
-    }
-    if($doctor->updateComment($comments, $status, $record_no)){
-        header("Location:doctordashboard.php");
-    }
-    else{
-        echo $doctor->updateComment($comments, $status, $record_no);
-    }
-}
-
 ?>
 
 
@@ -58,21 +40,16 @@ if(!empty($_POST)){
 
     <div class="container">
    
-            <div class = "record-box" onclick="location.href='doctordashboard.php'" style="cursor:pointer;" >
-           Home
-        </div>
-
-        <br>
-
             <div class = "record-box" onclick="location.href='patientpastfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patient_no ?>'" style="cursor:pointer;" >
-            View Past Records
+           Back
         </div>
-   
-        <!-- <input type="checkbox" id="flip"> -->
+
+       
+       
           <br><br>
 
         <div class="forms">
-        <form action="#" method="post">
+       
             <div class="form-content">
                 <div class="login-form">
                     <div class="title">
@@ -80,10 +57,6 @@ if(!empty($_POST)){
 
                     </div>    
                     
-                    <br> <br>
-                
-                    <input type="submit" id="input-box2" value="Confirm" style ="font-size:18px"  />
-                  
                     <br> <br>
 
                     <table>
@@ -164,24 +137,10 @@ if(!empty($_POST)){
                                     } else { ?><span>&#10060;</span><?php ;
                                                                     } ?> </td>
                                 <td><?php echo $reversed_record[$y]['doubt'] ?> </td>
-
-                                <?php if($reversed_record[$y]['status'] == "Pending") { ?>
-
-                                    <td> 
-                                    <input type="text" name="comments[]" />
-                                    <input type="hidden" name="defaultcomments[]" value='<?php echo $reversed_record[$y]['symptom_record_no']; ?>' />                                    
-                                    </td>
-                                    <td>
-                                    <input type = 'checkbox' name = 'status[]' 
-                                    value = '<?php echo $reversed_record[$y]['symptom_record_no']; ?>'>                                     
-                                    </td>
-                                    
-                                <?php } else { ?> 
-
-                                    <td><?php echo $reversed_record[$y]['comments'] ?> </td>
+                                <td><?php echo $reversed_record[$y]['comments'] ?> </td>
                                     <td><?php echo $reversed_record[$y]['status'] ?> </td>
 
-                                <?php } ?>
+                                
 
 
                             </tr>
@@ -200,7 +159,6 @@ if(!empty($_POST)){
 
             </div>
         </div>
-                    </form>
     </div>
     </div>
 </body>
