@@ -18,7 +18,7 @@ $patient_name = $patient_details['patient_name'];
 $symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
 $reversed_record = array_reverse($symptom_record);
 
-if(!empty($_POST)){
+if(!empty($_POST['confirm-btn'])){
     if(isset($_POST['status'])){
         $status = $_POST['status'];
     }
@@ -33,6 +33,13 @@ if(!empty($_POST)){
     }
     else{
         echo $doctor->updateComment($comments, $status, $record_no);
+    }
+}
+
+if(!empty($_POST['close-btn'])){
+    $record_details = $db->getCommon('patient_record','patient_record_no',$record_no);
+    if($db->updateNew('patient_record','patient_record_no',$record_no, array('end_date'=>date('Y-m-d'), 'status'=>'sent to hospital'))){
+        header("Location:doctordashboard.php");
     }
 }
 
@@ -57,16 +64,21 @@ if(!empty($_POST)){
 
 
     <div class="container">
-   
-            <div class = "record-box" onclick="location.href='doctordashboard.php'" style="cursor:pointer;" >
+
+        
+           <div class = "record-box" onclick="location.href='doctordashboard.php'" style="cursor:pointer;" >
            Home
-        </div>
+        </div> 
 
         <br>
-
-            <div class = "record-box" onclick="location.href='patientpastfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patient_no ?>'" style="cursor:pointer;" >
+        <div class = "record-box" onclick="location.href='patientpastfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patient_no ?>'" style="cursor:pointer;" >
             View Past Records
-        </div>
+        </div> 
+        <br>
+    
+        
+
+        
    
         <!-- <input type="checkbox" id="flip"> -->
           <br><br>
@@ -82,7 +94,9 @@ if(!empty($_POST)){
                     
                     <br> <br>
                 
-                    <input type="submit" id="input-box2" value="Confirm" style ="font-size:18px"  />
+                    <input type="submit" id="input-box2" name = "confirm-btn" value="Confirm" style ="font-size:18px"  />
+                    
+                    <input type="submit" id="input-box2" name = "close-btn" value="Close Record" style ="font-size:18px"  />
                   
                     <br> <br>
 

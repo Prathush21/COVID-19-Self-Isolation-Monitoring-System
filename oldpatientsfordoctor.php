@@ -3,28 +3,14 @@ require_once 'classes/db.php';
 
 session_start();
 
-$uname = $_SESSION['username'];
-
-$patient_no = $_GET['varname1'];
-$current_record_no = $_GET['varname'];
-
-if($_SESSION['qualified'] == false){
-    $status = "You can't create a record";
-    $_SESSION['qualified']=true;
-}
-else{
-
-    $status = $uname;
-
-}
+$uname = $_GET['varname'];
 
 $db = Db::getInstance();
-$patient_det =$db->getCommon('patient','patient_no',$patient_no);
+$doctor_no =$db->getCommon('doctor','username',$uname)['doctor_no'];
 
-$patient_name = $patient_det['patient_name'];
+$records =$db->getAllRelevant('patient_record','assigned_doctor_no',$doctor_no);
 
-$result = $db->getAllRelevant('patient_record','patient_no',$patient_no);
-$patient_records = array_reverse($result);
+
 
 ?>
 
@@ -56,8 +42,7 @@ $patient_records = array_reverse($result);
     <div class="forms">
         <div class="form-content">
           <div class="login-form"  >
-            <div class="title">Patient <?php echo $patient_no . " - " . $patient_name?> <br><br>  Past Records</div>
-         
+            <div class="title">Previous Patients' Records </div>
             <div class="input-boxes">
                 
             </div>
@@ -67,18 +52,19 @@ $patient_records = array_reverse($result);
             $x=0;
 
 
-            while($x<count($patient_records)){ 
-              $record_no = $patient_records[$x]['patient_record_no'];
-              if($record_no != $current_record_no){
-              $no = count($patient_records)-$x;
-              $doctor_no =  $patient_records[$x]['assigned_doctor_no'];
+            while($x<count($records)){ 
+              if($records[$x]['status'] != 'ongoing'){
+                $patient_no = $records[$x]['patient_no'];
+                $patient_name = $db->getCommon('patient','patient_no',$patient_no)['patient_name'];
+                $record_no = $records[$x]['patient_record_no'];           
               
               ?>
             
               
               <div class = "record-box" onclick="location.href='viewapastrecordfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patient_no ?>';" style="cursor: pointer;" > 
-              <h2> Record <?php echo count($patient_records)-$x ?></h2>
-              <h3> <?php echo $patient_records[$x]['start_date'] ?> -> <?php echo $patient_records[$x]['end_date'] ?></h3>
+              <h2> <?php echo $patient_no . ' - ' . $patient_name ?></h2>
+              <h3> <?php echo $records[$x]['start_date'] ?> -> <?php echo $records[$x]['end_date'] ?></h3>
+              <h3> <?php echo $records[$x]['status'] ?></h3>
               
               </div>
               <br> <br>
@@ -91,9 +77,7 @@ $patient_records = array_reverse($result);
             
             
             ?> 
-          
-
-             
+                     
 
         
       </div>
@@ -103,5 +87,6 @@ $patient_records = array_reverse($result);
     </div>
     </div>
   </div>
+  
 </body>
 </html>

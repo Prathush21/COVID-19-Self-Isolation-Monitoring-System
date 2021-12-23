@@ -276,4 +276,5 @@ th,td{
     border-radius: 10px;
     text-align: center;
     padding: 1%;
+    float: left;
   }
