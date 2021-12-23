@@ -26,7 +26,7 @@ $patients = $doctor->getPatientList($uname);
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="patient_dashboard2.css">
+    <link rel="stylesheet" href="doctordashboard.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +66,7 @@ $patients = $doctor->getPatientList($uname);
     </div>
   </div>
 
-  <div >
+  <!-- <div >
               <input type="submit" id="input-box" value="Log out" onclick="redirecting1()"  />
 
               
@@ -76,7 +76,9 @@ $patients = $doctor->getPatientList($uname);
 
           }
         </script>
-            </div>
+            </div> -->
+
+            
             <br><br>
 
             <div >
@@ -103,5 +105,15 @@ $patients = $doctor->getPatientList($uname);
           }
         </script>
             </div>
+
+            <br>
+
+            <div class = "prev-box" onclick="location.href='oldpatientsfordoctor.php?varname=<?php echo $uname ?>'" style="cursor:pointer;" >
+            View Previous Patients
+        </div> 
+
+            <div class = "logout-box" onclick="location.href='logout.php?varname=<?php echo $uname ?>'" style="cursor:pointer;" >
+            Log out
+          </div>
 </body>
 </html>

@@ -45,6 +45,7 @@ if(!empty($_POST)){
         'contact_type' => $contacttype,
         'assigned_doctor_no' => $docno,
         'end_date' => $enddate,
+        'status' => 'ongoing',
       ))
     ){
       header("Location:symptom_record.php");
