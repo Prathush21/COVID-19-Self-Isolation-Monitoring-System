@@ -3,7 +3,7 @@ require_once 'classes/db.php';
 
 session_start();
 
-$uname = $_SESSION['username'];
+$uname = $_SESSION['uname'];
 
 if($_SESSION['qualified'] == false){
     $status = "You can't create a record";
@@ -20,6 +20,8 @@ $patient_det =$db->getCommon('patient','username',$uname);
 $patient_no = $patient_det['patient_no'];
 $result = $db->getAll('patient_record','patient_no',$patient_no);
 $patient_records = array_reverse($result);
+$record_count=count($patient_records);
+$_SESSION['count']=$record_count;
 
 ?>
 
@@ -30,7 +32,7 @@ $patient_records = array_reverse($result);
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="patient_dashboard2.css">
+    <link rel="stylesheet" href="patientdashboard.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,6 +61,7 @@ $patient_records = array_reverse($result);
               $no = count($patient_records)-$x;
               $doctor_no =  $patient_records[$x]['assigned_doctor_no'];
               
+              
               ?>
             
               
@@ -84,9 +87,9 @@ $patient_records = array_reverse($result);
             ?> 
 
 
-            <div class="input-boxes">
+            <!-- <div class="input-boxes">
                 <a href="patientupdate1.php"><div class="text sign-up-text">Update your account</div></a>
-            </div>
+            </div> -->
 
         </form>
 

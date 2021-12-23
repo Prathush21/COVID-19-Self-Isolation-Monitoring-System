@@ -4,6 +4,7 @@ session_start();
 $patient_record_no = $_SESSION['record_no'];
 $number = $_SESSION['number'];
 $doc_no = $_SESSION['doc_no'];
+$record_count=$_SESSION['count'];
 
 
 require_once  'classes/user.php';
@@ -70,6 +71,12 @@ if (!empty($_POST)) {
         $doubt = $_POST['doubt'];
     }
 
+    $severity_count=$_SESSION['severity'];
+
+    if ($breathe=='yes' or $severity_count>=2){
+        // send mail
+    }
+
 
 
     $symptom_record = new SymptomRecord();
@@ -101,7 +108,7 @@ if (!empty($_POST)) {
     ) {
         // $_SESSION['username'] = $uname;
         // $_SESSION['qualified'] = true;
-        header("Location:view_record.php?varname=  $patient_record_no &varname1=  $number &varname2= $doc_no ");
+        header("Location:view_record.php?varname=  $patient_record_no &varname1=  $record_count &varname2= $doc_no ");
     }
 }
 
