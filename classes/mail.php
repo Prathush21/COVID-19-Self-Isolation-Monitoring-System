@@ -1,7 +1,6 @@
 <?php
-
 class Mail{
-
+    
     public function sendMail($doc_email,$patient_no,$patient_name,$patient_phone){
 
         $subject="Regarding severity of patient {$patient_no}";
@@ -11,21 +10,16 @@ class Mail{
         mail($doc_email,$subject,$msg);
 
     }
+
+    public function sendReminderMail($to){
+        $content = "Hi! Please record your symptoms for today.";
+        mail($to,"Reminder: Record your Symptoms", $content);
+    }
+
+    public function sendRecordClosedMail($to){
+        $content = "The doctor assigned to you has closed your record. You will be contacted shortly.";
+        mail($to,"Your Record is Closed", $content);
+    }
 }
-
-// // the message
-// $msg = "First line of text\nSecond line of text";
-
-// // use wordwrap() if lines are longer than 70 characters
-// $msg = wordwrap($msg,70);
-
-// // send email
-
-
- 
-// if (mail("190197p@gmail.com","My subject",$msg)) {
-//     echo "Email successfully sent to ...";
-// } else {
-//     echo "Email sending failed...";
-// }
 ?>
+

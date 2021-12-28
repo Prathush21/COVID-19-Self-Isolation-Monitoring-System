@@ -1,61 +1,51 @@
 <?php
 require_once 'classes/db.php';
+require_once 'classes/mail.php';
+require_once 'classes/doctor.php';
 session_start();
 
 $uname = $_SESSION['username'];
-$var=1;
-$var2=1;
 
-
-if ($_SESSION['qualified'] == false) {
-    $status = "You can't have an account here";
-} else {
-    $status = $uname;
-}
 $record_no = $_GET['varname'];
 
-$_SESSION['record'] = $record_no;
-$no = $_GET['varname1'];
-$doctor_no = $_GET['varname2'];
-
-$_SESSION['number'] = $no;
-$_SESSION['doc_no'] = $doctor_no;
+$patient_no = $_GET['varname1'];
 
 $db = Db::getInstance();
+$doctor = new Doctor();
+$mail = new Mail();
 
-$doctor_details = $db->getCommon('doctor', 'doctor_no', $doctor_no);
-$doctor_name = $doctor_details['doctor_name'];
+$patient_details = $db->getCommon('patient','patient_no',$patient_no);
+$patient_name = $patient_details['patient_name'];
+$patient_email = $patient_details['email_add'];
 
-$symptom_record_details=$db->getCommon('patient_record','patient_record_no',$record_no);
-$end_date=$symptom_record_details['end_date'];
-$today=date('Y-m-d');
-
-$symptom_record_no=$db->getMax('symptom_record','symptom_record_no',$record_no,'patient_record_no');
-$symptom_details=$db->getCommon('symptom_record','symptom_record_no',$symptom_record_no);
-$date=$symptom_details['date'];
-
-$status=$symptom_record_details['status'];
-
-if($date==$today){
-    $var2=0;
-}
-
-if($end_date<$today){
-    $var=0;
-    if($status!='closed'){
-        $status='closed';
-        $db->updateSimple('patient_record','status','patient_record_no',$status,$record_no);
-    }
-    
-}
-
-$symptom_record = $db->getAll('symptom_record', 'patient_record_no', $record_no);
-
+$symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
 $reversed_record = array_reverse($symptom_record);
 
+if(!empty($_POST['confirm-btn'])){
+    if(isset($_POST['status'])){
+        $status = $_POST['status'];
+    }
+    if(isset($_POST['comments'])){
+        $comments = $_POST['comments'];
+    }
+    else{
+        $comments = $_POST['defaultcomments'];
+    }
+    if($doctor->updateComment($comments, $status, $record_no)){
+        header("Location:doctordashboard.php");
+    }
+    else{
+        echo $doctor->updateComment($comments, $status, $record_no);
+    }
+}
 
-
-
+if(!empty($_POST['close-btn'])){
+    $record_details = $db->getCommon('patient_record','patient_record_no',$record_no);
+    if($db->updateNew('patient_record','patient_record_no',$record_no, array('end_date'=>date('Y-m-d'), 'status'=>'sent to hospital'))){
+        $mail->sendRecordClosedMail($patient_email);
+        header("Location:doctordashboard.php");
+    }
+}
 
 ?>
 
@@ -67,106 +57,51 @@ $reversed_record = array_reverse($symptom_record);
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="view_record2.css">
+    <link rel="stylesheet" href="patientsymptomsfordoctor.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-<!-- <div >
-              <input type="submit" id="input-box3" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" />
 
-              
-        <script>
-          function redirecting1() {
-            location.replace("symptom_record.php")
 
-          }
-        </script>
-            </div> -->
+
     <div class="container">
-    <div >
-              <input type="submit" id="input-box5" value="View your evidence report" onclick="redirecting4()" style="font-size:16px" <?php if($var!=0){?> hidden <?php }?> />
-
-              
-        <script>
-          function redirecting4() {
-            location.replace("pdf.php")
-
-          }
-        </script>
-        <div >
-              <input type="submit" id="input-box3" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
-
-              
-        <script>
-          function redirecting1() {
-            location.replace("updatesymptom.php")
-
-          }
-        </script>
-            </div>
-
-            <div >
-              <input type="submit" id="input-box4" value="Close Record" onclick="redirecting3()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
-
-              
-        <script>
-          function redirecting3() {
-            location.replace("submitreport.php")
-
-          }
-        </script>
-            </div>
-    
-    <div >
-              <input type="submit" id="input-box2" value="Home" onclick="redirecting2()" style ="font-size:18px"  />
-
-              
-        <script>
-          function redirecting2() {
-            location.replace("patient_dashboard.php")
-
-          }
-        </script>
-            </div>
-
-            
-
-            <br><br>
 
         
+           <div class = "record-box" onclick="location.href='doctordashboard.php'" style="cursor:pointer;" >
+           Home
+        </div> 
 
+        <br>
+        <div class = "record-box" onclick="location.href='patientpastfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patient_no ?>'" style="cursor:pointer;" >
+            View Past Records
+        </div> 
+        <br>
+    
+        
+
+        
    
-        <input type="checkbox" id="flip">
-
+        <!-- <input type="checkbox" id="flip"> -->
+          <br><br>
 
         <div class="forms">
+        <form action="#" method="post">
             <div class="form-content">
                 <div class="login-form">
                     <div class="title">
-                        <h2> Record <?php echo $no ?></h2>
+                        <h2> Patient <?php echo $patient_no . " - " . $patient_name ?></h2>
 
-                    </div>
-                    <h3>Assigned Doctor-<?php echo $doctor_name ?></h3>
-                    <h3>Status-<?php echo $status ?></h3>
-
-                    <div class="button input-box">
-              <input type="submit" value="Record your symptom" onclick="redirecting()"  <?php if($var==0){?> hidden <?php }?> <?php if($var2==0){?> disabled <?php }?>/>
-
-              
-        <script>
-          function redirecting() {
-            location.replace("symptom_record.php")
-
-          }
-        </script>
-            </div>
-
-           
-
-            
+                    </div>    
+                    
+                    <br> <br>
+                
+                    <input type="submit" id="input-box2" name = "confirm-btn" value="Confirm" style ="font-size:18px"  />
+                    
+                    <input type="submit" id="input-box2" name = "close-btn" value="Close Record" style ="font-size:18px"  />
+                  
                     <br> <br>
 
                     <table>
@@ -247,8 +182,24 @@ $reversed_record = array_reverse($symptom_record);
                                     } else { ?><span>&#10060;</span><?php ;
                                                                     } ?> </td>
                                 <td><?php echo $reversed_record[$y]['doubt'] ?> </td>
-                                <td><?php echo $reversed_record[$y]['comments'] ?> </td>
-                                <td><?php echo $reversed_record[$y]['status'] ?> </td>
+
+                                <?php if($reversed_record[$y]['status'] == "Pending") { ?>
+
+                                    <td> 
+                                    <input type="text" name="comments[]" />
+                                    <input type="hidden" name="defaultcomments[]" value='<?php echo $reversed_record[$y]['symptom_record_no']; ?>' />                                    
+                                    </td>
+                                    <td>
+                                    <input type = 'checkbox' name = 'status[]' 
+                                    value = '<?php echo $reversed_record[$y]['symptom_record_no']; ?>'>                                     
+                                    </td>
+                                    
+                                <?php } else { ?> 
+
+                                    <td><?php echo $reversed_record[$y]['comments'] ?> </td>
+                                    <td><?php echo $reversed_record[$y]['status'] ?> </td>
+
+                                <?php } ?>
 
 
                             </tr>
@@ -267,7 +218,7 @@ $reversed_record = array_reverse($symptom_record);
 
             </div>
         </div>
-        
+                    </form>
     </div>
     </div>
 </body>

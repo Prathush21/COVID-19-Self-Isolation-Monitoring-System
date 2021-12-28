@@ -85,23 +85,23 @@ $_SESSION['count']=$record_count;
             
             
             ?> 
-
+          </form>
 
             <!-- <div class="input-boxes">
                 <a href="patientupdate1.php"><div class="text sign-up-text">Update your account</div></a>
             </div> -->
 
-        </form>
+       
 
         
       </div>
 
-      </form>
+      
     </div>
     </div>
     </div>
   </div>
-  <div >
+  <!-- <div >
               <input type="submit" id="input-box" value="Log out" onclick="redirecting1()"  />
 
               
@@ -111,7 +111,9 @@ $_SESSION['count']=$record_count;
 
           }
         </script>
+            </div> -->
             </div>
+            
             <br><br>
 
             <div >
@@ -133,10 +135,13 @@ $_SESSION['count']=$record_count;
               
         <script>
           function redirecting2() {
-            location.replace("create_record_form.php")
+            location.replace("patientupdate1.php")
 
           }
         </script>
             </div>
+            <div class = "logout-box" onclick="location.href='logout.php?varname=<?php echo $uname ?>'" style="cursor:pointer;" >
+            Log out
+          </div>
 </body>
 </html>
