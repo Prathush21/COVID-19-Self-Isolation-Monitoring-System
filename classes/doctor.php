@@ -33,7 +33,7 @@ class Doctor{
 
 	public function getPatientList($uname){
 		$docno = $this->_db->getCommon('doctor','username',$uname)['doctor_no'];
-		$results = $this->_db->getAll("patient_record");
+		$results = $this->_db->getTable("patient_record");
 		$today = date('Y-m-d');
 		$patients = array();
 		foreach($results as $result){
@@ -91,7 +91,7 @@ class Doctor{
 		// $iterationcounter2 = 0;
 		$correct = true;
 		$commentno = 0;
-		$symptom_record = $this->_db->getAllRelevant('symptom_record', 'patient_record_no', $patient_record_no);
+		$symptom_record = $this->_db->getAll('symptom_record', 'patient_record_no', $patient_record_no);
 		$reversed_record = array_reverse($symptom_record);
 		foreach($reversed_record as $row){
 			if($row['status'] == "Pending"){

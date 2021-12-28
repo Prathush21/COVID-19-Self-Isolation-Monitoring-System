@@ -15,7 +15,7 @@ $doctor = new Doctor();
 $patient_details = $db->getCommon('patient','patient_no',$patient_no);
 $patient_name = $patient_details['patient_name'];
 
-$symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
+$symptom_record = $db->getAll('symptom_record', 'patient_record_no', $record_no);
 $reversed_record = array_reverse($symptom_record);
 
 ?>

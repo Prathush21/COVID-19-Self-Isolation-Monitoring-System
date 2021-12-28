@@ -9,6 +9,7 @@ $uname = $_SESSION['username'];
 $record_no = $_GET['varname'];
 
 $patient_no = $_GET['varname1'];
+$status="";
 
 $db = Db::getInstance();
 $doctor = new Doctor();
@@ -18,7 +19,7 @@ $patient_details = $db->getCommon('patient','patient_no',$patient_no);
 $patient_name = $patient_details['patient_name'];
 $patient_email = $patient_details['email_add'];
 
-$symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
+$symptom_record = $db->getAll('symptom_record', 'patient_record_no', $record_no);
 $reversed_record = array_reverse($symptom_record);
 
 if(!empty($_POST['confirm-btn'])){
@@ -57,7 +58,7 @@ if(!empty($_POST['close-btn'])){
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="patientsymptomsfordoctor.css">
+    <link rel="stylesheet" href="patientsymptomsfordoctor1.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

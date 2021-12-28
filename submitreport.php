@@ -65,6 +65,7 @@ if(isset($_POST['submit'])) {
 
                 
                 $db->uploadFile('patient_record',$record_no,$target_file);
+                //send mail
                 header("Location:view_record.php?varname=  $record_no &varname1=  $no &varname2= $doc_no ");
   
                 // Execute query
