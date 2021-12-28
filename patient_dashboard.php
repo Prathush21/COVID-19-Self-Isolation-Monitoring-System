@@ -3,7 +3,7 @@ require_once 'classes/db.php';
 
 session_start();
 
-$uname = $_SESSION['username'];
+$uname = $_SESSION['uname'];
 
 if($_SESSION['qualified'] == false){
     $status = "You can't create a record";
@@ -18,8 +18,10 @@ else{
 $db = Db::getInstance();
 $patient_det =$db->getCommon('patient','username',$uname);
 $patient_no = $patient_det['patient_no'];
-$result = $db->getAllRelevant('patient_record','patient_no',$patient_no);
+$result = $db->getAll('patient_record','patient_no',$patient_no);
 $patient_records = array_reverse($result);
+$record_count=count($patient_records);
+$_SESSION['count']=$record_count;
 
 ?>
 
@@ -58,6 +60,7 @@ $patient_records = array_reverse($result);
               $record_no = $patient_records[$x]['patient_record_no'];
               $no = count($patient_records)-$x;
               $doctor_no =  $patient_records[$x]['assigned_doctor_no'];
+              
               
               ?>
             

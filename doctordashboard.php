@@ -2,8 +2,8 @@
 
 session_start();
 
-require_once  'classes/doctor.php';
 
+require_once  'classes/doctor.php';
 
 $uname = $_SESSION['username'];
 
@@ -16,7 +16,6 @@ else{
 
 $doctor = new Doctor();
 $patients = $doctor->getPatientList($uname);
-
 ?>
 
 
@@ -26,7 +25,9 @@ $patients = $doctor->getPatientList($uname);
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
+
     <link rel="stylesheet" href="doctordashboard.css">
+
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,8 +36,7 @@ $patients = $doctor->getPatientList($uname);
 
   <div class="container">
     <input type="checkbox" id="flip">
-    
-
+  
     <div class="forms">
         <div class="form-content">
           <div class="login-form">
@@ -115,5 +115,6 @@ $patients = $doctor->getPatientList($uname);
             <div class = "logout-box" onclick="location.href='logout.php?varname=<?php echo $uname ?>'" style="cursor:pointer;" >
             Log out
           </div>
+
 </body>
 </html>

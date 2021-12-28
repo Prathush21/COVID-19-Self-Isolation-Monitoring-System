@@ -1,10 +1,14 @@
-
 <?php
 class Mail{
-    private $headers;
+    
+    public function sendMail($doc_email,$patient_no,$patient_name,$patient_phone){
 
-    public function __construct(){
-        // $this->headers = "From: 190197p@gmail.com";
+        $subject="Regarding severity of patient {$patient_no}";
+
+        $msg= "Symptoms of your patient {$patient_name} are severe. Please contatct your patient immediately\n Contact number of the patient is {$patient_phone}";
+
+        mail($doc_email,$subject,$msg);
+
     }
 
     public function sendReminderMail($to){
@@ -18,3 +22,4 @@ class Mail{
     }
 }
 ?>
+

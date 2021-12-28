@@ -48,6 +48,11 @@ if(!empty($_POST)){
         'status' => 'ongoing',
       ))
     ){
+      $patient_record_no=$patientRecord->getRecord($patient_no);
+      $_SESSION['record']=$patient_record_no;
+      $record_count=$_SESSION['count'];
+      $record_count++;
+      $_SESSION['count']=$record_count;
       header("Location:symptom_record.php");
     }
   }

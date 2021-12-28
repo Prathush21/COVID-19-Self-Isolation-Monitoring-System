@@ -1,15 +1,18 @@
 <?php
 
 session_start();
+$uname = $_SESSION['uname'];
 $patient_record_no = $_SESSION['record_no'];
 $number = $_SESSION['number'];
 $doc_no = $_SESSION['doc_no'];
+$record_count=$_SESSION['count'];
 
 
 require_once  'classes/user.php';
 require_once 'classes/patient.php';
 require_once 'classes/validate.php';
 require_once 'classes/symptomrecord.php';
+require_once 'classes/mail.php';
 
 
 $breathe = 'no';
@@ -29,7 +32,13 @@ $pressure2 =  $_SESSION['pressure2'];
 $pulse =  $_SESSION['pulse'];
 $temp =  $_SESSION['temp'];
 
-
+$db = Db::getInstance();
+$doc_details=$db->getCommon('doctor','doctor_no',$doc_no);
+$doc_email=$doc_details['doctor_email'];
+$patient_details=$db->getCommon('patient','username',$uname);
+$patient_no=$patient_details['patient_no'];
+$patient_name=$patient_details['patient_name'];
+$patient_phone=$patient_details['phonenumber'];
 
 if (!empty($_POST)) {
 
@@ -70,6 +79,13 @@ if (!empty($_POST)) {
         $doubt = $_POST['doubt'];
     }
 
+    $severity_count=$_SESSION['severity'];
+
+    if ($breathe=='yes' or $severity_count>=2){
+        $mail=new Mail();
+        $mail->sendMail($doc_email,$patient_no,$patient_name,$patient_phone);
+    }
+
 
 
     $symptom_record = new SymptomRecord();
@@ -101,7 +117,7 @@ if (!empty($_POST)) {
     ) {
         // $_SESSION['username'] = $uname;
         // $_SESSION['qualified'] = true;
-        header("Location:view_record.php?varname=  $patient_record_no &varname1=  $number &varname2= $doc_no ");
+        header("Location:view_record.php?varname=  $patient_record_no &varname1=  $record_count &varname2= $doc_no ");
     }
 }
 
