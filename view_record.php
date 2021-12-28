@@ -91,7 +91,7 @@ $reversed_record = array_reverse($symptom_record);
               
         <script>
           function redirecting4() {
-            location.replace("updatesymptom.php")
+            location.replace("pdf.php")
 
           }
         </script>

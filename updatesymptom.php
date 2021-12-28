@@ -7,6 +7,7 @@ require_once  'classes/user.php';
 require_once 'classes/patient.php';
 require_once 'classes/validate.php';
 require_once 'classes/symptomrecord.php';
+require_once 'classes/mail.php';
 
 // $breathe = 'no';
 // $body_ache = 'no';
@@ -18,12 +19,21 @@ require_once 'classes/symptomrecord.php';
 // $pulse =  $_SESSION['pulse'];
 // $temp =  $_SESSION['temp'];
 $error='';
+$uname = $_SESSION['uname'];
 
 
 
 $record_no=$_SESSION['record'];
 $no=$_SESSION['number'] ;
 $doc_no=$_SESSION['doc_no'];
+
+$db = Db::getInstance();
+$doc_details=$db->getCommon('doctor','doctor_no',$doc_no);
+$doc_email=$doc_details['doctor_email'];
+$patient_details=$db->getCommon('patient','username',$uname);
+$patient_no=$patient_details['patient_no'];
+$patient_name=$patient_details['patient_name'];
+$patient_phone=$patient_details['phonenumber'];
 
 $symptom_record = new SymptomRecord();
 
@@ -97,6 +107,8 @@ if (!empty($_POST)) {
 
     if($count>0){
         //send mail
+        $mail=new Mail();
+        $mail->sendMail($doc_email,$patient_no,$patient_name,$patient_phone);
         header("Location:view_record.php?varname=  $record_no &varname1=  $no &varname2= $doc_no ");
     }
         
