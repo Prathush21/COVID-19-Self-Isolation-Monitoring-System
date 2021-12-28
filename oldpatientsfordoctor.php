@@ -21,7 +21,7 @@ $records =$db->getAllRelevant('patient_record','assigned_doctor_no',$doctor_no);
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="patientpastfordoctor2.css">
+    <link rel="stylesheet" href="patientpastfordoctor1.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,9 +33,11 @@ $records =$db->getAllRelevant('patient_record','assigned_doctor_no',$doctor_no);
   <div class="container">
     <input type="checkbox" id="flip">
 
-    <div class ="back-box" onclick="location.href='patientsymptomsfordoctor2.php?varname=<?php echo $current_record_no ?>&varname1=<?php echo $patient_no ?>'" style="cursor:pointer;" >
+    <div class ="back-box" onclick="history.go(-1);" >
             Back
         </div>
+<!-- 
+        <button onclick="history.go(-1);">Back </button> -->
 
         <br>
 
