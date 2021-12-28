@@ -1,5 +1,6 @@
 <?php
 require_once 'classes/db.php';
+require_once 'classes/mail.php';
 require_once 'classes/doctor.php';
 session_start();
 
@@ -11,9 +12,11 @@ $patient_no = $_GET['varname1'];
 
 $db = Db::getInstance();
 $doctor = new Doctor();
+$mail = new Mail();
 
 $patient_details = $db->getCommon('patient','patient_no',$patient_no);
 $patient_name = $patient_details['patient_name'];
+$patient_email = $patient_details['email_add'];
 
 $symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
 $reversed_record = array_reverse($symptom_record);
@@ -39,6 +42,7 @@ if(!empty($_POST['confirm-btn'])){
 if(!empty($_POST['close-btn'])){
     $record_details = $db->getCommon('patient_record','patient_record_no',$record_no);
     if($db->updateNew('patient_record','patient_record_no',$record_no, array('end_date'=>date('Y-m-d'), 'status'=>'sent to hospital'))){
+        $mail->sendRecordClosedMail($patient_email);
         header("Location:doctordashboard.php");
     }
 }

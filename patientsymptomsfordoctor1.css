@@ -277,4 +277,5 @@ th,td{
     text-align: center;
     padding: 1%;
     float: left;
+    cursor:pointer;
   }
