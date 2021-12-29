@@ -44,7 +44,7 @@ if($end_date<$today){
     $var=0;
     if($status!='closed'){//quarantine time expired
         $status='closed';
-        $db->updateSimple('patient_record','status','patient_record_no',$status,$record_no);
+        $result=$db->updateSimple('patient_record','status','patient_record_no',$status,$record_no);
     }
     
 }

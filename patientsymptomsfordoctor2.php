@@ -12,7 +12,7 @@ $patient_no = $_GET['varname1'];
 $status="";
 
 $db = Db::getInstance();
-$doctor = new Doctor();
+$doctor = Doctor::getInstance($uname);
 $mail = new Mail();
 
 $patient_details = $db->getCommon('patient','patient_no',$patient_no);

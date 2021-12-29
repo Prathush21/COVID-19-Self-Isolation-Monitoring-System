@@ -1,6 +1,10 @@
 <?php
 require_once 'classes/db.php';
 
+require_once 'classes/patient.php';
+
+require_once 'classes/patientrecord.php';
+
 session_start();
 
 $uname = $_SESSION['uname'];
@@ -16,9 +20,13 @@ else{
 }
 
 $db = Db::getInstance();
-$patient_det =$db->getCommon('patient','username',$uname);
+$patient = Patient::getInstance($uname);
+$patient_det =$patient->getDetails($uname);
 $patient_no = $patient_det['patient_no'];
-$result = $db->getAll('patient_record','patient_no',$patient_no);
+
+$patient_rec=new PatientRecord();
+
+$result = $patient_rec->getRecordDetails($patient_no);
 $patient_records = array_reverse($result);
 $record_count=count($patient_records);
 $_SESSION['count']=$record_count;

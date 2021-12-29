@@ -87,7 +87,7 @@ if($validate->checkNic($nic)){
 
 if ($validate->passed()){
     $user=new User();
-    $patient = new Patient();
+    $patient = Patient::getInstance($uname);
     if(
     $user->create(array(
         'username'=> $uname,

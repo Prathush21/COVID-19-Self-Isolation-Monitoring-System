@@ -85,5 +85,10 @@ class PatientRecord{
         return $result;
 
     }
+
+    public function getRecordDetails($patient_no){
+        $result=$this->_db->getAll('patient_record','patient_no',$patient_no);
+        return $result;
+    }
 }
 ?>

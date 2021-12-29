@@ -26,6 +26,9 @@ class User{
 			return true;
 		}
 	}
+
+    public function getDetails($uname){}
+    public static function getInstance($uname){}
     // public function login($uname, $password){
 	// 	echo 'hi';
     //     return $this->db->getPassword('user',$uname, $password);
