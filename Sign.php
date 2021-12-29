@@ -86,10 +86,10 @@ if($validate->checkNic($nic)){
 
 
 if ($validate->passed()){
-    $user=new User();
+    // $user=new User();
     $patient = Patient::getInstance($uname);
     if(
-    $user->create(array(
+    $patient->createUser(array(
         'username'=> $uname,
         'password'=> $hashed,
     )) and

@@ -8,6 +8,7 @@ require_once 'classes/patient.php';
 require_once 'classes/validate.php';
 require_once 'classes/symptomrecord.php';
 require_once  'classes/mail.php';
+require_once 'classes/patientrecord.php';
 
 // $breathe = 'no';
 // $body_ache = 'no';
@@ -71,8 +72,8 @@ if(isset($_POST['submit'])) {
                 $target_file)
             ) {
 
-                
-                $db->uploadFile('patient_record',$record_no,$target_file);
+                $patient_record=new PatientRecord();
+                $patient_record->uploadFile($record_no,$target_file);
                 //send mail
                 $mail=new Mail();
                 $mail->SendMailReport($doc_email,$patient_no,$patient_name);

@@ -29,6 +29,14 @@ class Patient extends User{
 			return true;
 		}
 	}
+	public function createUser($fields = array()) {
+		if(!$this->_db->insert('user', $fields)) {
+			throw new Exception('There was a problem creating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
 	public function getDetails($uname){
         $result=$this->_db->getCommon('patient','username',$uname);
         return $result;

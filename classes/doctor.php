@@ -40,6 +40,15 @@ class Doctor extends User{
 		}
 	}
 
+	public function updateUser($fields = array(),$uname) {
+		if(!$this->_db->update('user',$uname, $fields)) {
+			throw new Exception('There was a problem updating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
+
     public function getDetails($uname){
         $result=$this->_db->getCommon('doctor','username',$uname);
         return $result;
