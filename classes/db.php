@@ -117,6 +117,16 @@ class Db
         return $result;
     }
 
+    public function getTable($table){
+        $stmt = $this->_pdo->prepare("SELECT * FROM $table");
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+
+    }
+
 
     public function getLastRowElement($table,$col1,$col2){
         
@@ -138,11 +148,11 @@ class Db
         return $stmt->fetchColumn();
     }
 
-    public function updateOne($table,$col1,$col2,$val1,$val2){
 
+    public function updateSimple($table,$col1,$col2,$val1,$val2){
         $stmt= $this->_pdo->prepare("UPDATE $table SET $col1=? WHERE $col2=?");
-        $stmt->execute([$val1,$val2]);
-
+        $result = $stmt->execute([$val1,$val2]);
+        return $result;
     }
 
     public function update($table, $uname, $fields)
@@ -161,6 +171,40 @@ class Db
             // die($set);
 
             $sql = "UPDATE {$table} SET {$set} WHERE username = '{$uname}'";
+            // echo $sql;
+
+            $this->_query = $this->_pdo->prepare($sql);
+            $x = 1;
+            if (count($fields)) {
+                foreach ($fields as $field) {
+                    // echo $param;
+                    $this->_query->bindValue($x, $field);
+                    $x++;
+                    // echo $x."<br>";
+                }
+            }
+            $this->_query->execute();
+            return true;
+        }
+        return false;
+    }
+
+    public function updateNew($table, $colname, $val, $fields)
+    {
+        if (count($fields)) {
+            $set = '';
+            $x = 1;
+
+            foreach ($fields as $name => $value) {
+                $set .= "{$name} = ?";
+                if ($x < count($fields)) {
+                    $set .= ', ';
+                }
+                $x++;
+            }
+            // die($set);
+
+            $sql = "UPDATE {$table} SET {$set} WHERE {$colname} = '{$val}'";
             // echo $sql;
 
             $this->_query = $this->_pdo->prepare($sql);

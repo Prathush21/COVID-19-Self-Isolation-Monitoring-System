@@ -11,6 +11,8 @@ require_once 'classes/validate.php';
 $error1 = "";
 $error2 = "";
 $error3 = "";
+$error4 = "";
+$error5 = "";
 
 $patient = new Patient();
 $validate_3 = new Validate();
@@ -36,6 +38,9 @@ $dob = $result['DOB'];
 if (!empty($_POST)) {
     if (isset($_POST['name'])) {
         $name = $_POST['name'];
+        if($validate_3->checkIfEmpty($name)){
+          $error4="Looks like you didn't enter your name!";
+        }
     }
 
     if (isset($_POST['gender'])) {
@@ -43,21 +48,27 @@ if (!empty($_POST)) {
     }
     if (isset($_POST['nic'])) {
         $id = $_POST['nic'];
+        if($validate_3->checkNic($id)){
+          $error1="Invalid NIC number";
+        }
     }
     if (isset($_POST['mobileno'])) {
         $phone = $_POST['mobileno'];
         if($validate_3->checkMobile($phone)){
-            $error2="invalid mobile number";
+            $error2="Invalid mobile number";
         }
     }
     if(isset($_POST['email-id'])){
         $email=trim($_POST['email-id']);
         if($validate_3->checkEmail($email)){
-          $error3="invalid email address";
+          $error3="Invalid email address";
         }
     }
     if (isset($_POST['address'])) {
-        $email = $_POST['address'];
+        $address = $_POST['address'];
+        if($validate_3->checkIfEmpty($address)){
+          $error5="Looks like you didn't enter your address!";
+        }
     }
     if(isset($_POST['asthma'])){
         $asthma=$_POST['asthma'];
@@ -83,10 +94,7 @@ if (!empty($_POST)) {
     if(isset($_POST['immuno'])){
     $immuno=$_POST['immuno'];
     }
-    if(isset($_POST['dob'])){
-        $immuno=$_POST['dob'];
-    }
-
+    
     if($validate_3->passed()){
       if ($patient->update(array(
         'patient_name' => $name,
@@ -105,7 +113,7 @@ if (!empty($_POST)) {
         'immuno_deficiency'=>$immuno,
         'username'=>$uname,
       ), $uname)) {
-        header("Location:login.php");
+        header("Location:patient_dashboard.php");
       }
     }
 
@@ -142,6 +150,7 @@ if (!empty($_POST)) {
               <label for="name"><b>Name</b></label>
               <input type="text" placeholder="Enter your name" name="name" <?php if ($name != "") { ?> value=<?php echo "'$name'";
                                                                                                       } ?> /><br />
+               <span id="name" style="color:red"><?php echo $error4; ?></span>                                                                                       
             </div>
 
             <label for="gender"><b>Gender</b></label> <br /><br />
@@ -183,17 +192,18 @@ if (!empty($_POST)) {
               <label for="address"><b>Residential Address</b></label>
               <input type="text" placeholder="Enter your Residential address" name="address" <?php if ($address != "") { ?> value=<?php echo "'$address'";
                                                                                                       } ?> /><br />
+              <span id="address" style="color:red"><?php echo $error5; ?></span>
             </div>
 
             <label for="disease"><b>Chronic Disease</b></label> <br /><br />
-            <input type="Checkbox" name="asthma" value="yes" <?php if ($asthma == "asthma") { ?>checked<?php } ?> />Asthma <br> <br>
-            <input type="Checkbox" name="lungdisease" value="yes" <?php if ($lung == "lungdisease") { ?>checked<?php } ?> />Chronic lung disease<br> <br>
-            <input type="Checkbox" name="kidney" value="yes" <?php if ($kidney == "kidney") { ?>checked<?php } ?> />Kidney failure <br> <br>
-            <input type="Checkbox" name="heart" value="yes" <?php if ($heart == "heart") { ?>checked<?php } ?> />Heart Disease <br> <br>
-            <input type="Checkbox" name="diabetes" value="yes" <?php if ($diabetes == "diabetes") { ?>checked<?php } ?> />Diabetes <br> <br>
-            <input type="Checkbox" name="hyper" value="yes" <?php if ($tension == "hyper") { ?>checked<?php } ?> />Hyper Tension <br> <br>
-            <input type="Checkbox" name="cancer" value="yes" <?php if ($cancer == "cancer") { ?>checked<?php } ?> />Cancer <br> <br>
-            <input type="Checkbox" name="immuno" value="yes" <?php if ($immuno == "immuno") { ?>checked<?php } ?> />Immunodeficiency Diseases <br>
+            <input type="Checkbox" name="asthma" value = "yes" <?php if ($asthma == "yes") { ?>checked disabled <?php } ?> />Asthma <br> <br>
+            <input type="Checkbox" name="lungdisease" value = "yes" <?php if ($lung == "yes") { ?>checked disabled <?php } ?> />Chronic lung disease<br> <br>
+            <input type="Checkbox" name="kidney" value = "yes" <?php if ($kidney == "yes") { ?>checked disabled <?php } ?> />Kidney failure <br> <br>
+            <input type="Checkbox" name="heart" value = "yes" <?php if ($heart == "yes") { ?>checked disabled <?php } ?> />Heart Disease <br> <br>
+            <input type="Checkbox" name="diabetes" value = "yes" <?php if ($diabetes == "yes") { ?>checked disabled <?php } ?> />Diabetes <br> <br>
+            <input type="Checkbox" name="hyper" value = "yes" <?php if ($tension == "yes") { ?>checked disabled <?php } ?> />Hyper Tension <br> <br>
+            <input type="Checkbox" name="cancer" value = "yes" <?php if ($cancer == "yes") { ?>checked disabled <?php } ?> />Cancer <br> <br>
+            <input type="Checkbox" name="immuno" value = "yes" <?php if ($immuno == "yes") { ?>checked disabled <?php } ?> />Immunodeficiency Diseases <br>
 
 
             <div class="button input-box">
@@ -219,7 +229,7 @@ if (!empty($_POST)) {
 
         <script>
           function redirecting() {
-            location.replace("doctordashboard.php")
+            location.replace("patient_dashboard.php")
 
           }
         </script>

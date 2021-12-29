@@ -40,8 +40,17 @@ class Validate{
         return false;
     }
 
+    // public function checkMobile($mobileno){
+    //     if(strlen($mobileno)!=10){
+    //         $this->_errorcount+=1;
+    //         $this->_errors[]=$mobileno;
+    //         return true;          
+    //     }
+    //     return false;        
+    // }
+
     public function checkMobile($mobileno){
-        if(strlen($mobileno)!=10){
+        if((strlen($mobileno)<9)||(strlen($mobileno)>10)){
             $this->_errorcount+=1;
             $this->_errors[]=$mobileno;
             return true;          
@@ -93,6 +102,14 @@ class Validate{
 
     public function passed(){
         if ($this->_errorcount==0){
+            return true;
+        }
+        return false;
+    }
+
+    public function checkIfEmpty($entry){
+        if($entry == ""){
+            $this->_errorcount+=1;
             return true;
         }
         return false;
