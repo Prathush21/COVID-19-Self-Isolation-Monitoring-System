@@ -1,10 +1,14 @@
 <?php
 require_once 'db.php';
+
+require_once 'patientrecord1.php';
+require_once 'recordstate.php';
+
+
 require_once 'user.php';
 
 class Patient extends User{
     private $db;
-
 	private static $instances=array();
 
     private function __construct($user = null) {
@@ -20,6 +24,38 @@ class Patient extends User{
 		return self::$instances[$uname];
 	}
 
+	public function getRecord($recordno){
+		$result=$this->_db->getCommon('patient_record','patient_record_no',$recordno);
+        return $result;
+	}
+
+	public function getRecordObject($recordno){
+		$result=$this->_db->getCommon('patient_record','patient_record_no',$recordno);
+		$patientRecord = "";
+		if($result['status'] == "ongoing"){
+			$patientRecord = new PatientRecord();
+			$patientRecord->setState(new Ongoing());
+			$patientRecord->setRecordNumber($recordno);
+			$patientRecord->setPatientNumber($result['patient_no']);			
+		}
+		return $patientRecord;
+
+		
+	}
+
+	public function getOngoingRecord($uname){
+		$patient_no = $this->getPatientNo($uname);
+		$records = $this->_db->getAll('patient_record','patient_no',$patient_no);
+		foreach($records as $record){
+			if($record['status'] == "ongoing"){
+				return $record;
+			}
+		}
+	}
+
+	public function getPatientUsername($patient_no){
+		return $this->_db->getCommon('patient','patient_no',$patient_no)['username'];
+	}
 
     public function create($fields = array()) {
 		if(!$this->_db->insert('patient', $fields)) {
@@ -51,6 +87,25 @@ class Patient extends User{
 		}
 	}
 	
-	
+
+	public function validatePatientRecordCreation($reason,$contacttype,$employment,$vaccination){
+		$valid = true;
+		if($reason == "close-contact"){
+			if ($contacttype == "outside"){
+				if ($vaccination == "fully-vaccinated"){
+					if(($employment == "hospital-work") || ($employment == "MOH-work")){
+						$valid = false;
+					}
+				}
+			}
+		}
+		return $valid;
+	}
+
+	public function getPatientNo($uname){
+        $result = $this->_db->get('patient',$uname);
+        return $result['patient_no'];
+    }
+
 }
 ?>

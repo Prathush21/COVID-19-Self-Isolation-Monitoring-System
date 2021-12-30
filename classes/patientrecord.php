@@ -2,7 +2,7 @@
 require_once 'db.php';
 
 class PatientRecord{
-    private $db;
+    private $db, $state;
 
     public function __construct(){
         $this->_db = Db::getInstance();

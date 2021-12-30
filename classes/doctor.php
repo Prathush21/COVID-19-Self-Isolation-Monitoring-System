@@ -20,8 +20,6 @@ class Doctor extends User{
 		return self::$instances[$uname];
 	}
 
-
-
     public function create($fields = array()) {
 		if(!$this->_db->insert('doctor', $fields)) {
 			throw new Exception('There was a problem creating this patient account.');
@@ -62,9 +60,11 @@ class Doctor extends User{
 		foreach($results as $result){
 			if ($result['assigned_doctor_no'] == $docno){
 				if(($result['end_date'] >= $today) && ($result['status'] == 'ongoing')){
-					$patientname = $this->_db->getCommon('patient','patient_no',$result['patient_no'])['patient_name'];
+					$patientdet = $this->_db->getCommon('patient','patient_no',$result['patient_no']);
+					$patientname = $patientdet['patient_name'];
+					$patient_uname = $patientdet['username'];
 					$record_no = $result['patient_record_no'];
-					$patients += array($result['patient_no']=>[$patientname, $record_no]);
+					$patients += array($result['patient_no']=>[$patientname, $record_no, $patient_uname]);
 				}
 			}
 		}

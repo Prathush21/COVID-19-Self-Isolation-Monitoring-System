@@ -2,6 +2,22 @@
 
 require_once 'doctor_dash.php';
 
+
+require_once  'classes/iterator.php';
+require_once  'classes/doctor.php';
+
+$uname = $_SESSION['username'];
+
+if($_SESSION['qualified'] == false){
+    $status = "You can't have an account here";
+}
+else{
+    $status = $uname;
+}
+
+$doctor = Doctor::getInstance($uname);
+$patients = $doctor->getPatientList($uname);
+
 ?>
 
 
@@ -30,11 +46,14 @@ require_once 'doctor_dash.php';
           <form action="#" method = "post">
             <br><br>
             <?php
-              foreach($patients as $patientno => [$patientname, $record_no]){
+              $it = new myIterator($patients);
+
+              foreach($it as $patientno => [$patientname, $record_no, $patient_uname]) {
+                  
                 ?>
               
             
-            <div class = "record-box" onclick="location.href='patientsymptomsfordoctor2.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patientno ?>'" style="cursor:pointer;" >
+            <div class = "record-box" onclick="location.href='patientsymptomsfordoctor2.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patient_uname ?>&varname2=<?php echo $patientno ?>'" style="cursor:pointer;" >
             <h1><?php echo $patientno . " " . $patientname; ?></h1>
           </div>
           <br>
