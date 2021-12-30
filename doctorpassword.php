@@ -13,7 +13,8 @@ $error2="";
 $psw="";
 $repsw="";
 
-$user=new User();
+// $user=new User();
+$doctor=Doctor::getInstance($uname);
 
 if (!empty($_POST)) {
   if (isset($_POST['password'])) {
@@ -29,10 +30,16 @@ if (!empty($_POST)) {
 
   if($validate_4->passed() ){
     if($psw!="" and $repsw!=""){
-      if ($user->update(array(
+      if ($doctor->updateUser(array(
         'password'=>$hashed,
       ), $uname)) {
-        header("Location:doctordashboard.php");
+        if($validate_4->checkUserExists('doctor', $uname)){
+          header("Location:doctorupdate.php");
+        }
+        else{
+          header("Location:doctordashboard.php");
+        }
+        
       }
 
     }

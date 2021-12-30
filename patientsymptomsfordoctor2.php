@@ -17,6 +17,8 @@ $status="";
 $db = Db::getInstance();
 $doctor = Doctor::getInstance($uname);
 
+$mail = new Mail();
+
 $patient = Patient::getInstance($patient_uname); 
 
 $patientRecord = $patient->getRecordObject($record_no);

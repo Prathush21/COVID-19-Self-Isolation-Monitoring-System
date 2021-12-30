@@ -27,7 +27,7 @@ class SymptomRecord{
     }
 
     public function updateSymptom($col1,$val1,$val2){
-        $this->_db->updateOne('symptom_record',$col1,'symptom_record_no',$val1,$val2);
+        $result=$this->_db->updateSimple('symptom_record',$col1,'symptom_record_no',$val1,$val2);
 
     }
 
@@ -51,64 +51,6 @@ class SymptomRecord{
 
         return $count;
     }
-    
-    // public function assignDoctor(){
-
-    //     $prevdocno = $this->_db->getLastRowElement('patient_record','patient_record_no','assigned_doctor_no');
-        
-        
-    //     if (($prevdocno == null) || ($prevdocno == $this->_db->getLastRowElement('doctor','doctor_no','doctor_no'))){
-    //         $docno = $this->_db->getFirstRowElement('doctor','doctor_no');            
-    //     }
-    //     else{
-    //         $docno = $prevdocno;
-    //         while(true){
-    //             $docno++;
-    //             $result = $this->_db->getCommon('doctor','doctor_no',$docno)['doctor_no'];
-    //             if($result != null)
-    //                 break;
-    //         }
-    //     }
-        
-    //     return $docno;
-       
-    // }
-
-    // public function getEndDate($reason,$contacttype,$employment,$vaccination,$startdate){
-    //     $duration = 0;
-    //     if ($reason == "covid-positive"){
-    //         if ($employment == "none"){
-    //             $duration = 14;
-    //         }
-    //         else{
-    //             $duration = 10;
-    //         }
-    //     }
-    //     elseif ($reason == "close-contact"){
-    //         if($contacttype == "inside"){
-    //             if($vaccination == "fully-vaccinated"){
-    //                 $duration = 14;
-    //             }
-    //             else{
-    //                 $duration = 21;
-    //             }
-    //         }
-    //         else{
-    //             if ($vaccination == "fully-vaccinated"){
-    //                 if(($employment == "essential-work") || ($employment == "none")){
-    //                     $duration = 10;
-    //                 }
-    //             }
-    //             else{
-    //                 $duration = 14;
-    //             }
-    //         }
-    //     }
-    //     else{
-    //         $duration = 14; //for foreign return - not specified by gov though
-    //     }
-    //     $enddate = date('Y-m-d', strtotime($startdate . " + " .$duration." days"));
-    //     return $enddate;
-    // }
+ 
 }
 ?>

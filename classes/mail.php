@@ -21,6 +21,7 @@ class Mail{
         mail($to,"Your Record is Closed", $content);
     }
 
+
     public function sendPCRAcceptedMail($to){
         $content = "The PCR you had submitted was accepted and the doctor assigned to you has closed your record.";
         mail($to,"Your PCR is Accepted", $content);
@@ -34,6 +35,16 @@ class Mail{
     public function sendQuarantineExpiredMail($to){
         $content = "Your quarantine has been successfully completed. Thank you for using our application.";
         mail($to,"Your Quarantine has been Completed", $content);
+    }
+
+    public function SendMailReport($doc_email,$patient_no,$patient_name){
+
+        $subject="Regarding submission of PCR report of patient {$patient_no}";
+
+        $msg= "Your patient {$patient_name} has submitted a PCR report, Please check that report";
+
+        mail($doc_email,$subject,$msg);
+    
     }
 }
 ?>

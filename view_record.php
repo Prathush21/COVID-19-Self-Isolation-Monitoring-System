@@ -1,5 +1,6 @@
 <?php
 require_once 'classes/db.php';
+require_once 'classes/patientrecord.php';
 session_start();
 
 $uname = $_SESSION['username'];
@@ -44,7 +45,8 @@ if($end_date<$today){
     $var=0;
     if($status!='closed'){//quarantine time expired
         $status='closed';
-        $db->updateSimple('patient_record','status','patient_record_no',$status,$record_no);
+        $patient_record=new PatientRecord();
+        $result=$patient_record->update($status,$record_no);
     }
     
 }

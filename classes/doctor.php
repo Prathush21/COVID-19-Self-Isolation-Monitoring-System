@@ -1,7 +1,8 @@
 <?php
 require_once 'db.php';
+require_once 'user.php';
 
-class Doctor{
+class Doctor extends User{
     private $db;
 
 	private static $instances=array();
@@ -30,6 +31,15 @@ class Doctor{
 
     public function update($fields = array(),$uname) {
 		if(!$this->_db->update('doctor',$uname, $fields)) {
+			throw new Exception('There was a problem updating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
+
+	public function updateUser($fields = array(),$uname) {
+		if(!$this->_db->update('user',$uname, $fields)) {
 			throw new Exception('There was a problem updating this patient account.');
 		}
 		else{

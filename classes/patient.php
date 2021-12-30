@@ -1,11 +1,14 @@
 <?php
 require_once 'db.php';
+
 require_once 'patientrecord1.php';
 require_once 'recordstate.php';
 
-class Patient{
-    private $_db;
 
+require_once 'user.php';
+
+class Patient extends User{
+    private $db;
 	private static $instances=array();
 
     private function __construct($user = null) {
@@ -62,6 +65,14 @@ class Patient{
 			return true;
 		}
 	}
+	public function createUser($fields = array()) {
+		if(!$this->_db->insert('user', $fields)) {
+			throw new Exception('There was a problem creating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
 	public function getDetails($uname){
         $result=$this->_db->getCommon('patient','username',$uname);
         return $result;
@@ -76,6 +87,7 @@ class Patient{
 		}
 	}
 	
+
 	public function validatePatientRecordCreation($reason,$contacttype,$employment,$vaccination){
 		$valid = true;
 		if($reason == "close-contact"){
