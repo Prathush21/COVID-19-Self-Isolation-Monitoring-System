@@ -29,6 +29,7 @@ $doc_no=$_SESSION['doc_no'];
 
 $db = Db::getInstance();
 $doc_details=$db->getCommon('doctor','doctor_no',$doc_no);
+$doc_details=$db->getCommon('doctor','doctor_no',$doc_no);
 $doc_email=$doc_details['doctor_email'];
 $patient_details=$db->getCommon('patient','username',$uname);
 $patient_no=$patient_details['patient_no'];

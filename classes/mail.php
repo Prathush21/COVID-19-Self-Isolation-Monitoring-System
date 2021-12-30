@@ -20,6 +20,16 @@ class Mail{
         $content = "The doctor assigned to you has closed your record. You will be contacted shortly.";
         mail($to,"Your Record is Closed", $content);
     }
+
+    public function SendMailReport($doc_email,$patient_no,$patient_name){
+
+        $subject="Regarding submission of PCR report of patient {$patient_no}";
+
+        $msg= "Your patient {$patient_name} has submitted a PCR report, Please check that report";
+
+        mail($doc_email,$subject,$msg);
+
+    }
 }
 ?>
 

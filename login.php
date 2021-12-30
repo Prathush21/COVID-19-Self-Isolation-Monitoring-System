@@ -26,9 +26,9 @@ if (($validate->checkUserExists('user',$uname))){
     //  echo $error1;
 }else{
   // if($validate->checkPassword('user',$uname,$psw)){
-    $user = new User();
-    if($user->check('patient',$uname)){
-      if($user->login('user',$uname,$psw)){
+    // $user = new User();
+    if($validate->check('patient',$uname)){
+      if($validate->verifyPassword('user',$uname,$psw)){
 
 
         $_SESSION['uname'] = $uname;
@@ -43,9 +43,13 @@ if (($validate->checkUserExists('user',$uname))){
 
     }
     else{
-      if($user->loginDoctor('user',$uname,$psw)){
+      if($validate->verifyPasswordDoctor('user',$uname,$psw)==1){
         $_SESSION['qualified'] = true;
         header("Location:doctordashboard.php");//have to change
+      }
+      else if ($validate->verifyPasswordDoctor('user',$uname,$psw)==0){
+        $_SESSION['qualified'] = true;
+        header("Location:doctorpassword.php");//have to change
       }
       else{
         $error2="wrong password";

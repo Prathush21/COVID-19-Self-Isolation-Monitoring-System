@@ -115,6 +115,45 @@ class Validate{
         return false;
     }
 
+    public function check($table,$uname){
+        $result =  $this->_db->getCommon($table,'username',$uname);
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function verifyPassword($table, $uname, $password){
+        $result =  $this->_db->getCommon($table,'username',$uname);
+
+        if (password_verify($password, $result['password'])){
+                    // echo "login successful";
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function verifyPasswordDoctor($table,$uname,$psw){
+        $result=$this->_db->getCommon($table,'username',$uname);
+        if($result['password']==$psw){
+            return 0;
+        }
+        else{
+            if (password_verify($psw, $result['password'])){
+                // echo "login successful";
+                return 1;
+            }
+            else {
+                return -1;
+            }
+        
+        }
+    }
+
     // public function checkPassword($table, $uname, $password){
        
         

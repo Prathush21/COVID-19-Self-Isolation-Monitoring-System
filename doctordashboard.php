@@ -14,7 +14,7 @@ else{
     $status = $uname;
 }
 
-$doctor = new Doctor();
+$doctor = Doctor::getInstance($uname);
 $patients = $doctor->getPatientList($uname);
 ?>
 

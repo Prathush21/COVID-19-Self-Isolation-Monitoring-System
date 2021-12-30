@@ -1,12 +1,26 @@
 <?php
 require_once 'db.php';
+require_once 'user.php';
 
-class Doctor{
+class Doctor extends User{
     private $db;
 
-    public function __construct($user = null) {
+	private static $instances=array();
+
+    private function __construct($user = null) {
 		$this->_db = Db::getInstance();
     }
+
+	public static function getInstance($uname){
+		if(!array_key_exists($uname,self::$instances)){
+				self::$instances[$uname]=new self();
+			
+		}
+		
+		return self::$instances[$uname];
+	}
+
+
 
     public function create($fields = array()) {
 		if(!$this->_db->insert('doctor', $fields)) {
@@ -19,6 +33,15 @@ class Doctor{
 
     public function update($fields = array(),$uname) {
 		if(!$this->_db->update('doctor',$uname, $fields)) {
+			throw new Exception('There was a problem updating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
+
+	public function updateUser($fields = array(),$uname) {
+		if(!$this->_db->update('user',$uname, $fields)) {
 			throw new Exception('There was a problem updating this patient account.');
 		}
 		else{
