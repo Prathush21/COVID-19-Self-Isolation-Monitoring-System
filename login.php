@@ -5,8 +5,6 @@ session_start();
 require_once 'classes/validate.php';
 require_once 'classes/user.php';
 
-
-
 $validate = new Validate();
 $error1 = "";
 $error2 = "";

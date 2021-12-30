@@ -10,7 +10,7 @@ $record_no = $_GET['varname'];
 $patient_no = $_GET['varname1'];
 
 $db = Db::getInstance();
-$doctor = new Doctor();
+$doctor = Doctor::getInstance($uname);
 
 $patient_details = $db->getCommon('patient','patient_no',$patient_no);
 $patient_name = $patient_details['patient_name'];

@@ -4,7 +4,8 @@ session_start();
 
 
 chdir("classes");
-require_once 'classes/patientrecord.php';
+require_once 'classes/patientrecord1.php';
+require_once 'classes/patient.php';
 
 if(!empty($_POST)){
   if (isset($_POST['reason']))
@@ -20,44 +21,36 @@ if(!empty($_POST)){
     $start_date = date('Y-m-d');
   }
 
-  $patientRecord = new PatientRecord();
+  $patient = Patient::getInstance($uname);
 
   //finding the patient number
   $uname = $_SESSION['uname'];
-  $patient_no = $patientRecord->getPatientNo($uname);
+  $patient_no = $patient->getPatientNo($uname);
 
-  $enddate = $patientRecord->getEndDate($reason,$contacttype,$employment,$vaccination,$start_date);
-  if($enddate == $start_date){
+  if(!($patient->validatePatientRecordCreation($reason,$contacttype,$employment,$vaccination))){
     $_SESSION['qualified'] = false;
+    header("Location:patient_dashboard.php");
   }
-
-  $docno = $patientRecord->assignDoctor();
-  
-  if($enddate != $start_date){
-    if(
-      $patientRecord->create(array(
+  else{
+    $patient_record = new PatientRecord();
+    if($patient_record->create(array(
         'patient_no' => $patient_no,
         'reason' => $reason,
         'vaccination' => $vaccination,
         'employment' => $employment,
         'email_time' => $time,
-        'start_date' => $start_date,
+        'start_date' => $startdate,
         'contact_type' => $contacttype,
         'assigned_doctor_no' => $docno,
         'end_date' => $enddate,
-        'status' => 'ongoing',
-      ))
-    ){
-      $patient_record_no=$patientRecord->getRecord($patient_no);
+    ))){
+      $patient_record_no = $patient->getOngoingRecord($uname)['patient_record_no'];
       $_SESSION['record']=$patient_record_no;
       $record_count=$_SESSION['count'];
       $record_count++;
       $_SESSION['count']=$record_count;
       header("Location:symptom_record.php");
-    }
-  }
-  else{
-    header("Location:patient_dashboard.php");
+    }    
   }
 
 }

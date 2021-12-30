@@ -20,6 +20,21 @@ class Mail{
         $content = "The doctor assigned to you has closed your record. You will be contacted shortly.";
         mail($to,"Your Record is Closed", $content);
     }
+
+    public function sendPCRAcceptedMail($to){
+        $content = "The PCR you had submitted was accepted and the doctor assigned to you has closed your record.";
+        mail($to,"Your PCR is Accepted", $content);
+    }
+
+    public function sendPCRRejectedMail($to){
+        $content = "The PCR you had submitted was rejected.";
+        mail($to,"Your PCR is Rejected", $content);
+    }
+
+    public function sendQuarantineExpiredMail($to){
+        $content = "Your quarantine has been successfully completed. Thank you for using our application.";
+        mail($to,"Your Quarantine has been Completed", $content);
+    }
 }
 ?>
 
