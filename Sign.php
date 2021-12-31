@@ -86,10 +86,10 @@ if($validate->checkNic($nic)){
 
 
 if ($validate->passed()){
-    $user=new User();
-    $patient = new Patient();
+    // $user=new User();
+    $patient = Patient::getInstance($uname);
     if(
-    $user->create(array(
+    $patient->createUser(array(
         'username'=> $uname,
         'password'=> $hashed,
     )) and
@@ -114,7 +114,7 @@ if ($validate->passed()){
     'username'=>$uname,
     ))
     ){
-      $_SESSION['username']=$uname;
+      $_SESSION['uname']=$uname;
       $_SESSION['qualified'] = true;
       header("Location:patient_dashboard.php");
     }

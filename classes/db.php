@@ -107,7 +107,7 @@ class Db
         return $result;
     }
 
-    public function getAllRelevant($table, $col, $val)
+    public function getAll($table, $col, $val)
     {
 
         $stmt = $this->_pdo->prepare("SELECT * FROM $table WHERE $col=?");
@@ -117,15 +117,16 @@ class Db
         return $result;
     }
 
-
-    public function getAll($table){
-
+    public function getTable($table){
         $stmt = $this->_pdo->prepare("SELECT * FROM $table");
-        $stmt->execute(); 
-        $result = $stmt->fetchAll();
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $result;
+
     }
+
 
     public function getLastRowElement($table,$col1,$col2){
         
@@ -147,8 +148,8 @@ class Db
         return $stmt->fetchColumn();
     }
 
-    public function updateSimple($table,$col1,$col2,$val1,$val2){
 
+    public function updateSimple($table,$col1,$col2,$val1,$val2){
         $stmt= $this->_pdo->prepare("UPDATE $table SET $col1=? WHERE $col2=?");
         $result = $stmt->execute([$val1,$val2]);
         return $result;
@@ -229,5 +230,21 @@ class Db
         $stmt->execute([$val1]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['MAXRECORD'];
+    }
+
+    public function getMax($table,$col1,$val1,$col2){
+        $stmt = $this->_pdo->prepare("SELECT MAX($col1) as MAXRECORD  FROM $table WHERE $col2=?");
+        $stmt->execute([$val1]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['MAXRECORD'];
+    }
+
+    public function uploadFile($table,$val,$file){
+        // $query = "INSERT INTO $table ($col) VALUE (?)";
+        // $query = "INSERT INTO patient_record (pcr_report) VALUES(?)";
+        $query ="UPDATE patient_record SET pcr_report=? WHERE patient_record_no=?"; 
+   
+        $statement = $this->_pdo->prepare($query);
+        $statement->execute([$file,$val]);
     }
 }

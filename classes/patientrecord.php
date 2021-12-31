@@ -2,7 +2,7 @@
 require_once 'db.php';
 
 class PatientRecord{
-    private $db;
+    private $db, $state;
 
     public function __construct(){
         $this->_db = Db::getInstance();
@@ -78,6 +78,26 @@ class PatientRecord{
         }
         $enddate = date('Y-m-d', strtotime($startdate . " + " .$duration." days"));
         return $enddate;
+    }
+
+    public function getRecord($val){
+        $result=$this->_db->getMaxRecord('patient_record', $val,'patient_record_no');
+        return $result;
+
+    }
+
+    public function getRecordDetails($patient_no){
+        $result=$this->_db->getAll('patient_record','patient_no',$patient_no);
+        return $result;
+    }
+
+    public function update($status,$record_no){
+        $result=$this->_db->updateSimple('patient_record','status','patient_record_no',$status,$record_no);
+        return $result;
+    }
+
+    public function uploadFile($record_no,$target_file){
+        $this->_db->uploadFile('patient_record',$record_no,$target_file);
     }
 }
 ?>

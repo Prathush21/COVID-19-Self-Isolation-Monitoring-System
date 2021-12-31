@@ -1,12 +1,24 @@
 <?php
 require_once 'db.php';
+require_once 'user.php';
 
-class Doctor{
+class Doctor extends User{
     private $db;
 
-    public function __construct($user = null) {
+	private static $instances=array();
+
+    private function __construct($user = null) {
 		$this->_db = Db::getInstance();
     }
+
+	public static function getInstance($uname){
+		if(!array_key_exists($uname,self::$instances)){
+				self::$instances[$uname]=new self();
+			
+		}
+		
+		return self::$instances[$uname];
+	}
 
     public function create($fields = array()) {
 		if(!$this->_db->insert('doctor', $fields)) {
@@ -26,6 +38,15 @@ class Doctor{
 		}
 	}
 
+	public function updateUser($fields = array(),$uname) {
+		if(!$this->_db->update('user',$uname, $fields)) {
+			throw new Exception('There was a problem updating this patient account.');
+		}
+		else{
+			return true;
+		}
+	}
+
     public function getDetails($uname){
         $result=$this->_db->getCommon('doctor','username',$uname);
         return $result;
@@ -33,15 +54,17 @@ class Doctor{
 
 	public function getPatientList($uname){
 		$docno = $this->_db->getCommon('doctor','username',$uname)['doctor_no'];
-		$results = $this->_db->getAll("patient_record");
+		$results = $this->_db->getTable("patient_record");
 		$today = date('Y-m-d');
 		$patients = array();
 		foreach($results as $result){
 			if ($result['assigned_doctor_no'] == $docno){
 				if(($result['end_date'] >= $today) && ($result['status'] == 'ongoing')){
-					$patientname = $this->_db->getCommon('patient','patient_no',$result['patient_no'])['patient_name'];
+					$patientdet = $this->_db->getCommon('patient','patient_no',$result['patient_no']);
+					$patientname = $patientdet['patient_name'];
+					$patient_uname = $patientdet['username'];
 					$record_no = $result['patient_record_no'];
-					$patients += array($result['patient_no']=>[$patientname, $record_no]);
+					$patients += array($result['patient_no']=>[$patientname, $record_no, $patient_uname]);
 				}
 			}
 		}
@@ -91,7 +114,7 @@ class Doctor{
 		// $iterationcounter2 = 0;
 		$correct = true;
 		$commentno = 0;
-		$symptom_record = $this->_db->getAllRelevant('symptom_record', 'patient_record_no', $patient_record_no);
+		$symptom_record = $this->_db->getAll('symptom_record', 'patient_record_no', $patient_record_no);
 		$reversed_record = array_reverse($symptom_record);
 		foreach($reversed_record as $row){
 			if($row['status'] == "Pending"){

@@ -2,24 +2,38 @@
 require_once 'classes/db.php';
 require_once 'classes/mail.php';
 require_once 'classes/doctor.php';
+require_once 'classes/patient.php';
+require_once 'classes/patientrecord1.php';
 session_start();
 
 $uname = $_SESSION['username'];
 
 $record_no = $_GET['varname'];
 
-$patient_no = $_GET['varname1'];
+$patient_no = $_GET['varname2'];
+$patient_uname = $_GET['varname1'];
+$status="";
 
 $db = Db::getInstance();
-$doctor = new Doctor();
+$doctor = Doctor::getInstance($uname);
+
 $mail = new Mail();
 
+$patient = Patient::getInstance($patient_uname); 
+
+$patientRecord = $patient->getRecordObject($record_no);
+
+$pcr = $patientRecord->getPCR($record_no);
+
+//TAKE $patient_name FROM A METHOD FOR THIS PATIENT OBJECT
 $patient_details = $db->getCommon('patient','patient_no',$patient_no);
 $patient_name = $patient_details['patient_name'];
-$patient_email = $patient_details['email_add'];
+//DON'T FORGET
 
-$symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
+//BETTER TO HAVE SYMPTOM_RECORD OBJECTS ARRAYLIST IN PATIENT_RECORD
+$symptom_record = $db->getAll('symptom_record', 'patient_record_no', $record_no);
 $reversed_record = array_reverse($symptom_record);
+//DON'T FORGET
 
 if(!empty($_POST['confirm-btn'])){
     if(isset($_POST['status'])){
@@ -40,10 +54,24 @@ if(!empty($_POST['confirm-btn'])){
 }
 
 if(!empty($_POST['close-btn'])){
-    $record_details = $db->getCommon('patient_record','patient_record_no',$record_no);
-    if($db->updateNew('patient_record','patient_record_no',$record_no, array('end_date'=>date('Y-m-d'), 'status'=>'sent to hospital'))){
-        $mail->sendRecordClosedMail($patient_email);
+    if($patientRecord->sendToHospital()){
         header("Location:doctordashboard.php");
+    }
+}
+
+if(!empty($_POST['view-pcr-btn'])){
+    if($patientRecord->getPCR($record_no)){
+        // echo $pcr;
+        // header("Content-type:$pcr");
+        // @readfile($pcr);
+        // $file_name=$pcr;
+        // echo '<a href="'.$file_name.'" role="text" aria-expanded="false" target = "_blank" >'.$file_name .'</a>'; 
+
+        // header('Content-disposition: attachment; filename='.$pcr);
+        // header('Content-type: application/pdf');
+        // readfile($pcr);
+
+        header("Location: viewpcrfordoctor.php? varname=$pcr &varname1=$record_no &varname2=$patient_uname");
     }
 }
 
@@ -57,7 +85,7 @@ if(!empty($_POST['close-btn'])){
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="patientsymptomsfordoctor.css">
+    <link rel="stylesheet" href="patientsymptomsfordoctor1.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,6 +107,9 @@ if(!empty($_POST['close-btn'])){
             View Past Records
         </div> 
         <br>
+        <!-- <div class = "record-box" onclick="location.href='.<?php $pcr ?>.'" role="text" aria-expanded="false" target = "_blank" style="cursor:pointer;" >
+            View PCR
+        </div>  -->
     
         
 
@@ -101,6 +132,8 @@ if(!empty($_POST['close-btn'])){
                     <input type="submit" id="input-box2" name = "confirm-btn" value="Confirm" style ="font-size:18px"  />
                     
                     <input type="submit" id="input-box2" name = "close-btn" value="Close Record" style ="font-size:18px"  />
+
+                    <input type="submit" id="input-box2" name = "view-pcr-btn" value="View Submitted PCR" style ="font-size:18px" <?php if(!($pcr)){?> hidden <?php } ?> onclick="window.open($pcr); return true;" />
                   
                     <br> <br>
 

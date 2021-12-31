@@ -14,7 +14,7 @@ $error3 = "";
 $error4 = "";
 $error5 = "";
 
-$patient = new Patient();
+$patient = Patient::getInstance($uname);
 $validate_3 = new Validate();
 
 $result = $patient->getDetails($uname);

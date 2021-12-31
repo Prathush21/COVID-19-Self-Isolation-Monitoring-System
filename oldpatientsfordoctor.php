@@ -8,7 +8,7 @@ $uname = $_GET['varname'];
 $db = Db::getInstance();
 $doctor_no =$db->getCommon('doctor','username',$uname)['doctor_no'];
 
-$records =$db->getAllRelevant('patient_record','assigned_doctor_no',$doctor_no);
+$records =$db->getAll('patient_record','assigned_doctor_no',$doctor_no);
 
 
 

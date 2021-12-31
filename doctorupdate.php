@@ -20,7 +20,7 @@ $psw = "";
 $repsw = "";
 $phone = "0";
 
-$doctor = new Doctor();
+$doctor = Doctor::getInstance($uname);
 
 $validate_3 = new Validate();
 if ($validate_3->checkUserExists('doctor', $uname)) {

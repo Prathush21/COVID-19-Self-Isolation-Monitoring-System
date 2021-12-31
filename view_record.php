@@ -1,8 +1,11 @@
 <?php
 require_once 'classes/db.php';
+require_once 'classes/patientrecord.php';
 session_start();
 
 $uname = $_SESSION['username'];
+$var=1;
+$var2=1;
 
 
 if ($_SESSION['qualified'] == false) {
@@ -24,7 +27,32 @@ $db = Db::getInstance();
 $doctor_details = $db->getCommon('doctor', 'doctor_no', $doctor_no);
 $doctor_name = $doctor_details['doctor_name'];
 
-$symptom_record = $db->getAllRelevant('symptom_record', 'patient_record_no', $record_no);
+$symptom_record_details=$db->getCommon('patient_record','patient_record_no',$record_no);
+$end_date=$symptom_record_details['end_date'];
+$today=date('Y-m-d');
+
+$symptom_record_no=$db->getMax('symptom_record','symptom_record_no',$record_no,'patient_record_no');
+$symptom_details=$db->getCommon('symptom_record','symptom_record_no',$symptom_record_no);
+$date=$symptom_details['date'];
+
+$status=$symptom_record_details['status'];
+
+if($date==$today){
+    $var2=0;
+}
+
+if($end_date<$today){
+    $var=0;
+    if($status!='closed'){//quarantine time expired
+        $status='closed';
+        $patient_record=new PatientRecord();
+        $result=$patient_record->update($status,$record_no);
+    }
+    
+}
+
+$symptom_record = $db->getAll('symptom_record', 'patient_record_no', $record_no);
+
 $reversed_record = array_reverse($symptom_record);
 
 
@@ -41,14 +69,14 @@ $reversed_record = array_reverse($symptom_record);
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="view_record.css">
+    <link rel="stylesheet" href="view_record2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-<div >
+<!-- <div >
               <input type="submit" id="input-box3" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" />
 
               
@@ -58,8 +86,42 @@ $reversed_record = array_reverse($symptom_record);
 
           }
         </script>
-            </div>
+            </div> -->
     <div class="container">
+    <div >
+              <input type="submit" id="input-box5" value="View your evidence report" onclick="redirecting4()" style="font-size:16px" <?php if($var!=0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting4() {
+            location.replace("pdf.php")
+
+          }
+        </script>
+        <div >
+              <input type="submit" id="input-box3" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting1() {
+            location.replace("updatesymptom.php")
+
+          }
+        </script>
+            </div>
+
+            <div >
+              <input type="submit" id="input-box4" value="Close Record" onclick="redirecting3()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting3() {
+            location.replace("submitreport.php")
+
+          }
+        </script>
+            </div>
+    
     <div >
               <input type="submit" id="input-box2" value="Home" onclick="redirecting2()" style ="font-size:18px"  />
 
@@ -90,9 +152,10 @@ $reversed_record = array_reverse($symptom_record);
 
                     </div>
                     <h3>Assigned Doctor-<?php echo $doctor_name ?></h3>
+                    <h3>Status-<?php echo $status ?></h3>
 
                     <div class="button input-box">
-              <input type="submit" value="Record your symptom" onclick="redirecting()"  />
+              <input type="submit" value="Record your symptom" onclick="redirecting()"  <?php if($var==0){?> hidden <?php }?> <?php if($var2==0){?> disabled <?php }?>/>
 
               
         <script>
