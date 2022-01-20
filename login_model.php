@@ -45,7 +45,7 @@ if (($validate->checkUserExists('user',$uname))){
     else{
       if($validate->verifyPasswordDoctor('user',$uname,$psw)==1){
         $_SESSION['qualified'] = true;
-        header("Location:doctordashboard.php");//have to change
+        header("Location:doctordashboard_edited.php");//have to change
       }
       else if ($validate->verifyPasswordDoctor('user',$uname,$psw)==0){
         $_SESSION['qualified'] = true;

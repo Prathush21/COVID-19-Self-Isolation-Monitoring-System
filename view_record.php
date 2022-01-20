@@ -1,6 +1,6 @@
 <?php
 require_once 'classes/db.php';
-require_once 'classes/patientrecord.php';
+require_once 'classes/patientrecord1.php';
 session_start();
 
 $uname = $_SESSION['username'];
@@ -43,8 +43,8 @@ if($date==$today){
 
 if($end_date<$today){
     $var=0;
-    if($status!='closed'){//quarantine time expired
-        $status='closed';
+    if($status!='quarantine ended'){//quarantine time expired
+        $status='quarantine ended';
         $patient_record=new PatientRecord();
         $result=$patient_record->update($status,$record_no);
     }
@@ -69,7 +69,7 @@ $reversed_record = array_reverse($symptom_record);
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="view_record2.css">
+    <link rel="stylesheet" href="view_record3.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,45 +87,12 @@ $reversed_record = array_reverse($symptom_record);
           }
         </script>
             </div> -->
+            
     <div class="container">
-    <div >
-              <input type="submit" id="input-box5" value="View your evidence report" onclick="redirecting4()" style="font-size:16px" <?php if($var!=0){?> hidden <?php }?> />
-
-              
-        <script>
-          function redirecting4() {
-            location.replace("pdf.php")
-
-          }
-        </script>
-        <div >
-              <input type="submit" id="input-box3" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
-
-              
-        <script>
-          function redirecting1() {
-            location.replace("updatesymptom.php")
-
-          }
-        </script>
-            </div>
-
-            <div >
-              <input type="submit" id="input-box4" value="Close Record" onclick="redirecting3()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
-
-              
-        <script>
-          function redirecting3() {
-            location.replace("submitreport.php")
-
-          }
-        </script>
-            </div>
     
     <div >
-              <input type="submit" id="input-box2" value="Home" onclick="redirecting2()" style ="font-size:18px"  />
+              <input type="submit" id="input-box1" value="Home" onclick="redirecting2()" style ="font-size:18px"  />
 
-              
         <script>
           function redirecting2() {
             location.replace("patient_dashboard.php")
@@ -134,14 +101,8 @@ $reversed_record = array_reverse($symptom_record);
         </script>
             </div>
 
-            
 
-            <br><br>
-
-        
-
-   
-        <input type="checkbox" id="flip">
+        <br>
 
 
         <div class="forms">
@@ -154,19 +115,49 @@ $reversed_record = array_reverse($symptom_record);
                     <h3>Assigned Doctor-<?php echo $doctor_name ?></h3>
                     <h3>Status-<?php echo $status ?></h3>
 
-                    <div class="button input-box">
-              <input type="submit" value="Record your symptom" onclick="redirecting()"  <?php if($var==0){?> hidden <?php }?> <?php if($var2==0){?> disabled <?php }?>/>
+                    <br>
 
-              
+                    <div>
+              <input type="submit" id="input-box2" value="Record your symptom" onclick="redirecting()"  <?php if($var==0){?> hidden <?php }?> <?php if($var2==0){?> disabled <?php }?>  style ="font-size:16px" />
+
         <script>
           function redirecting() {
             location.replace("symptom_record.php")
 
           }
         </script>
-            </div>
 
-           
+              <input type="submit" id="input-box3" value="View your evidence report" onclick="redirecting4()" style="font-size:16px" <?php if($var!=0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting4() {
+            location.replace("pdf.php")
+
+          }
+        </script>
+
+              <input type="submit" id="input-box2" value="Update Symptoms" onclick="redirecting1()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting1() {
+            location.replace("updatesymptom.php")
+
+          }
+        </script>
+
+              <input type="submit" id="input-box2" value="Close Record" onclick="redirecting3()" style="font-size:16px" <?php if($var==0){?> hidden <?php }?> />
+
+              
+        <script>
+          function redirecting3() {
+            location.replace("submitreport.php")
+
+          }
+        </script>
+            </div>
+  
 
             
                     <br> <br>

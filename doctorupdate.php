@@ -57,7 +57,7 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
       'doctor_email' => $email,
       'doctor_phone' => $phone,
     ))) {
-      header("Location:doctordashboard.php");
+      header("Location:doctordashboard_edited.php");
     }
 
   }
@@ -111,7 +111,7 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
         'doctor_email' => $email,
         'doctor_phone' => $phone,
       ), $uname)) {
-        header("Location:doctordashboard.php");
+        header("Location:doctordashboard_edited.php");
       }
     }
 
@@ -211,7 +211,7 @@ if ($validate_3->checkUserExists('doctor', $uname)) {
 
         <script>
           function redirecting() {
-            location.replace("doctordashboard.php")
+            location.replace("doctordashboard_edited.php")
 
           }
         </script>

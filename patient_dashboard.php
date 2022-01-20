@@ -3,7 +3,7 @@ require_once 'classes/db.php';
 
 require_once 'classes/patient.php';
 
-require_once 'classes/patientrecord.php';
+require_once 'classes/patientrecord1.php';
 
 session_start();
 

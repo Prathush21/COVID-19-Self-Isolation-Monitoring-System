@@ -61,7 +61,7 @@ if(isset($_POST['reject'])) {
 <head>
   <meta charset="UTF-8" />
   <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-  <link rel="stylesheet" href="submitreport.css" />
+  <link rel="stylesheet" href="submitreport1.css" />
   <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -76,17 +76,27 @@ if(isset($_POST['reject'])) {
     <div class="forms">
       <!-- <div class="form-content"> -->
       <div class="signup-form">
-        <div class="title">View PCR</div>
+        
+      <div class = "record-box" onclick="history.go(-1);" >
+           Back
+        </div>
         <br><br>
+
+        <div class="title">View PCR</div>
+        <br>
         <?php
         echo '<a href="'.$pcr.'" role="text" aria-expanded="false" >'.$pcr .'</a>'; 
 
         ?>
+        <br>
+        <br>
+
 
 
         <form method='post' action='#'>
         
-        <input type='submit' id='input-box3' value='Accept PCR' name='accept' />
+        <input type='submit' id='input-box4' value='Accept PCR' name='accept' />
+ 
 
         <input type="submit" id='input-box4' value="Reject PCR" name='reject' />
 

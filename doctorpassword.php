@@ -37,7 +37,7 @@ if (!empty($_POST)) {
           header("Location:doctorupdate.php");
         }
         else{
-          header("Location:doctordashboard.php");
+          header("Location:doctordashboard_edited.php");
         }
         
       }
@@ -108,7 +108,7 @@ if (!empty($_POST)) {
 
         <script>
           function redirecting() {
-            location.replace("doctordashboard.php")
+            location.replace("doctordashboard_edited.php")
 
           }
         </script>
