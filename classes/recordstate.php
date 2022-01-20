@@ -40,7 +40,7 @@ class Ongoing extends RecordState{
     public function expireRecord($patientRecordObj){
         $record_no = $patientRecordObj->getRecordNumber();
         $patient_email = $this->_db->getCommon('patient','patient_no',$patientRecordObj->getPatientNumber())['email_add'];
-        if($this->_db->updateNew('patient_record','patient_record_no',$record_no, array('end_date'=>date('Y-m-d'), 'status'=>'closed'))){
+        if($this->_db->updateNew('patient_record','patient_record_no',$record_no, array('end_date'=>date('Y-m-d'), 'status'=>'quarantine ended'))){
             $this->mail->sendQuarantineExpiredMail($patient_email);
             return true;
         }

@@ -8,7 +8,7 @@ require_once 'classes/patient.php';
 require_once 'classes/validate.php';
 require_once 'classes/symptomrecord.php';
 require_once  'classes/mail.php';
-require_once 'classes/patientrecord.php';
+require_once 'classes/patientrecord1.php';
 
 // $breathe = 'no';
 // $body_ache = 'no';
@@ -109,7 +109,7 @@ if(isset($_POST['submit'])) {
 <head>
   <meta charset="UTF-8" />
   <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-  <link rel="stylesheet" href="submitreport.css" />
+  <link rel="stylesheet" href="submitreport1.css" />
   <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>

@@ -108,6 +108,7 @@ if (!empty($_POST)) {
 
     if($count>0){
         //send mail
+        $symptom_record->updateSymptom('status','Pending',$symptom_record_no);
         $mail=new Mail();
         $mail->sendMail($doc_email,$patient_no,$patient_name,$patient_phone);
         header("Location:view_record.php?varname=  $record_no &varname1=  $no &varname2= $doc_no ");

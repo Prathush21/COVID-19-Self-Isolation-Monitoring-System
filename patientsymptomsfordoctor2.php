@@ -46,7 +46,7 @@ if(!empty($_POST['confirm-btn'])){
         $comments = $_POST['defaultcomments'];
     }
     if($doctor->updateComment($comments, $status, $record_no)){
-        header("Location:doctordashboard.php");
+        header("Location:doctordashboard_edited.php");
     }
     else{
         echo $doctor->updateComment($comments, $status, $record_no);
@@ -55,7 +55,7 @@ if(!empty($_POST['confirm-btn'])){
 
 if(!empty($_POST['close-btn'])){
     if($patientRecord->sendToHospital()){
-        header("Location:doctordashboard.php");
+        header("Location:doctordashboard_edited.php");
     }
 }
 
@@ -75,6 +75,13 @@ if(!empty($_POST['view-pcr-btn'])){
     }
 }
 
+if(!empty($_POST['home-btn'])){
+    header("Location:doctordashboard_edited.php");
+}
+if(!empty($_POST['view-past-btn'])){
+    header("Location: patientpastfordoctor.php?varname=$record_no &varname1=$patient_no");
+}
+
 ?>
 
 
@@ -85,7 +92,7 @@ if(!empty($_POST['view-pcr-btn'])){
 <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="patientsymptomsfordoctor1.css">
+    <link rel="stylesheet" href="patientsymptomsfordoctor2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,31 +104,19 @@ if(!empty($_POST['view-pcr-btn'])){
 
     <div class="container">
 
-        
-           <div class = "record-box" onclick="location.href='doctordashboard.php'" style="cursor:pointer;" >
-           Home
-        </div> 
-
-        <br>
-        <div class = "record-box" onclick="location.href='patientpastfordoctor.php?varname=<?php echo $record_no ?>&varname1=<?php echo $patient_no ?>'" style="cursor:pointer;" >
-            View Past Records
-        </div> 
-        <br>
-        <!-- <div class = "record-box" onclick="location.href='.<?php $pcr ?>.'" role="text" aria-expanded="false" target = "_blank" style="cursor:pointer;" >
-            View PCR
-        </div>  -->
-    
-        
-
-        
-   
-        <!-- <input type="checkbox" id="flip"> -->
-          <br><br>
-
         <div class="forms">
         <form action="#" method="post">
             <div class="form-content">
                 <div class="login-form">
+
+                
+                
+                <input type="submit" id="input-box2" name = "home-btn" value="Home" style ="font-size:18px"  />
+                    
+                <input type="submit" id="input-box2" name = "view-past-btn" value="View Past Records" style ="font-size:18px"  />
+
+                <br> <br>
+
                     <div class="title">
                         <h2> Patient <?php echo $patient_no . " - " . $patient_name ?></h2>
 

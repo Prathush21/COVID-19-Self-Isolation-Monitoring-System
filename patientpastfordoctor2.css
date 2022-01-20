@@ -240,19 +240,13 @@ body{
   color: #fff;
   background: #2B4560;
   border-radius: 6px;
-  padding: 0;
+  padding: 1%;
   cursor: pointer;
   transition: all 0.4s ease;
-  width:170%;
-  /* margin-top: 200px; */
-  /* margin-right: 200px; */
-  height: 10%;
+  width:30%;
+  /* height: 10%; */
   position:relative;
   
-  /* transform: translateY(500px);
-  transform: translateX(-200px); */
-  transform: translate(-275px,300px);
-  /* display: block; */
 }
 .forms .form-content .button input:hover{
   background: #2B4560;

@@ -35,7 +35,7 @@ $patient_records = array_reverse($result);
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="patientpastfordoctor1.css">
+    <link rel="stylesheet" href="patientpastfordoctor2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,18 +46,17 @@ $patient_records = array_reverse($result);
 
   <div class="container">
     <input type="checkbox" id="flip">
-
-    <div class ="back-box" onclick="location.href='patientsymptomsfordoctor2.php?varname=<?php echo $current_record_no ?>&varname1=<?php echo $patient_no ?>'" style="cursor:pointer;" >
-            Back
-        </div>
-
-        <br>
-
+        
     <div class="forms">
         <div class="form-content">
           <div class="login-form"  >
+          <input type="submit" id="input-box2" name = "back-btn" value="Back" onclick="history.go(-1);" style ="font-size:18px"  />
+
+          <br>
+          <br>
+
             <div class="title">Patient <?php echo $patient_no . " - " . $patient_name?> <br><br>  Past Records</div>
-         
+        
             <div class="input-boxes">
                 
             </div>
