@@ -12,6 +12,7 @@ body{
   /* align-items: center; */
   /* justify-content: left; */
   background: url("images/background2.jpg"); 
+
   /* background: #6AA4B0; */
   /* background: linear-gradient(to bottom,#E1E7E0 10%,#E1E7E0 20%,#E1E7E0 20%,#6AA4B0 60%,#6AA4B0 60%); */
   /* background: linear-gradient(to bottom, #E1E7E0 0%, #E1E7E0 18%,  #6AA4B0 18%,  #6AA4B0 100%); */
@@ -25,6 +26,8 @@ body{
 /* .header{
   background: #E1E7E0;
 } */
+
+
 .container{
   position: relative;
   max-width: 700px;
@@ -336,8 +339,9 @@ a{
     margin-left: 500px;
 }
 .record-box{
-  background-color: #B0B7C0
-  ;
+
+  background-color: blanchedalmond;
+
   width: 150%;
   border-radius: 10px;
   padding: 5px;
