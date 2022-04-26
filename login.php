@@ -1,47 +1,10 @@
 <?php
 
-require_once 'classes/validate.php';
-require_once 'classes/user.php';
 
-$validate = new Validate();
-$error1 = "";
-$error2 = "";
-$uname = null;
-$psw = null;
-
-if(!empty($_POST)){
-    $uname=$_POST['uname'];
-    $psw=$_POST['password'];
+require_once 'login_model.php';
 
 
-if (($validate->checkUserExists($uname))){
-    $error1 = "No such user exists";
-    
-    //  echo $error1;
-}else{
-  // if($validate->checkPassword('user',$uname,$psw)){
-    $user = new User();
-    if($user->login('user',$uname,$psw)){
-      header("Location:https://www.google.lk/");
 
-
-  }
-  else{
-    $error2="wrong password";
-  }
-
-}
-// $validate->checkPassword('user',$uname,$psw);
-
-
-// if (($validate->passed())){
-//     $user = new User();
-//     if ($user->login($uname, $psw)){
-//         //start login session
-       
-//     }
-// }
-}
 
 ?>
 
@@ -52,7 +15,7 @@ if (($validate->checkUserExists($uname))){
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login2.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,17 +25,17 @@ if (($validate->checkUserExists($uname))){
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <!--<img src="images/frontImg.jpg" alt="">-->
-        <div class="text">
+        <img src="images/covidlogin.jpg" alt="">-->
+        <!-- <div class="text">
           <span class="text-1">Every new friend is a <br> new adventure</span>
           <span class="text-2">Let's get connected</span>
-        </div>
+        </div> -->
       </div>
       <div class="back">
         <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
         <div class="text">
-          <span class="text-1">Complete miles of journey <br> with one step</span>
-          <span class="text-2">Let's get started</span>
+          <!-- <span class="text-1">Complete miles of journey <br> with one step</span>
+          <span class="text-2">Let's get started</span> -->
         </div>
       </div>
     </div>
@@ -96,7 +59,7 @@ if (($validate->checkUserExists($uname))){
               </div>
               <span id="unm" style="color:red"><?php echo $error2;?></span>
               
-              <div class="text"><a href="#">Forgot password?</a></div>
+              <div class="text"><a href="#" style="color:#2B4560">Forgot password?</a></div>
               <div class="button input-box">
                 <input type="submit" value="Login">
               </div>

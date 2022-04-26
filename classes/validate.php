@@ -40,13 +40,22 @@ class Validate{
         return false;
     }
 
+    // public function checkMobile($mobileno){
+    //     if(strlen($mobileno)!=10){
+    //         $this->_errorcount+=1;
+    //         $this->_errors[]=$mobileno;
+    //         return true;          
+    //     }
+    //     return false;        
+    // }
+
     public function checkMobile($mobileno){
-        if(strlen($mobileno)!=10){
+        if((strlen($mobileno)<9)||(strlen($mobileno)>10)){
             $this->_errorcount+=1;
             $this->_errors[]=$mobileno;
             return true;          
         }
-        return false;
+        return false;        
     }
 
     public function checkEmail($email){
@@ -84,10 +93,8 @@ class Validate{
     }
 
 
-    public function checkUserExists($uname){
-        if(!($this->_db->select('user',$uname))){
-            $this->_errorcount+=1;
-            $this->_errors[]=$uname;
+    public function checkUserExists($table,$uname){
+        if(!($this->_db->select($table,$uname))){
             return true;
         }
         return false;
@@ -98,6 +105,53 @@ class Validate{
             return true;
         }
         return false;
+    }
+
+    public function checkIfEmpty($entry){
+        if($entry == ""){
+            $this->_errorcount+=1;
+            return true;
+        }
+        return false;
+    }
+
+    public function check($table,$uname){
+        $result =  $this->_db->getCommon($table,'username',$uname);
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function verifyPassword($table, $uname, $password){
+        $result =  $this->_db->getCommon($table,'username',$uname);
+
+        if (password_verify($password, $result['password'])){
+                    // echo "login successful";
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function verifyPasswordDoctor($table,$uname,$psw){
+        $result=$this->_db->getCommon($table,'username',$uname);
+        if($result['password']==$psw){
+            return 0;
+        }
+        else{
+            if (password_verify($psw, $result['password'])){
+                // echo "login successful";
+                return 1;
+            }
+            else {
+                return -1;
+            }
+        
+        }
     }
 
     // public function checkPassword($table, $uname, $password){

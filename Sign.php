@@ -1,123 +1,6 @@
 <?php 
 
-chdir("classes");
-require_once  'classes/user.php';
-require_once 'classes/patient.php';
-require_once 'classes/validate.php';
-
-$error1="";
-$error2="";
-$error3="";
-$error4="";
-$error5="";
-$gender='no';
-$asthma='no';
-$lung='no';
-$kidney='no';
-$heart='no';
-$diabetes='no';
-$tension='no';
-$cancer='no';
-$immuno='no';
-
-if(!empty($_POST)){
-    $name=$_POST['name'];
-    $uname=$_POST['uname'];
-    $psw=$_POST['password'];
-    $nic=$_POST['nic'];
-    $repsw=$_POST['repassword'];
-    $address=$_POST['address'];
-    $mobileno=$_POST['mobileno'];
-    $email=trim($_POST['email-id']);
-    $dob=$_POST['dob'];
-    if(isset($_POST['gender'])){
-      $gender=$_POST['gender'];
-    }
-    
-    if(isset($_POST['asthma'])){
-      $asthma=$_POST['asthma'];
-    }
-    
-    if(isset($_POST['lungdisease'])){
-      $lung=$_POST['lungdisease'];
-    }
-    if(isset($_POST['kidney'])){
-      $kidney=$_POST['kidney'];
-    }
-    if(isset($_POST['heart'])){
-      $heart=$_POST['heart'];
-    }
-    if(isset($_POST['diabetes'])){
-      $diabetes=$_POST['diabetes'];
-    }
-    if(isset($_POST['hyper'])){
-      $tension=$_POST['hyper'];
-    }
-    if(isset($_POST['cancer'])){
-      $cancer=$_POST['cancer'];
-    }
-    if(isset($_POST['immuno'])){
-      $immuno=$_POST['immuno'];
-    }
-   
-    $hashed = password_hash($psw,PASSWORD_DEFAULT);
-
-
-$validate=new Validate();
-if($validate->checkUser($uname)){
-    $error1="User already exists";
-}
-if($validate->matchPassword($psw,$repsw)){
-  $error2="Passwords didn't match";
-}
-if($validate->checkMobile($mobileno)){
-  $error3="Invalid mobile number";
-}
-if($validate->checkEmail($email)){
-  $error4="Invalid email address";
-}
-if($validate->checkNic($nic)){
-  $error5="Invalid NIC number";
-}
-
-
-
-
-if ($validate->passed()){
-    $user=new User();
-    $patient = new Patient();
-    if(
-    $user->create(array(
-        'username'=> $uname,
-        'password'=> $hashed,
-    )) and
-
-    
-    $patient->create (array(
-    'patient_name'=>$name,
-    'NIC'=>$nic,
-    'address'=>$address,
-    'phonenumber'=>$mobileno,
-    'email_add'=>$email,
-    'DOB'=>$dob,
-    'gender'=>$gender,
-    'asthma'=>$asthma,
-    'lung_disease'=>$lung,
-    'kidney_failure'=>$kidney,
-    'heart_disease'=>$heart,
-    'diabetes'=>$diabetes,
-    'hyper_tension'=>$tension,
-    'cancer'=>$cancer,
-    'immuno_deficiency'=>$immuno,
-    'username'=>$uname,
-    ))
-    ){
-      header("Location:login.php");
-    }
-}
-
-
-}
+require_once 'signup_model.php';
 
 
 ?>
@@ -128,7 +11,7 @@ if ($validate->passed()){
 <head>
   <meta charset="UTF-8" />
   <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-  <link rel="stylesheet" href="signup.css" />
+  <link rel="stylesheet" href="signup1.css" />
   <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
